@@ -83,7 +83,7 @@ const props = defineProps({
     shape: { type: String, default: 'square', validator: (value) => ['round', 'square'].includes(value) },
     id: { type: String, default: 'van-search-n-input' },
     background: String,
-    maxlength: [Number, String],
+    maxlength: { type: [Number, String], default: -1 },
     placeholder: String,
     clearable: { type: Boolean, default: true },
     clearIcon: { type: String, default: 'clear' },

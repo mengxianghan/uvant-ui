@@ -178,7 +178,7 @@ const props = defineProps({
     fixed: { type: Boolean, default: false },
     focus: { type: Boolean, default: false },
     size: { type: String, validator: (value) => ['normal', 'large'].includes(value) },
-    maxlength: [Number, String],
+    maxlength: { type: [Number, String], default: -1 },
     min: Number,
     max: Number,
     placeholder: String,

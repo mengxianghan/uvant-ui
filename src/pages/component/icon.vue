@@ -61,12 +61,14 @@
 <script setup></script>
 
 <style lang="scss">
-@font-face {
-    font-family: 'my-icon';
-    src:
-        url('//at.alicdn.com/t/c/font_1094427_q4p92jk2dbi.woff2?t=1728460455317') format('woff2'),
-        url('//at.alicdn.com/t/c/font_1094427_q4p92jk2dbi.woff?t=1728460455317') format('woff'),
-        url('//at.alicdn.com/t/c/font_1094427_q4p92jk2dbi.ttf?t=1728460455317') format('truetype');
+page {
+    @font-face {
+        font-family: 'my-icon';
+        src:
+            url('//at.alicdn.com/t/c/font_1094427_q4p92jk2dbi.woff2?t=1728460455317') format('woff2'),
+            url('//at.alicdn.com/t/c/font_1094427_q4p92jk2dbi.woff?t=1728460455317') format('woff'),
+            url('//at.alicdn.com/t/c/font_1094427_q4p92jk2dbi.ttf?t=1728460455317') format('truetype');
+    }
 }
 
 .my-icon {

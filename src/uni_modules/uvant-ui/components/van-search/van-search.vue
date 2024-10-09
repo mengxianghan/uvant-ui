@@ -25,15 +25,15 @@
                     @click="handleInput">
                     <view class="van-field__body">
                         <input
-                            type="search"
-                            class="van-field__control"
+                            :value="modelValue"
                             :disabled="disabled"
                             :placeholder="placeholder"
                             :id="id"
                             :class="cpControlClass"
-                            :value="modelValue"
                             :maxlength="maxlength"
                             :focus="autofocus"
+                            type="search"
+                            class="van-field__control"
                             @input="onInput"
                             @focus="onFocus"
                             @blur="onBlur"

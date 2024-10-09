@@ -62,7 +62,7 @@ const list = ref([
             { key: 'PickerGroup', name: '选择器组', url: '' },
             { key: 'Radio', name: '单选框', url: '' },
             { key: 'Rate', name: '评分', url: '' },
-            { key: 'Search', name: '搜索', url: '' },
+            { key: 'Search', name: '搜索', url: '/pages/component/search' },
             { key: 'Slider', name: '滑块', url: '' },
             { key: 'Signature', name: '签名', url: '' },
             { key: 'Stepper', name: '切换器', url: '' },

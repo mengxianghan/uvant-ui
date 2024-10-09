@@ -55,7 +55,7 @@
 
 <script setup>
 import { computed, useSlots, watchEffect, ref } from 'vue'
-import { isNumberic } from '../utils'
+import { isNumber } from '../utils'
 import usePlaceholder from '../hooks/usePlaceholder'
 
 const props = defineProps({
@@ -93,7 +93,7 @@ watchEffect(() => {
 
 const cpHasTipIcon = computed(() => props.tipIcon)
 const cpHasTip = computed(() => props.tip || slots.tip)
-const cpHasPrice = computed(() => isNumberic(props.price))
+const cpHasPrice = computed(() => isNumber(props.price))
 const cpClass = computed(() => {
     const { safeAreaInsetBottom, placeholder, fixed } = props
     const classNames = {

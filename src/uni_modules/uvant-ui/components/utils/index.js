@@ -19,7 +19,7 @@ export function isObject(value) {
     return value !== null && typeof value === 'object'
 }
 
-export function isNumberic(value) {
+export function isNumber(value) {
     return typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)
 }
 
@@ -30,6 +30,10 @@ export function isMobile(value) {
 
 export function isEmpty(value) {
     return value === '' || value === undefined || value === null
+}
+
+export function isArray(value) {
+    return Array.isArray(value)
 }
 
 export function uuid() {

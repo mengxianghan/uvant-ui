@@ -26,6 +26,12 @@
             }
         },
         {
+            "path": "pages/component/space",
+            "style": {
+                "navigationBarTitleText": "Space"
+            }
+        },
+        {
             "path": "pages/component/field",
             "style": {
                 "navigationBarTitleText": "Field"

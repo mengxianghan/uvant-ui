@@ -42,7 +42,7 @@ const list = ref([
             { key: 'Image', name: '图片', url: '' },
             { key: 'Layout', name: '布局', url: '' },
             { key: 'Popup', name: '弹出层', url: '' },
-            { key: 'Space', name: '间距', url: '' },
+            { key: 'Space', name: '间距', url: '/pages/component/space' },
             { key: 'Toast', name: '轻提示', url: '' },
         ],
     },

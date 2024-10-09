@@ -15,8 +15,8 @@
             :body-style="{ padding: 0 }">
             <van-submit-bar
                 :fixed="false"
-                disabled
                 :price="3050"
+                disabled
                 button-text="提交订单"
                 tip="你的收货地址不支持配送"
                 tip-icon="info-o"
@@ -28,8 +28,8 @@
             :body-style="{ padding: 0 }">
             <van-submit-bar
                 :fixed="false"
-                loading
                 :price="3050"
+                loading
                 button-text="提交订单"
                 @submit="onSubmit" />
         </demo-block>
@@ -42,7 +42,7 @@
                 :price="3050"
                 button-text="提交订单"
                 @submit="onSubmit">
-                <van-checkbox v-model="checked">全选</van-checkbox>
+                <label><checkbox class="scale-75"></checkbox>全选</label>
                 <template #tip>
                     你的收货地址不支持配送,
                     <text
@@ -57,9 +57,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-const checked = ref(false)
 const onSubmit = () => uni.showToast({ title: '点击按钮' })
 const onClickLink = () => uni.showToast({ title: '修改地址' })
 </script>

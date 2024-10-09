@@ -20,7 +20,14 @@
                 @click="handleNavigator(child.url)">
                 <view class="flex-1">{{ child.key }} {{ child.name }}</view>
                 <template v-if="!child.url">
-                    <view class="mr-2 font-normal text-neutral-500">未开始</view>
+                    <view
+                        class="mr-2 font-normal"
+                        :class="{
+                            'text-blue-500': child.statusText,
+                            'text-neutral-500': !child.statusText,
+                        }">
+                        {{ child.statusText || '未开始' }}
+                    </view>
                 </template>
                 <van-icon name="arrow"></van-icon>
             </view>
@@ -128,7 +135,7 @@ const list = ref([
             { key: 'Pagination', name: '分页', url: '' },
             { key: 'Sidebar', name: '侧边导航', url: '' },
             { key: 'Tab', name: '标签页', url: '' },
-            { key: 'Tabbar', name: '标签栏', url: '' },
+            { key: 'Tabbar', name: '标签栏', url: '', statusText: '开发中' },
             { key: 'TreeSelect', name: '分类选择', url: '' },
         ],
     },

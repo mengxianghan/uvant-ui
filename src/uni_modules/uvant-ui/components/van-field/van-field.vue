@@ -59,10 +59,10 @@
                             :fixed="fixed"
                             @focus="onFocus"
                             @blur="onBlur"
-                            @linechange="onLinechange"
+                            @linechange="onLineChange"
                             @input="onInput"
                             @confirm="onConfirm"
-                            @keyboardheightchange="onKeyboardheightchange"></textarea>
+                            @keyboardheightchange="onKeyboardHeightChange"></textarea>
                     </template>
                     <!-- input -->
                     <template v-else>
@@ -103,8 +103,8 @@
                             @focus="onFocus"
                             @blur="onBlur"
                             @confirm="onConfirm"
-                            @keyboardheightchange="onKeyboardheightchange"
-                            @nicknamereview="onNicknamereview" />
+                            @keyboardheightchange="onKeyboardHeightChange"
+                            @nicknamereview="onNicknameReview" />
                     </template>
 
                     <!-- 清除按钮 -->
@@ -448,15 +448,15 @@ function onConfirm(e) {
     emits('confirm', e)
 }
 
-function onKeyboardheightchange(e) {
+function onKeyboardHeightChange(e) {
     emits('keyboardheightchange', e)
 }
 
-function onLinechange(e) {
+function onLineChange(e) {
     emits('linechange', e)
 }
 
-function onNicknamereview(e) {
+function onNicknameReview(e) {
     emits('nicknamereview', e)
 }
 </script>

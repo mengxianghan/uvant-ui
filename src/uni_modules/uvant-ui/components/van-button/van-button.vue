@@ -28,9 +28,11 @@
                     </view>
                 </template>
 
-                <view class="van-button__text">
-                    <slot>{{ text }}</slot>
-                </view>
+                <template v-if="cpHasText">
+                    <view class="van-button__text">
+                        <slot>{{ text }}</slot>
+                    </view>
+                </template>
 
                 <template v-if="'right' === iconPosition && cpHasIcon">
                     <view class="van-button__icon">
@@ -45,8 +47,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { isDef } from '../utils'
+import { computed, useSlots } from 'vue'
+import { isEmpty } from '../utils'
 
 const props = defineProps({
     type: { type: String, default: 'default' },
@@ -67,6 +69,8 @@ const props = defineProps({
     loadingType: { type: String, default: 'circular' },
 })
 const emits = defineEmits(['click'])
+
+const slots = useSlots()
 
 const cpClass = computed(() => {
     const { type, size, plain, square, round, hairline, block, disabled } = props
@@ -116,7 +120,10 @@ const cpHasLoadingText = computed(() => {
     return loadingText
 })
 const cpHasIcon = computed(() => {
-    return isDef(props.icon) && props.icon !== ''
+    return !isEmpty(props.icon)
+})
+const cpHasText = computed(() => {
+    return !isEmpty(props.text) || slots.default
 })
 
 function handleClick(e) {

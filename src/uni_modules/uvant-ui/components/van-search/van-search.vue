@@ -106,6 +106,7 @@ const emits = defineEmits([
     'clickRightIcon',
     'clear',
     'cancel',
+    'change',
 ])
 
 const modelValue = defineModel('modelValue', { type: [String, Number] })

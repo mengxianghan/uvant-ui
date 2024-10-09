@@ -41,6 +41,7 @@ $van-submit-bar-padding: var(--van-submit-bar-padding, 0 $van-padding-md);
     }
 
     &__tip-icon {
+        display: inline-block;
         margin-right: $van-padding-base;
         font-size: $van-submit-bar-tip-icon-size;
         vertical-align: middle;

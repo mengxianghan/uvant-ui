@@ -1,0 +1,35 @@
+html {
+    -webkit-tap-highlight-color: transparent;
+}
+
+body,
+page {
+    font-family: var(--van-base-font);
+}
+
+navigator {
+    text-decoration: none;
+}
+
+input,
+uni-input,
+button,
+uni-button,
+textarea,
+uni-textarea {
+    color: inherit;
+    font: inherit;
+}
+
+navigator,
+input,
+uni-input,
+button,
+uni-button,
+textarea,
+uni-textarea,
+[class*='van-'] {
+    &:focus {
+        outline: none;
+    }
+}

@@ -1,16 +1,77 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+    "pages": [
+        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+            "path": "pages/home/index",
+            "style": {
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/component/button",
+            "style": {
+                "navigationBarTitleText": "Button"
+            }
+        },
+        {
+            "path": "pages/component/cell",
+            "style": {
+                "navigationBarTitleText": "Cell"
+            }
+        },
+        {
+            "path": "pages/component/icon",
+            "style": {
+                "navigationBarTitleText": "Icon"
+            }
+        },
+        {
+            "path": "pages/component/field",
+            "style": {
+                "navigationBarTitleText": "Field"
+            }
+        },
+        {
+            "path": "pages/component/loading",
+            "style": {
+                "navigationBarTitleText": "Loading"
+            }
+        },
+        {
+            "path": "pages/component/badge",
+            "style": {
+                "navigationBarTitleText": "Badge"
+            }
+        },
+        {
+            "path": "pages/component/circle",
+            "style": {
+                "navigationBarTitleText": "Circle"
+            }
+        },
+        {
+            "path": "pages/component/tag",
+            "style": {
+                "navigationBarTitleText": "Tag"
+            }
+        },
+        {
+            "path": "pages/component/action-bar",
+            "style": {
+                "navigationBarTitleText": "ActionBar"
+            }
+        },
+        {
+            "path": "pages/component/submit-bar",
+            "style": {
+                "navigationBarTitleText": "SubmitBar"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "vant uniapp",
+        "navigationBarBackgroundColor": "#fff",
+        "backgroundColor": "#f7f8fa"
+    }
 }

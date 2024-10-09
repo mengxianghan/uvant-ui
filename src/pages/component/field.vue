@@ -42,7 +42,7 @@
                 <!-- 输入密码 -->
                 <van-field
                     v-model="password"
-                    type="password"
+                    password
                     label="密码"
                     placeholder="请输入密码" />
             </van-cell-group>

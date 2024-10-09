@@ -4,7 +4,7 @@
         :dot="dot"
         :badge="badge"
         :badge-props="badgeProps">
-        <text
+        <view
             :class="cpClass"
             :style="cpStyle"
             @click="handleClick">
@@ -14,7 +14,7 @@
                     :style="cpImageStyle"
                     :src="name" />
             </template>
-        </text>
+        </view>
     </icon-wrap>
 </template>
 

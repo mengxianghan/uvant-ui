@@ -8,9 +8,9 @@
             <template v-if="cpHasTip">
                 <view class="van-submit-bar__tip">
                     <template v-if="cpHasTipIcon">
-                        <text class="van-submit-bar__tip-icon">
+                        <view class="van-submit-bar__tip-icon">
                             <van-icon :name="tipIcon"></van-icon>
-                        </text>
+                        </view>
                     </template>
                     <template v-if="tip">
                         <text class="van-submit-bar__tip-text">{{ tip }}</text>

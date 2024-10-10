@@ -25,7 +25,7 @@
                     @click="handleInput">
                     <view class="van-field__body">
                         <input
-                            :value="modelValue"
+                            v-model="modelValue"
                             :disabled="disabled"
                             :placeholder="placeholder"
                             :id="id"
@@ -76,6 +76,7 @@
 <script setup>
 import { computed, useSlots, ref } from 'vue'
 import { isEmpty } from '../utils'
+import { debounce } from 'lodash-es'
 
 const props = defineProps({
     label: String,
@@ -95,6 +96,8 @@ const props = defineProps({
     inputAlign: { type: String, validator: (value) => ['left', 'center', 'right'].includes(value) },
     leftIcon: { type: String, default: 'search' },
     rightIcon: String,
+    formatter: { type: Function, default: (val) => val },
+    formatTrigger: { type: String, default: 'onChange', validator: (value) => ['onChange', 'onBlur'].includes(value) },
 })
 
 const emits = defineEmits([
@@ -171,6 +174,16 @@ const cpHasRightIcon = computed(() => {
     return !isEmpty(props.rightIcon) || slots.rightIcon
 })
 
+const onInput = debounce(() => {
+    const { formatTrigger, formatter } = props
+
+    if ('onChange' === formatTrigger) {
+        modelValue.value = formatter(modelValue.value)
+    }
+
+    emits('change', modelValue.value)
+}, 10)
+
 function handleCancel() {
     emits('cancel')
 }
@@ -192,20 +205,22 @@ function handleClear() {
     emits('clear')
 }
 
-function onInput(e) {
-    modelValue.value = e.detail.value
-    emits('change', e.detail.value)
-}
-
 function onFocus(e) {
     isFocus.value = true
     emits('focus', e)
 }
 
 function onBlur(e) {
+    const { formatTrigger, formatter } = props
+
     setTimeout(() => {
         isFocus.value = false
     }, 5)
+
+    if ('onBlur' === formatTrigger) {
+        modelValue.value = formatter(modelValue.value)
+    }
+
     emits('blur', e)
 }
 

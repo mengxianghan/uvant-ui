@@ -5,7 +5,8 @@
             :body-style="{ padding: 0 }">
             <van-search
                 v-model="value"
-                placeholder="请输入搜索关键词" />
+                placeholder="请输入搜索关键词"
+                :formatter="formatter" />
         </demo-block>
 
         <demo-block
@@ -71,6 +72,7 @@ const value = ref('')
 
 const onSearch = (val) => uni.showToast({ title: val, icon: 'none' })
 const onCancel = () => uni.showToast({ title: '取消' })
+const formatter = (val) => val.replace(/\d/g, '')
 </script>
 
 <style lang="scss" scoped></style>

@@ -5,7 +5,7 @@
   "description": "vant-uniapp",
   "keywords": [
     "vant-uniapp"
-],
+  ],
   "repository": "",
   "engines": {
     "HBuilderX": "^3.1.0"
@@ -79,5 +79,8 @@
         }
       }
     }
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
   }
 }

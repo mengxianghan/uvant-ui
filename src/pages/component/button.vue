@@ -133,13 +133,11 @@
         </demo-block>
 
         <demo-block title="块级元素">
-            <view class="flex flex-wrap gap-2">
-                <van-button
-                    type="primary"
-                    block
-                    >块级元素</van-button
-                >
-            </view>
+            <van-button
+                type="primary"
+                block>
+                块级元素
+            </van-button>
         </demo-block>
 
         <demo-block title="自定义颜色">

@@ -134,6 +134,24 @@
         </demo-block>
 
         <demo-block
+            title="格式化输入内容"
+            :body-style="{ padding: 0 }">
+            <van-cell-group inset>
+                <van-field
+                    v-model="value1"
+                    :formatter="formatter"
+                    label="文本"
+                    placeholder="在输入时执行格式化" />
+                <van-field
+                    v-model="value2"
+                    :formatter="formatter"
+                    label="文本"
+                    format-trigger="onBlur"
+                    placeholder="在失焦时执行格式化" />
+            </van-cell-group>
+        </demo-block>
+
+        <demo-block
             title="高度自适应"
             :body-style="{ padding: 0 }">
             <van-cell-group inset>
@@ -221,6 +239,8 @@ const username = ref('')
 const phone = ref('')
 const sms = ref('')
 const message = ref('')
+
+const formatter = (value) => value.replace(/\d/g, '')
 </script>
 
 <style lang="scss" scoped></style>

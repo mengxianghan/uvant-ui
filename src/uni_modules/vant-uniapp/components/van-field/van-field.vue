@@ -32,12 +32,11 @@
                     <!-- textarea -->
                     <template v-if="'textarea' === type">
                         <textarea
-                            class="van-field__control"
+                            v-model="modelValue"
                             :class="cpControlClass"
                             :style="cpTextareaStyle"
                             :placeholder-class="cpPlaceholderClass"
                             :name="name"
-                            :value="modelValue"
                             :placeholder="placeholder"
                             :disabled="disabled"
                             :maxlength="maxlength"
@@ -57,6 +56,7 @@
                             :adjust-keyboard-to="adjustKeyBoardTo"
                             :show-confirm-bar="showConfirmBar"
                             :fixed="fixed"
+                            class="van-field__control"
                             @focus="onFocus"
                             @blur="onBlur"
                             @linechange="onLineChange"
@@ -67,10 +67,9 @@
                     <!-- input -->
                     <template v-else>
                         <input
-                            class="van-field__control"
+                            v-model="modelValue"
                             :placeholder-class="cpPlaceholderClass"
                             :class="cpControlClass"
-                            :value="modelValue"
                             :name="name"
                             :type="type"
                             :password="password"
@@ -99,6 +98,7 @@
                             :controlled="controlled"
                             :always-system="alwaysSystem"
                             :inputmode="inputmode"
+                            class="van-field__control"
                             @input="onInput"
                             @focus="onFocus"
                             @blur="onBlur"
@@ -164,6 +164,7 @@
 <script setup>
 import { computed, ref, useSlots } from 'vue'
 import { isEmpty, addUnit } from '../utils'
+import { debounce } from 'lodash-es'
 
 const props = defineProps({
     label: String,
@@ -250,6 +251,8 @@ const props = defineProps({
     },
     adjustKeyBoardTo: { type: String, default: 'bottom', validator: (value) => ['cursor', 'bottom'].includes(value) },
     password: { type: Boolean, default: false },
+    formatter: { type: Function, default: (val) => val },
+    formatTrigger: { type: String, default: 'onChange', validator: (value) => ['onChange', 'onBlur'].includes(value) },
 })
 const emits = defineEmits([
     'input',
@@ -410,6 +413,16 @@ const cpHasWordLimit = computed(() => {
     return !isEmpty(maxlength) && showWordLimit
 })
 
+const onInput = debounce(() => {
+    const { formatTrigger, formatter } = props
+
+    if ('onChange' === formatTrigger) {
+        modelValue.value = formatter(modelValue.value)
+    }
+    emits('input', modelValue.value)
+    emits('change', modelValue.value)
+}, 10)
+
 function handleLeftIcon(e) {
     emits('clickLeftIcon', e)
 }
@@ -430,17 +443,17 @@ function onFocus(e) {
 }
 
 function onBlur(e) {
+    const { formatter, formatTrigger } = props
+
     setTimeout(() => {
         isFocus.value = false
     }, 5)
 
-    emits('blur', e)
-}
+    if ('onBlur' === formatTrigger) {
+        modelValue.value = formatter(modelValue.value)
+    }
 
-function onInput(e) {
-    modelValue.value = e.detail.value
-    emits('input', e)
-    emits('change', e)
+    emits('blur', e)
 }
 
 function onConfirm(e) {

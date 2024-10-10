@@ -1,5 +1,5 @@
 <template>
-    <template v-if="show">
+    <template v-if="cpShow">
         <van-badge
             v-bind="badgeProps"
             :dot="dot"
@@ -13,11 +13,18 @@
 </template>
 
 <script setup>
-defineProps({
-    show: { type: Boolean, default: false },
+import { computed } from 'vue'
+import { isDef, isObject } from '../utils'
+
+const props = defineProps({
     dot: { type: Boolean, default: false },
     badge: [Number, String],
     badgeProps: Object,
+})
+
+const cpShow = computed(() => {
+    const { dot, badge, badgeProps } = props
+    return dot || isDef(badge) || isObject(badgeProps)
 })
 </script>
 

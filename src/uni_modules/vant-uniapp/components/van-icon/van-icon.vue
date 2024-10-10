@@ -1,6 +1,5 @@
 <template>
-    <icon-wrap
-        :show="cpHasBadge"
+    <vc-badge
         :dot="dot"
         :badge="badge"
         :badge-props="badgeProps">
@@ -15,13 +14,12 @@
                     :src="name" />
             </template>
         </view>
-    </icon-wrap>
+    </vc-badge>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { addUnit, isDef, isObject } from '../utils'
-import IconWrap from './icon-wrap.vue'
+import { addUnit } from '../utils'
 
 const props = defineProps({
     name: String,
@@ -34,10 +32,6 @@ const props = defineProps({
 })
 const emits = defineEmits(['click'])
 
-const cpHasBadge = computed(() => {
-    const { dot, badge, badgeProps } = props
-    return dot || isDef(badge) || isObject(badgeProps)
-})
 const cpIsImage = computed(() => props.name?.includes('/'))
 const cpClass = computed(() => {
     const { classPrefix, name } = props

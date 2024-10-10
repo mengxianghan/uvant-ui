@@ -21,4 +21,8 @@ $van-action-bar-height: var(--van-action-bar-height, 50px);
     :deep(van-action-bar-button) {
         flex: 1;
     }
+
+    :deep(van-action-bar-icon) {
+        height: 100%;
+    }
 }

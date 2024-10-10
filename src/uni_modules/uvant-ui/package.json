@@ -1,10 +1,10 @@
 {
-  "id": "vant-uniapp",
-  "displayName": "vant-uniapp",
+  "id": "uvant-ui",
+  "displayName": "uvant-ui",
   "version": "1.0.0",
-  "description": "vant-uniapp",
+  "description": "uvant-ui",
   "keywords": [
-    "vant-uniapp"
+    "uvant-ui"
   ],
   "repository": "",
   "engines": {

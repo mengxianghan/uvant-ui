@@ -5,7 +5,7 @@
                 class="w-8 h-8"
                 src="/static/logo.png"
                 mode="scaleToFill" />
-            <view class="text-3xl ml-4">Vant uniapp</view>
+            <view class="text-3xl ml-4">uvant ui</view>
         </view>
         <view class="text-neutral-400 pl-6 mt-4 mb-8 text-sm">轻量、可靠的 uniapp 组件库</view>
 

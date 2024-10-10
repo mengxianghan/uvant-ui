@@ -34,6 +34,12 @@
 			}
 		},
 		{
+			"path": "pages/component/image",
+			"style": {
+				"navigationBarTitleText": "Image"
+			}
+		},
+		{
 			"path": "pages/component/space",
 			"style": {
 				"navigationBarTitleText": "Space"

@@ -46,7 +46,7 @@ const list = ref([
             { key: 'Button', name: '按钮', url: '/pages/component/button' },
             { key: 'Cell', name: '单元格', url: '/pages/component/cell' },
             { key: 'Icon', name: '图标', url: '/pages/component/icon' },
-            { key: 'Image', name: '图片', url: '' },
+            { key: 'Image', name: '图片', url: '/pages/component/image' },
             { key: 'Layout', name: '布局', url: '' },
             { key: 'Popup', name: '弹出层', url: '' },
             { key: 'Space', name: '间距', url: '/pages/component/space' },

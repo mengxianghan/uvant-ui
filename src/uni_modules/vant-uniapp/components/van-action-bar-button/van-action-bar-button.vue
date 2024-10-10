@@ -15,7 +15,6 @@
 
 <script setup>
 import { computed, getCurrentInstance, inject } from 'vue'
-// import { head, last } from 'lodash-es'
 
 const props = defineProps({
     text: String,

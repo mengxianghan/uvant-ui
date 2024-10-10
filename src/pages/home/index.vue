@@ -135,7 +135,7 @@ const list = ref([
             { key: 'Pagination', name: '分页', url: '' },
             { key: 'Sidebar', name: '侧边导航', url: '' },
             { key: 'Tab', name: '标签页', url: '' },
-            { key: 'Tabbar', name: '标签栏', url: '', statusText: '开发中' },
+            { key: 'Tabbar', name: '标签栏', url: '/pages/component/tabbar' },
             { key: 'TreeSelect', name: '分类选择', url: '' },
         ],
     },

@@ -3,7 +3,9 @@
         <demo-block
             title="基础用法"
             :body-style="{ padding: 0 }">
-            <van-action-bar :fixed="false">
+            <van-action-bar
+                :fixed="false"
+                :safe-area-inset-bottom="false">
                 <van-action-bar-icon
                     icon="chat-o"
                     text="客服"
@@ -26,7 +28,9 @@
         <demo-block
             title="徽标提示"
             :body-style="{ padding: 0 }">
-            <van-action-bar :fixed="false">
+            <van-action-bar
+                :fixed="false"
+                :safe-area-inset-bottom="false">
                 <van-action-bar-icon
                     icon="chat-o"
                     text="客服"
@@ -51,7 +55,9 @@
         <demo-block
             title="自定义图标颜色"
             :body-style="{ padding: 0 }">
-            <van-action-bar :fixed="false">
+            <van-action-bar
+                :fixed="false"
+                :safe-area-inset-bottom="false">
                 <van-action-bar-icon
                     icon="chat-o"
                     text="客服"
@@ -75,7 +81,9 @@
         <demo-block
             title="自定义按钮颜色"
             :body-style="{ padding: 0 }">
-            <van-action-bar :fixed="false">
+            <van-action-bar
+                :fixed="false"
+                :safe-area-inset-bottom="false">
                 <van-action-bar-icon
                     icon="chat-o"
                     text="客服" />

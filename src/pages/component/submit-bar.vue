@@ -6,6 +6,7 @@
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
+                :safe-area-inset-bottom="false"
                 button-text="提交订单"
                 @submit="onSubmit" />
         </demo-block>
@@ -16,6 +17,7 @@
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
+                :safe-area-inset-bottom="false"
                 disabled
                 button-text="提交订单"
                 tip="你的收货地址不支持配送"
@@ -29,6 +31,7 @@
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
+                :safe-area-inset-bottom="false"
                 loading
                 button-text="提交订单"
                 @submit="onSubmit" />
@@ -40,6 +43,7 @@
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
+                :safe-area-inset-bottom="false"
                 button-text="提交订单"
                 @submit="onSubmit">
                 <label><checkbox class="scale-75"></checkbox>全选</label>

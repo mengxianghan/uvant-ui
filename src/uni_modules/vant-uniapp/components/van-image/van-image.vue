@@ -2,7 +2,8 @@
     <div
         class="van-image"
         :class="cpClass"
-        :style="cpStyle">
+        :style="cpStyle"
+        @click="handleClick">
         <image
             :src="src"
             :mode="fit"
@@ -83,6 +84,7 @@ const props = defineProps({
     iconPrefix: String,
     webp: { type: Boolean, default: false },
 })
+const emits = defineEmits(['click', 'load', 'error'])
 
 const loading = ref(true)
 const error = ref(false)
@@ -113,14 +115,20 @@ const cpShowError = computed(() => {
     return error.value && props.showError
 })
 
-function onLoad() {
-    loading.value = false
-    error.value = false
+function handleClick(e) {
+    emits('click', e)
 }
 
-function onError() {
+function onLoad(e) {
+    loading.value = false
+    error.value = false
+    emits('load', e)
+}
+
+function onError(e) {
     loading.value = false
     error.value = true
+    emits('error', e)
 }
 </script>
 

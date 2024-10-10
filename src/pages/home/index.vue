@@ -1,11 +1,11 @@
 <template>
-    <view class="px-5 pb-5 pt-12 min-h-svh bg-white">
+    <view class="container">
         <view class="flex pl-6">
             <image
                 class="w-8 h-8"
                 src="/static/logo.png"
                 mode="scaleToFill" />
-            <view class="text-3xl ml-4">UVant UI</view>
+            <view class="text-3xl ml-4">Vant uniapp</view>
         </view>
         <view class="text-neutral-400 pl-6 mt-4 mb-8 text-sm">轻量、可靠的 uniapp 组件库</view>
 
@@ -162,4 +162,16 @@ function handleNavigator(url) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+    @apply px-5 pb-6 min-h-svh bg-white;
+
+    /* #ifdef H5 */
+    @apply pt-10;
+    /* #endif */
+
+    /* #ifndef H5 */
+    @apply pt-8;
+    /* #endif */
+}
+</style>

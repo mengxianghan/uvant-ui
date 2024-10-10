@@ -1,12 +1,7 @@
 import { getCurrentInstance, onMounted, onUpdated, ref } from 'vue'
 import { uuid } from '../utils'
 
-/**
- * @param {object} options
- * @param {boolean} options.show
- */
-export default (options = {}) => {
-    const { show = false } = options
+export default () => {
     const instance = getCurrentInstance()
     const placeholderClassName = ref(`van-placeholder--${uuid()}`)
     const placeholderHeight = ref(0)
@@ -20,12 +15,11 @@ export default (options = {}) => {
     })
 
     function init() {
-        if (!show) return
-
         uni.createSelectorQuery()
             .in(instance.proxy)
             .select(`.${placeholderClassName.value}`)
             .boundingClientRect((data) => {
+                if (!data) return
                 placeholderHeight.value = data.height
             })
             .exec()

@@ -79,7 +79,7 @@ const props = defineProps({
 const emits = defineEmits(['submit'])
 
 const slots = useSlots()
-const { placeholderClassName, placeholderHeight } = usePlaceholder({ show: props.placeholder })
+const { placeholderClassName, placeholderHeight } = usePlaceholder()
 
 const integer = ref(0)
 const decimal = ref()

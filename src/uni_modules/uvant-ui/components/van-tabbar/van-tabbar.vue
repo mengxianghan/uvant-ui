@@ -34,9 +34,9 @@ const { placeholderClassName, placeholderHeight } = usePlaceholder()
 const itemList = ref([])
 
 const cpClass = computed(() => {
-    const { fixed, border, safeAreaInsetBottom } = props
+    const { fixed, border, safeAreaInsetBottom, placeholder } = props
     const classNames = {
-        [`${placeholderClassName.value}`]: true,
+        [`${placeholderClassName.value}`]: placeholder,
         'van-tabbar--fixed': fixed,
         'van-hairline--top-bottom': border,
         'van-safe-area-bottom': safeAreaInsetBottom,

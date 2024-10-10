@@ -20,7 +20,7 @@ const props = defineProps({
     fixed: { type: Boolean, default: true },
 })
 
-const { placeholderClassName, placeholderHeight } = usePlaceholder({ show: props.placeholder })
+const { placeholderClassName, placeholderHeight } = usePlaceholder()
 
 const children = ref([])
 

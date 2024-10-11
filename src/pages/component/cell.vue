@@ -69,13 +69,17 @@
 
         <demo-block
             title="分组标题"
-            :body-style="{ padding: 0 }">
-            <van-cell-group title="分组1">
+            :body-style="{ padding: 0, '--van-cell-group-background': 'transparent' }">
+            <van-cell-group
+                title="分组1"
+                :border="false">
                 <van-cell
                     title="单元格"
                     value="内容" />
             </van-cell-group>
-            <van-cell-group title="分组2">
+            <van-cell-group
+                title="分组2"
+                :border="false">
                 <van-cell
                     title="单元格"
                     value="内容" />

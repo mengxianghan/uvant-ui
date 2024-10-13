@@ -104,6 +104,12 @@
             "style": {
                 "navigationBarTitleText": "Tab"
             }
+        },
+        {
+            "path": "pages/component/sticky",
+            "style": {
+                "navigationBarTitleText": "Sticky"
+            }
         }
     ],
     "globalStyle": {

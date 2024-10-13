@@ -116,7 +116,7 @@ const list = ref([
             { key: 'RollingText', name: '翻滚文本动效', url: '' },
             { key: 'Skeleton', name: '骨架屏', url: '' },
             { key: 'Steps', name: '步骤条', url: '' },
-            { key: 'Sticky', name: '粘性布局', url: '' },
+            { key: 'Sticky', name: '粘性布局', url: '/pages/component/sticky' },
             { key: 'Swipe', name: '轮播', url: '' },
             { key: 'Tag', name: '标签', url: '/pages/component/tag' },
             { key: 'TextEllipsis', name: '文本省略', url: '' },

@@ -7,8 +7,7 @@
             :scroll-left="scrollLeft"
             :show-scrollbar="false"
             :class="cpWrapClass"
-            :id="scrollViewId"
-            @scroll="onScroll">
+            :id="scrollViewId">
             <view
                 class="van-tabs__nav"
                 :class="cpNavClass">
@@ -199,10 +198,6 @@ async function handleClick(record, index) {
     active.value = record.value
     emits('click', record)
     emits('change', active.value, { record })
-}
-
-function onScroll(e) {
-    scrollLeft.value = e.detail.scrollLeft
 }
 
 /**

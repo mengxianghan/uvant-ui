@@ -98,6 +98,12 @@
             "style": {
                 "navigationBarTitleText": "SubmitBar"
             }
+        },
+        {
+            "path": "pages/component/tab",
+            "style": {
+                "navigationBarTitleText": "Tab"
+            }
         }
     ],
     "globalStyle": {

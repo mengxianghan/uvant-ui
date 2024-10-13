@@ -156,3 +156,24 @@ export function getRect(context, selector) {
             .exec()
     })
 }
+
+export function mergeClassNames(...args) {
+    const classNames = []
+    args.forEach((item) => {
+        if (item && typeof item === 'string') {
+            classNames.push(item)
+        }
+        if (Array.isArray(item)) {
+            classNames.push(...mergeClassNames(item))
+        }
+        if (isObject(item)) {
+            for (const key in item) {
+                if (item[key]) {
+                    classNames.push(key)
+                }
+            }
+        }
+    })
+
+    return classNames.join(' ')
+}

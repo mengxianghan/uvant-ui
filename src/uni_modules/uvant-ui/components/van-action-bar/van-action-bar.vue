@@ -1,7 +1,7 @@
 <template>
     <van-placeholder
-        :show="placeholder"
-        :height="placeholderHeight">
+        :placeholder="placeholder"
+        :position="fixed && 'bottom'">
         <view
             class="van-action-bar"
             :class="cpClass">
@@ -12,7 +12,6 @@
 
 <script setup>
 import { computed, provide, ref } from 'vue'
-import usePlaceholder from '../hooks/usePlaceholder'
 
 const props = defineProps({
     safeAreaInsetBottom: { type: Boolean, default: true },
@@ -20,16 +19,12 @@ const props = defineProps({
     fixed: { type: Boolean, default: true },
 })
 
-const { placeholderClassName, placeholderHeight } = usePlaceholder()
-
 const children = ref([])
 
 const cpClass = computed(() => {
-    const { placeholder, safeAreaInsetBottom, fixed } = props
+    const { safeAreaInsetBottom } = props
     const classNames = {
-        'van-action-bar--fixed': fixed,
         'van-safe-area-bottom': safeAreaInsetBottom,
-        [`${placeholderClassName.value}`]: placeholder,
     }
 
     return classNames

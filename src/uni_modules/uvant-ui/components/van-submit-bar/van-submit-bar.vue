@@ -1,7 +1,7 @@
 <template>
     <van-placeholder
-        :show="placeholder"
-        :height="placeholderHeight">
+        :placeholder="placeholder"
+        :position="fixed && 'bottom'">
         <view
             class="van-submit-bar"
             :class="cpClass">
@@ -56,7 +56,6 @@
 <script setup>
 import { computed, useSlots, watchEffect, ref } from 'vue'
 import { isNumber } from '../utils'
-import usePlaceholder from '../hooks/usePlaceholder'
 
 const props = defineProps({
     price: Number,
@@ -79,7 +78,6 @@ const props = defineProps({
 const emits = defineEmits(['submit'])
 
 const slots = useSlots()
-const { placeholderClassName, placeholderHeight } = usePlaceholder()
 
 const integer = ref(0)
 const decimal = ref()
@@ -95,11 +93,10 @@ const cpHasTipIcon = computed(() => props.tipIcon)
 const cpHasTip = computed(() => props.tip || slots.tip)
 const cpHasPrice = computed(() => isNumber(props.price))
 const cpClass = computed(() => {
-    const { safeAreaInsetBottom, placeholder, fixed } = props
+    const { safeAreaInsetBottom, fixed } = props
     const classNames = {
         'van-submit-bar--fixed': fixed,
         'van-safe-area-bottom': safeAreaInsetBottom,
-        [`${placeholderClassName.value}`]: placeholder,
     }
 
     return classNames

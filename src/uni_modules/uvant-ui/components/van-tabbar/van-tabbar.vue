@@ -1,19 +1,14 @@
 <template>
-    <van-placeholder
-        :show="placeholder"
-        :height="placeholderHeight">
-        <view
-            class="van-tabbar"
-            :class="cpClass">
-            <slot></slot>
-        </view>
-    </van-placeholder>
+    <view
+        class="van-tabbar"
+        :class="cpClass">
+        <slot></slot>
+    </view>
 </template>
 
 <script setup>
 import { computed, provide, ref } from 'vue'
 import { findIndex } from 'lodash-es'
-import usePlaceholder from '../hooks/usePlaceholder'
 
 const props = defineProps({
     fixed: { type: Boolean, default: true },
@@ -29,14 +24,11 @@ const props = defineProps({
 const modelValue = defineModel({ type: [Number, String] })
 const emits = defineEmits(['change'])
 
-const { placeholderClassName, placeholderHeight } = usePlaceholder()
-
 const itemList = ref([])
 
 const cpClass = computed(() => {
-    const { fixed, border, safeAreaInsetBottom, placeholder } = props
+    const { fixed, border, safeAreaInsetBottom } = props
     const classNames = {
-        [`${placeholderClassName.value}`]: placeholder,
         'van-tabbar--fixed': fixed,
         'van-hairline--top-bottom': border,
         'van-safe-area-bottom': safeAreaInsetBottom,

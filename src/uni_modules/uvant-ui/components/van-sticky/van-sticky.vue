@@ -1,42 +1,145 @@
 <template>
-    <template v-if="position">
-        <view
-            class="van-sticky"
-            :class="{
-                'van-sticky--fixed': position,
-            }"
-            :style="cpStyle">
+    <view
+        class="van-sticky"
+        :class="cpClass"
+        :style="cpStyle">
+        <view :style="cpInnerStyle">
             <slot></slot>
         </view>
-    </template>
-    <template v-else>
-        <slot></slot>
-    </template>
+    </view>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { addUnit } from '../utils'
+import { computed, getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
+import { addUnit, getRect, getSystemInfoSync } from '../utils'
+import { uniqueId } from 'lodash-es'
 
 const props = defineProps({
-    placeholder: { type: Boolean, default: false },
-    position: { type: String, validator: (value) => ['top', 'bottom'].includes(value) },
+    position: { type: String, default: 'top', validator: (value) => ['top', 'bottom'].includes(value) },
     offset: { type: [Number, String], default: 0 },
     zIndex: { type: [Number, String], default: 99 },
+    container: Function,
+    disabled: { type: Boolean, default: false },
+    pageScroll: { type: Function, default: () => {}, required: true },
 })
 
+const scrollTop = defineModel('scrollTop', { type: Number, default: null })
+
+const instance = getCurrentInstance()
+const stickySelector = ref(uniqueId('van-sticky-'))
+
+const state = reactive({
+    width: 0,
+    height: 0,
+    transform: 0,
+    fixed: false,
+})
+
+const cpIsTop = computed(() => props.position === 'top')
+const cpOffset = computed(() => {
+    const { offset } = props
+    const { windowTop, windowBottom = 0 } = getSystemInfoSync()
+    return cpIsTop.value ? offset + windowTop : offset + windowBottom
+})
+const cpClass = computed(() => {
+    return {
+        [`${stickySelector.value}`]: true,
+    }
+})
 const cpStyle = computed(() => {
-    const { position, offset, zIndex } = props
-    const style = {
-        zIndex,
+    if (!state.fixed) {
+        return
     }
 
-    if (position) {
-        style[`${position}`] = `calc(${addUnit(offset)} + var(--window-${position}))`
+    return {
+        height: state.fixed ? addUnit(state.height) : '',
+        zIndex: props.zIndex,
+    }
+})
+const cpInnerStyle = computed(() => {
+    const { zIndex, position } = props
+
+    if (!state.fixed) {
+        return
+    }
+
+    const style = {
+        zIndex,
+        [position]: addUnit(cpOffset.value),
+        width: addUnit(state.width),
+        height: addUnit(state.height),
+        position: 'fixed',
+    }
+
+    if (state.transform) {
+        style.transform = `translate3d(0, ${addUnit(state.transform)}, 0)`
     }
 
     return style
 })
+
+watch(
+    () => scrollTop.value,
+    (val) => {
+        onScroll({ scrollTop: val })
+    }
+)
+
+props.pageScroll((e) => {
+    onScroll({ scrollTop: e.scrollTop })
+})
+
+onMounted(() => {
+    onScroll()
+})
+
+async function onScroll({ scrollTop: _scrollTop } = {}) {
+    const { disabled } = props
+
+    if (disabled) {
+        state.fixed = false
+        state.transform = 0
+        return
+    }
+
+    scrollTop.value = _scrollTop || scrollTop.value
+
+    const rootRect = await getRect(instance.proxy, `.${stickySelector.value}`)
+    const containerRect = await getContainerRect()
+    const { windowTop = 0, screenHeight } = getSystemInfoSync()
+
+    state.width = rootRect.width
+    state.height = rootRect.height
+
+    if (cpIsTop.value) {
+        if (containerRect) {
+            const difference = containerRect.bottom - cpOffset.value - state.height + windowTop
+            state.fixed = cpOffset.value > rootRect.top + windowTop && containerRect.bottom > 0
+            state.transform = difference < 0 ? difference : 0
+        } else {
+            state.fixed = cpOffset.value > rootRect.top + windowTop
+        }
+    } else {
+        if (containerRect) {
+            const difference = screenHeight - containerRect.top - cpOffset.value - state.height - windowTop
+            state.fixed =
+                screenHeight - cpOffset.value < rootRect.bottom + windowTop && screenHeight > containerRect.top
+            state.transform = difference < 0 ? -difference : 0
+        } else {
+            state.fixed = screenHeight - cpOffset.value < rootRect.bottom + windowTop
+        }
+    }
+}
+
+function getContainerRect() {
+    const nodesRef = props.container?.()
+
+    if (!nodesRef) {
+        return Promise.resolve(null)
+    }
+
+    return new Promise((resolve) => nodesRef.boundingClientRect(resolve).exec())
+}
 </script>
 
 <style lang="scss" scoped>

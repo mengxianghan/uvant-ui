@@ -4,8 +4,8 @@
             <slot name="title">{{ title }}</slot>
         </view>
         <view
-            class="demo-block__body px-4"
-            :style="bodyStyle">
+            class="demo-block__body"
+            :class="{ 'px-4': card }">
             <slot></slot>
         </view>
     </view>
@@ -14,7 +14,7 @@
 <script setup>
 defineProps({
     title: String,
-    bodyStyle: [String, Object],
+    card: { type: Boolean, default: true },
 })
 </script>
 

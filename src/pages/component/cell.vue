@@ -2,7 +2,7 @@
     <view class="pb-8">
         <demo-block
             title="基础用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group>
                 <van-cell
                     title="单元格"
@@ -16,7 +16,7 @@
 
         <demo-block
             title="卡片风格"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-cell
                     title="单元格"
@@ -30,7 +30,7 @@
 
         <demo-block
             title="单元格大小"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell
                 title="单元格"
                 value="内容"
@@ -44,7 +44,7 @@
 
         <demo-block
             title="展示图标"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell
                 title="单元格"
                 icon="location-o" />
@@ -52,7 +52,7 @@
 
         <demo-block
             title="展示箭头"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell
                 title="单元格"
                 is-link />
@@ -88,7 +88,7 @@
 
         <demo-block
             title="使用插槽"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell
                 value="内容"
                 is-link>
@@ -113,7 +113,7 @@
 
         <demo-block
             title="垂直居中"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell
                 center
                 title="单元格"

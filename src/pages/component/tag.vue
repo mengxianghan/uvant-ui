@@ -2,7 +2,7 @@
     <view class="pb-8">
         <demo-block
             title="基础用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-cell
                     v-for="item in ['primary', 'success', 'danger', 'warning']"
@@ -17,7 +17,7 @@
 
         <demo-block
             title="样式风格"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-cell title="空心样式">
                     <template #value>
@@ -63,7 +63,7 @@
 
         <demo-block
             title="标签大小"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-cell title="小号标签">
                     <template #value>
@@ -93,7 +93,7 @@
 
         <demo-block
             title="自定义颜色"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-cell title="背景颜色">
                     <template #value>

@@ -2,7 +2,7 @@
     <view class="pb-8">
         <demo-block
             title="基础用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabbar
                 v-model="active"
                 :fixed="false"
@@ -32,7 +32,7 @@
 
         <demo-block
             title="通过名称匹配"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabbar
                 v-model="active1"
                 :fixed="false"
@@ -62,7 +62,7 @@
 
         <demo-block
             title="徽标提示"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabbar
                 v-model="active"
                 :fixed="false"
@@ -88,7 +88,7 @@
 
         <demo-block
             title="自定义图标"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabbar
                 v-model="active"
                 :fixed="false"
@@ -110,7 +110,7 @@
 
         <demo-block
             title="自定义颜色"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabbar
                 v-model="active"
                 :fixed="false"
@@ -126,7 +126,7 @@
 
         <demo-block
             title="监听切换事件"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabbar
                 v-model="active"
                 :fixed="false"

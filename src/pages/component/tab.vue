@@ -2,7 +2,7 @@
     <view class="pb-8">
         <demo-block
             title="基础用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active1"
                 :list="list1">
@@ -11,7 +11,7 @@
 
         <demo-block
             title="标签栏滚动"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active2"
                 :list="list2">
@@ -20,7 +20,7 @@
 
         <demo-block
             title="禁用标签"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active3"
                 :list="list3">
@@ -29,7 +29,7 @@
 
         <demo-block
             title="点击事件"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active4"
                 :list="list4"
@@ -39,7 +39,7 @@
 
         <demo-block
             title="收缩布局"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active2"
                 :list="list2"
@@ -49,7 +49,7 @@
 
         <demo-block
             title="自定义标签"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active5"
                 :list="list5">
@@ -64,7 +64,7 @@
 
         <demo-block
             title="异步切换"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-tabs
                 v-model:active="active1"
                 :list="list1"

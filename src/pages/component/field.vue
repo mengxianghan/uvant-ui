@@ -2,7 +2,7 @@
     <view class="pb-8">
         <demo-block
             title="基础用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <!-- 可以使用 CellGroup 作为容器 -->
             <van-cell-group inset>
                 <van-field
@@ -14,7 +14,7 @@
 
         <demo-block
             title="自定义类型"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <!-- 输入任意文本 -->
                 <van-field
@@ -50,7 +50,7 @@
 
         <demo-block
             title="禁用输入框"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     label="文本"
@@ -61,7 +61,7 @@
 
         <demo-block
             title="显示图标"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="value1"
@@ -80,7 +80,7 @@
 
         <demo-block
             title="必填星号"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="username"
@@ -97,7 +97,7 @@
 
         <demo-block
             title="错误提示"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="username"
@@ -114,7 +114,7 @@
 
         <demo-block
             title="插入按钮"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="sms"
@@ -135,7 +135,7 @@
 
         <demo-block
             title="格式化输入内容"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="value1"
@@ -153,7 +153,7 @@
 
         <demo-block
             title="高度自适应"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="message"
@@ -167,7 +167,7 @@
 
         <demo-block
             title="显示字数统计"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="message"
@@ -183,7 +183,7 @@
 
         <demo-block
             title="输入框内容对齐"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="value"
@@ -195,7 +195,7 @@
 
         <demo-block
             title="输入框文本位置"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-cell-group inset>
                 <van-field
                     v-model="value"

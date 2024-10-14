@@ -2,7 +2,7 @@
     <view class="pb-8">
         <demo-block
             title="基础用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
@@ -13,7 +13,7 @@
 
         <demo-block
             title="禁用状态"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
@@ -27,7 +27,7 @@
 
         <demo-block
             title="加载状态"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-submit-bar
                 :fixed="false"
                 :price="3050"
@@ -39,7 +39,7 @@
 
         <demo-block
             title="高级用法"
-            :body-style="{ padding: 0 }">
+            :card="false">
             <van-submit-bar
                 :fixed="false"
                 :price="3050"

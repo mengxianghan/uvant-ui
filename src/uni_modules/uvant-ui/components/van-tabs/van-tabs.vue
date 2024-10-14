@@ -50,11 +50,9 @@
 </template>
 
 <script setup>
-import { uniqueId } from 'lodash-es'
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
 import { addUnit, isEmpty, getRect } from '../utils'
-import { findIndex } from 'lodash-es'
-import { head } from 'lodash-es'
+import { findIndex, head, uniqueId } from 'lodash-es'
 
 const props = defineProps({
     list: { type: Array, default: () => [] },

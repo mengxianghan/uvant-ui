@@ -81,7 +81,9 @@
         <demo-block
             title="自定义按钮颜色"
             :card="false">
-            <van-action-bar :fixed="false">
+            <van-action-bar
+                :fixed="false"
+                :safe-area-inset-bottom="false">
                 <van-action-bar-icon
                     icon="chat-o"
                     text="客服" />

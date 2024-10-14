@@ -11,7 +11,7 @@
 
 <script setup>
 import { computed, getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
-import { addUnit, getRect, getSystemInfoSync } from '../utils'
+import { addUnit, getRect, getSystemInfoSync, isFunction } from '../utils'
 import { uniqueId } from 'lodash-es'
 
 const props = defineProps({
@@ -22,7 +22,7 @@ const props = defineProps({
     disabled: { type: Boolean, default: false },
     pageScroll: { type: Function, default: () => {}, required: true },
 })
-
+const emits = defineEmits(['scroll', 'change'])
 const scrollTop = defineModel('scrollTop', { type: Number, default: null })
 
 const instance = getCurrentInstance()
@@ -78,19 +78,24 @@ const cpInnerStyle = computed(() => {
     return style
 })
 
+watch([() => scrollTop.value, () => props.disabled, () => props.position], () => {
+    onScroll({ scrollTop: scrollTop.value })
+})
 watch(
-    () => scrollTop.value,
-    (val) => {
-        onScroll({ scrollTop: val })
+    () => state.fixed,
+    (value) => {
+        emits('change', value)
     }
 )
 
-props.pageScroll((e) => {
-    onScroll({ scrollTop: e.scrollTop })
-})
-
 onMounted(() => {
     onScroll()
+
+    if (isFunction(props.pageScroll)) {
+        props.pageScroll((e) => {
+            onScroll({ scrollTop: e.scrollTop })
+        })
+    }
 })
 
 async function onScroll({ scrollTop: _scrollTop } = {}) {
@@ -129,6 +134,8 @@ async function onScroll({ scrollTop: _scrollTop } = {}) {
             state.fixed = screenHeight - cpOffset.value < rootRect.bottom + windowTop
         }
     }
+
+    emits('scroll', { scrollTop, isFixed: state.fixed })
 }
 
 function getContainerRect() {

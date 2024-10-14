@@ -6,18 +6,17 @@
             :scroll-x="cpScrollable"
             :scroll-left="scrollLeft"
             :show-scrollbar="false"
-            :class="cpWrapClass"
-            :id="scrollViewId">
+            :class="cpWrapClass">
             <view
                 class="van-tabs__nav"
                 :class="cpNavClass">
                 <view
                     v-for="(item, index) in list"
                     :key="item.value"
-                    :id="[`${tabId}-${index}`]"
                     :class="{
                         'van-tab--active': item.value === active,
                         'van-tab--disabled': item.disabled,
+                        [`${tabSelector}-${index}`]: true,
                         ...cpTabClass,
                     }"
                     :style="{
@@ -42,7 +41,7 @@
                 </view>
                 <view
                     class="van-tabs__line"
-                    :id="lineId"
+                    :class="[lineSelector]"
                     :style="cpLineStyle"></view>
             </view>
         </scroll-view>
@@ -75,9 +74,9 @@ const active = defineModel('active', { type: [Number, String] })
 const emits = defineEmits(['click', 'change'])
 
 const instance = getCurrentInstance()
-const tabId = ref(uniqueId('van-tab-'))
-const lineId = ref(uniqueId('van-tab-line-'))
-const scrollViewId = ref(uniqueId('van-tabs-wrap-'))
+const tabSelector = ref(uniqueId('van-tab-'))
+const lineSelector = ref(uniqueId('van-tab-line-'))
+const scrollViewSelector = ref(uniqueId('van-tabs-wrap-'))
 const scrollLeft = ref(0)
 const lineOffsetLeft = ref(0)
 
@@ -85,6 +84,7 @@ const cpWrapClass = computed(() => {
     const className = {
         'van-hairline--top-bottom': props.border,
         'van-tabs__wrap--shrink': props.shrink,
+        [scrollViewSelector.value]: true,
     }
 
     return className
@@ -156,7 +156,7 @@ async function initialize() {
  */
 function getItemRect(start = 0, count = props.list.length) {
     const { list } = props
-    const queue = list.map((item, index) => getRect(instance.proxy, `#${tabId.value}-${index}`))
+    const queue = list.map((item, index) => getRect(instance.proxy, `.${tabSelector.value}-${index}`))
     return new Promise((resolve) => {
         Promise.all(queue).then((data) => {
             resolve(data.slice(start, start + count))
@@ -178,14 +178,14 @@ async function getItemRectWidth(start = 0, count = props.list.length) {
  * 获取下划线 DOMRect
  */
 async function getLineRect() {
-    return await getRect(instance.proxy, `#${lineId.value}`)
+    return await getRect(instance.proxy, `.${lineSelector.value}`)
 }
 
 /**
  * 获取菜单尺寸
  */
 async function getScrollViewRect() {
-    return await getRect(instance.proxy, `#${scrollViewId.value}`)
+    return await getRect(instance.proxy, `.${scrollViewSelector.value}`)
 }
 
 async function handleClick(record, index) {

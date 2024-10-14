@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
-import { computed, provide, ref } from 'vue'
-import { findIndex } from 'lodash-es'
+import { computed } from 'vue'
+import { useChildren } from '../composables'
 
 const props = defineProps({
     fixed: { type: Boolean, default: true },
@@ -24,7 +24,7 @@ const props = defineProps({
 const modelValue = defineModel({ type: [Number, String] })
 const emits = defineEmits(['change'])
 
-const itemList = ref([])
+const { linkChildren } = useChildren('van-tabbar')
 
 const cpClass = computed(() => {
     const { fixed, border, safeAreaInsetBottom } = props
@@ -45,28 +45,10 @@ async function onChange(val) {
     emits('change', modelValue.value)
 }
 
-function addItem(item) {
-    itemList.value.push(item)
-}
-
-function getIndex(item) {
-    return findIndex(itemList.value, { uid: item.uid })
-}
-
-function deleteItem(item) {
-    const index = getIndex(item)
-    if (index < 0) return
-    itemList.value.splice(index, 1)
-}
-
-provide('van-tabbar', {
-    active: computed(() => modelValue.value),
-    activeColor: computed(() => props.activeColor),
-    inactiveColor: computed(() => props.inactiveColor),
-    getIndex,
+linkChildren({
+    active: modelValue,
+    props,
     onChange,
-    addItem,
-    deleteItem,
 })
 </script>
 

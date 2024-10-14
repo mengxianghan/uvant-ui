@@ -19,7 +19,7 @@ export default {
 
 <script setup>
 import { computed } from 'vue'
-import { useParent } from '../hooks'
+import { useParent } from '../composables'
 
 defineProps({
     span: [Number, String],

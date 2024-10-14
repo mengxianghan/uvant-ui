@@ -14,7 +14,8 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, inject } from 'vue'
+import { computed } from 'vue'
+import { useParent, useExpose } from '../composables'
 
 const props = defineProps({
     text: String,
@@ -25,30 +26,39 @@ const props = defineProps({
     loading: { type: Boolean, default: false },
 })
 
-const instance = getCurrentInstance()
-const { setChildren, children } = inject('van-action-bar')
+const { parent, index } = useParent('van-action-bar')
+useExpose({ isButton: true })
 
-setChildren(instance)
+const cpIsFirst = computed(() => {
+    if (!parent) {
+        return false
+    }
+    const prev = parent.children[index.value - 1]
+    return !(prev && 'isButton' in prev)
+})
+
+const cpIsLast = computed(() => {
+    if (!parent) {
+        return false
+    }
+    const next = parent.children[index.value + 1]
+    return !(next && 'isButton' in next)
+})
+
+const cpIsOnlyOne = computed(() => {
+    if (!parent) {
+        return false
+    }
+    return parent.children.filter((item) => item.isButton).length === 1
+})
 
 const cpClass = computed(() => {
     const { type } = props
-    let firstInstance
-    let lastInstance
-    let isFirst
-    let isLast
-    const len = children.value.length
-
-    if (len > 1) {
-        firstInstance = children.value[0]
-        lastInstance = children.value[children.value.length - 1]
-        isFirst = firstInstance.uid === instance.uid
-        isLast = lastInstance.uid === instance.uid
-    }
 
     const className = {
-        'van-action-bar-button--first': isFirst,
-        'van-action-bar-button--last': isLast,
-        'van-action-bar-button--only-one': !isFirst && !isLast,
+        'van-action-bar-button--first': cpIsFirst.value && !cpIsOnlyOne.value,
+        'van-action-bar-button--last': cpIsLast.value && !cpIsOnlyOne.value,
+        'van-action-bar-button--only-one': cpIsOnlyOne.value,
         [`van-action-bar-button--${type}`]: true,
     }
 

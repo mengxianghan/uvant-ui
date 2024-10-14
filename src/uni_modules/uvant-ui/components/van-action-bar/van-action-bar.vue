@@ -12,7 +12,8 @@
 </template>
 
 <script setup>
-import { computed, provide, ref } from 'vue'
+import { computed } from 'vue'
+import { useChildren } from '../composables'
 
 const props = defineProps({
     safeAreaInsetBottom: { type: Boolean, default: true },
@@ -20,7 +21,7 @@ const props = defineProps({
     fixed: { type: Boolean, default: true },
 })
 
-const children = ref([])
+const { linkChildren } = useChildren('van-action-bar')
 
 const cpClass = computed(() => {
     const { safeAreaInsetBottom } = props
@@ -31,14 +32,7 @@ const cpClass = computed(() => {
     return classNames
 })
 
-function setChildren(child) {
-    children.value.push(child)
-}
-
-provide('van-action-bar', {
-    setChildren,
-    children: computed(() => children.value),
-})
+linkChildren()
 </script>
 
 <style lang="scss" scoped>

@@ -13,7 +13,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useChildren } from '../hooks'
+import { useChildren } from '../composables'
 
 const props = defineProps({
     gutter: [Number, String, Array],

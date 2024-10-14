@@ -25,7 +25,8 @@
 </template>
 
 <script setup>
-import { computed, inject, getCurrentInstance, onMounted, onBeforeUnmount } from 'vue'
+import { computed } from 'vue'
+import { useParent } from '../composables'
 
 const props = defineProps({
     name: [Number, String],
@@ -36,14 +37,13 @@ const props = defineProps({
     badgeProps: Object,
 })
 
-const { getIndex, active, activeColor, inactiveColor, addItem, deleteItem, onChange } = inject('van-tabbar', {})
-const instance = getCurrentInstance()
+const { parent, index } = useParent('van-tabbar')
 
 const cpKey = computed(() => {
-    return props.name || getIndex(instance)
+    return props.name || index.value
 })
 const cpIsActive = computed(() => {
-    return active.value === cpKey.value
+    return parent.active.value === cpKey.value
 })
 const cpClass = computed(() => {
     const classNames = {
@@ -55,28 +55,20 @@ const cpClass = computed(() => {
 const cpStyle = computed(() => {
     const style = {}
 
-    if (activeColor.value && cpIsActive.value) {
-        style.color = activeColor.value
+    if (parent.props.activeColor && cpIsActive.value) {
+        style.color = parent.props.activeColor
     }
 
-    if (inactiveColor.value && !cpIsActive.value) {
-        style.color = inactiveColor.value
+    if (parent.props.inactiveColor && !cpIsActive.value) {
+        style.color = parent.props.inactiveColor
     }
 
     return style
 })
 
-onMounted(() => {
-    addItem(instance)
-})
-
-onBeforeUnmount(() => {
-    deleteItem(instance)
-})
-
 function handleClick() {
     const { name } = props
-    onChange(name || getIndex(instance))
+    parent.onChange(name || index.value)
 }
 </script>
 

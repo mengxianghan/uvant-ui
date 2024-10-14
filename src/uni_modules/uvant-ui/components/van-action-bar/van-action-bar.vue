@@ -1,13 +1,14 @@
 <template>
-    <van-placeholder
+    <van-fixed
         :placeholder="placeholder"
-        :position="fixed && 'bottom'">
+        :position="fixed && 'bottom'"
+        :safe-area="safeAreaInsetBottom">
         <view
             class="van-action-bar"
             :class="cpClass">
             <slot></slot>
         </view>
-    </van-placeholder>
+    </van-fixed>
 </template>
 
 <script setup>

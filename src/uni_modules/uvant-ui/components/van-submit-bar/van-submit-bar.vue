@@ -1,5 +1,5 @@
 <template>
-    <van-placeholder
+    <van-fixed
         :placeholder="placeholder"
         :position="fixed && 'bottom'">
         <view
@@ -50,7 +50,7 @@
                 </slot>
             </view>
         </view>
-    </van-placeholder>
+    </van-fixed>
 </template>
 
 <script setup>

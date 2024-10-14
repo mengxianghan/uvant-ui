@@ -110,6 +110,12 @@
             "style": {
                 "navigationBarTitleText": "Sticky"
             }
+        },
+        {
+            "path": "pages/component/layout",
+            "style": {
+                "navigationBarTitleText": "Layout"
+            }
         }
     ],
     "globalStyle": {

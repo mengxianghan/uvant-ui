@@ -105,7 +105,7 @@ const list = ref([
             { key: 'Collapse', name: '折叠面板', url: '' },
             { key: 'CountDown', name: '倒计时', url: '' },
             { key: 'Divider', name: '分割线', url: '' },
-            { key: 'Empty', name: '空状态', url: '' },
+            { key: 'Empty', name: '空状态', url: '/pages/component/empty' },
             { key: 'Highlight', name: '高亮文本', url: '' },
             { key: 'ImagePreview', name: '图片预览', url: '' },
             { key: 'Lazyload', name: '懒加载', url: '' },

@@ -116,6 +116,12 @@
             "style": {
                 "navigationBarTitleText": "Layout"
             }
+        },
+        {
+            "path": "pages/component/empty",
+            "style": {
+                "navigationBarTitleText": "Empty"
+            }
         }
     ],
     "globalStyle": {

@@ -122,6 +122,12 @@
             "style": {
                 "navigationBarTitleText": "Empty"
             }
+        },
+        {
+            "path": "pages/component/stepper",
+            "style": {
+                "navigationBarTitleText": "Stepper"
+            }
         }
     ],
     "globalStyle": {

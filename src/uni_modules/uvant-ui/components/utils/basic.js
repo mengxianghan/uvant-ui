@@ -154,3 +154,9 @@ export function mergeClassNames(...args) {
 
     return classNames.join(' ')
 }
+
+export function isPromise(val) {
+    return isObject(val) && isFunction(val.then) && isFunction(val.catch)
+}
+
+export function noop() {}

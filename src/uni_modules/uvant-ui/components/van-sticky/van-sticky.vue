@@ -69,10 +69,7 @@ const cpInnerStyle = computed(() => {
         width: addUnit(state.width),
         height: addUnit(state.height),
         position: 'fixed',
-    }
-
-    if (state.transform) {
-        style.transform = `translate3d(0, ${addUnit(state.transform)}, 0)`
+        transform: state.transform ? `translate3d(0, ${addUnit(state.transform)}, 0)` : '',
     }
 
     return style
@@ -111,7 +108,7 @@ async function onScroll({ scrollTop: _scrollTop } = {}) {
 
     const rootRect = await getRect(instance.proxy, `.${stickySelector.value}`)
     const containerRect = await getContainerRect()
-    const { windowTop = 0, screenHeight } = getSystemInfoSync()
+    const { windowTop = 0, windowHeight: clientHeight } = getSystemInfoSync()
 
     state.width = rootRect.width
     state.height = rootRect.height
@@ -126,12 +123,12 @@ async function onScroll({ scrollTop: _scrollTop } = {}) {
         }
     } else {
         if (containerRect) {
-            const difference = screenHeight - containerRect.top - cpOffset.value - state.height - windowTop
+            const difference = clientHeight - containerRect.top - cpOffset.value - state.height - windowTop
             state.fixed =
-                screenHeight - cpOffset.value < rootRect.bottom + windowTop && screenHeight > containerRect.top
+                clientHeight - cpOffset.value < rootRect.bottom + windowTop && clientHeight > containerRect.top
             state.transform = difference < 0 ? -difference : 0
         } else {
-            state.fixed = screenHeight - cpOffset.value < rootRect.bottom + windowTop
+            state.fixed = clientHeight - cpOffset.value < rootRect.bottom + windowTop
         }
     }
 

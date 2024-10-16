@@ -61,7 +61,7 @@
 
 <script setup>
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
-import { addUnit, isEmpty, getRect } from '../utils'
+import { addUnit, isEmpty, getRect, getSizeStyle } from '../utils'
 import { findIndex, head, uniqueId } from 'lodash-es'
 
 const props = defineProps({
@@ -94,9 +94,8 @@ const lineOffsetLeft = ref(0)
 const lineStyles = computed(() => ({
     transform: `translate(${addUnit(lineOffsetLeft.value)})`,
     transitionDuration: `${props.duration}s`,
-    width: !isEmpty(props.lineWidth) ? addUnit(props.lineWidth) : '',
-    height: !isEmpty(props.lineHeight) ? addUnit(props.lineHeight) : '',
     background: !isEmpty(props.lineColor) ? props.lineColor : '',
+    ...getSizeStyle([props.lineWidth, props.lineHeight]),
 }))
 const activeIndex = computed(() => findIndex(props.list, { value: active.value }))
 const scrollable = computed(() => props.list.length > +props.swipeThreshold || !props.ellipsis)

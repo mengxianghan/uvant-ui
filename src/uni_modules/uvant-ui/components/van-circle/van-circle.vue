@@ -1,19 +1,13 @@
 <template>
     <view
         class="van-circle"
-        :style="{
-            width: addUnit(size),
-            height: addUnit(size),
-        }">
+        :style="getSizeStyle(size)">
         <canvas
             class="van-circle__canvas"
             :id="canvasId"
             :canvas-id="canvasId"
             :type="type"
-            :style="{
-                width: addUnit(size),
-                height: addUnit(size),
-            }"></canvas>
+            :style="getSizeStyle(size)"></canvas>
         <template v-if="hasText">
             <view class="van-circle__text">
                 <slot>{{ text }}</slot>
@@ -24,7 +18,7 @@
 
 <script setup>
 import { ref, computed, getCurrentInstance, onBeforeUnmount, onMounted, watch, useSlots } from 'vue'
-import { addUnit, isObject, canIUseCanvas2d, uuid } from '../utils'
+import { isObject, canIUseCanvas2d, uuid, getSizeStyle } from '../utils'
 import { adaptor } from './canvas'
 
 const props = defineProps({

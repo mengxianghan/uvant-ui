@@ -10,7 +10,7 @@
 
 <script setup>
 import { computed, getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
-import { addUnit, getRect, getSystemInfoSync, isFunction } from '../utils'
+import { addUnit, getRect, getSizeStyle, getSystemInfoSync, isFunction } from '../utils'
 import { uniqueId } from 'lodash-es'
 
 const props = defineProps({
@@ -58,10 +58,9 @@ const innerStyles = computed(() => {
     return {
         zIndex: props.zIndex,
         [props.position]: addUnit(currentOffset.value),
-        width: addUnit(state.width),
-        height: addUnit(state.height),
         position: 'fixed',
         transform: state.transform ? `translate3d(0, ${addUnit(state.transform)}, 0)` : '',
+        ...getSizeStyle([state.width, state.height]),
     }
 })
 

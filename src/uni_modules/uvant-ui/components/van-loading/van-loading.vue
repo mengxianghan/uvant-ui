@@ -11,8 +11,7 @@
             }"
             :style="{
                 color: color,
-                width: !isEmpty(size) ? addUnit(size) : '',
-                height: !isEmpty(size) ? addUnit(size) : '',
+                ...getSizeStyle(size),
             }">
             <slot name="icon">
                 <template v-if="'spinner' === type">
@@ -36,7 +35,7 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { addUnit, isDef, isEmpty } from '../utils'
+import { addUnit, getSizeStyle, isDef } from '../utils'
 
 defineProps({
     color: String,

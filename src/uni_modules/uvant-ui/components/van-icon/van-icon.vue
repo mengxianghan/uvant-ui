@@ -10,10 +10,7 @@
             <template v-if="isImage">
                 <image
                     class="van-icon__image"
-                    :style="{
-                        width: addUnit(size),
-                        height: addUnit(size),
-                    }"
+                    :style="getSizeStyle(size)"
                     :src="name" />
             </template>
         </view>
@@ -22,7 +19,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { addUnit } from '../utils'
+import { addUnit, getSizeStyle } from '../utils'
 
 const props = defineProps({
     name: String,

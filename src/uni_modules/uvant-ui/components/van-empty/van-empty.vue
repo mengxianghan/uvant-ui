@@ -2,15 +2,15 @@
     <view class="van-empty">
         <view
             class="van-empty__image"
-            :style="cpImageStyle">
+            :style="getSizeStyle(imageSize)">
             <slot name="image">
                 <image
                     class="van-empty__image-img"
-                    :src="cpImageSrc"
+                    :src="imageSrc"
                     mode="aspectFit" />
             </slot>
         </view>
-        <template v-if="cpHasDescription">
+        <template v-if="hasDescription">
             <view class="van-empty__description">
                 <slot name="description">{{ description }}</slot>
             </view>
@@ -46,9 +46,8 @@ const PRESET_IMAGES = {
     default: 'https://img01.yzcdn.cn/vant/empty-image-default.png',
 }
 
-const cpImageSrc = computed(() => get(PRESET_IMAGES, props.image, props.image))
-const cpImageStyle = computed(() => getSizeStyle(props.imageSize))
-const cpHasDescription = computed(() => !isEmpty(props.description) || slots.description)
+const imageSrc = computed(() => get(PRESET_IMAGES, props.image, props.image))
+const hasDescription = computed(() => !isEmpty(props.description) || slots.description)
 </script>
 
 <style lang="scss" scoped>

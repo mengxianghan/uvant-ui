@@ -4,10 +4,7 @@
         :class="{
             'van-image--round': round,
         }"
-        :style="{
-            width: !isEmpty(width) ? addUnit(width) : '',
-            height: !isEmpty(height) ? addUnit(height) : '',
-        }"
+        :style="getSizeStyle([width, height])"
         @click="handleClick">
         <image
             :src="src"
@@ -49,7 +46,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { isEmpty, addUnit } from '../utils'
+import { getSizeStyle } from '../utils'
 
 const props = defineProps({
     src: String,

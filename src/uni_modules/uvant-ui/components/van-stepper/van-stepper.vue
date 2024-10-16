@@ -18,8 +18,8 @@
         <input
             v-model="modelValue"
             :name="name"
-            :inputmode="props.integer ? 'numeric' : 'decimal'"
-            :type="props.integer ? 'tel' : 'text'"
+            :inputmode="integer ? 'numeric' : 'decimal'"
+            :type="integer ? 'number' : 'digit'"
             :disabled="disabled || disableInput"
             :class="{
                 'van-stepper__input--disabled': disabled || disableInput,

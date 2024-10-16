@@ -22,7 +22,7 @@ const props = defineProps({
     badgeProps: Object,
 })
 
-const disabled = computed(() => !(props.dot && isDef(props.badge) && isObject(props.badgeProps)))
+const disabled = computed(() => !(props.dot || isDef(props.badge) || isObject(props.badgeProps)))
 </script>
 
 <style lang="scss" scoped></style>

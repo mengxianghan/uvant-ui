@@ -62,25 +62,19 @@
                 <van-badge>
                     <view class="child"></view>
                     <template #content>
-                        <van-icon
-                            name="success"
-                            class="badge-icon" />
+                        <van-icon name="success" />
                     </template>
                 </van-badge>
                 <van-badge>
                     <view class="child"></view>
                     <template #content>
-                        <van-icon
-                            name="cross"
-                            class="badge-icon" />
+                        <van-icon name="cross" />
                     </template>
                 </van-badge>
                 <van-badge>
                     <view class="child"></view>
                     <template #content>
-                        <van-icon
-                            name="down"
-                            class="badge-icon" />
+                        <van-icon name="down" />
                     </template>
                 </van-badge>
             </view>
@@ -106,10 +100,5 @@
     height: 40px;
     background: #f2f3f5;
     border-radius: 4px;
-}
-.badge-icon {
-    display: block;
-    font-size: 10px;
-    line-height: 16px;
 }
 </style>

@@ -1,36 +1,41 @@
 <template>
     <view
         class="van-cell"
-        :class="cpClass"
+        :class="{
+            'van-cell--center': center,
+            'van-cell--clickable': isLink || clickable,
+            'van-cell--borderless': !border,
+            [`van-cell--${size}`]: size,
+        }"
         @click="handleClick">
-        <template v-if="cpHasLeftIcon">
+        <template v-if="hasLeftIcon">
             <view class="van-cell__left-icon">
                 <slot name="icon">
                     <van-icon :name="icon"></van-icon>
                 </slot>
             </view>
         </template>
-        <template v-if="cpHasTitle">
+        <template v-if="hasTitle">
             <view class="van-cell__title">
                 <view>
                     <slot name="title">{{ title }}</slot>
                 </view>
-                <template v-if="cpHasLabel">
+                <template v-if="hasLabel">
                     <view class="van-cell__label">
                         <slot name="label">{{ label }}</slot>
                     </view>
                 </template>
             </view>
         </template>
-        <template v-if="cpHasValue">
+        <template v-if="hasValue">
             <view class="van-cell__value">
                 <slot name="value">{{ value }}</slot>
             </view>
         </template>
-        <template v-if="cpHasRightIcon">
+        <template v-if="hasRightIcon">
             <view class="van-cell__right-icon">
                 <slot name="rightIcon">
-                    <van-icon :name="cpArrow"></van-icon>
+                    <van-icon :name="arrow"></van-icon>
                 </slot>
             </view>
         </template>
@@ -63,29 +68,12 @@ const props = defineProps({
 const emits = defineEmits(['click'])
 const slots = useSlots()
 
-const cpHasLeftIcon = computed(() => {
-    return isDef(props.icon) || slots.icon
-})
-const cpHasTitle = computed(() => isDef(props.title) || slots.title || cpHasLabel.value)
-const cpHasValue = computed(() => isDef(props.value) || slots.value)
-const cpHasLabel = computed(() => isDef(props.label) || slots.label)
-const cpHasRightIcon = computed(() => slots['rightIcon'] || props.isLink)
-const cpClass = computed(() => {
-    const { center, clickable, size, isLink, border } = props
-
-    const classNames = {
-        'van-cell--center': center,
-        'van-cell--clickable': isLink || clickable,
-        'van-cell--borderless': !border,
-    }
-
-    if (size) {
-        classNames[`van-cell--${size}`] = true
-    }
-
-    return classNames
-})
-const cpArrow = computed(() => {
+const hasLeftIcon = computed(() => isDef(props.icon) || slots.icon)
+const hasTitle = computed(() => isDef(props.title) || slots.title || hasLabel.value)
+const hasValue = computed(() => isDef(props.value) || slots.value)
+const hasLabel = computed(() => isDef(props.label) || slots.label)
+const hasRightIcon = computed(() => slots['rightIcon'] || props.isLink)
+const arrow = computed(() => {
     const { arrowDirection } = props
     let name
 

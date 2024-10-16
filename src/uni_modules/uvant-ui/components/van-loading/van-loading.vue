@@ -1,11 +1,19 @@
 <template>
     <view
         class="van-loading"
-        :class="cpClass">
+        :class="{
+            'van-loading--vertical': vertical,
+        }">
         <view
             class="van-loading__spinner"
-            :class="cpSpinnerClass"
-            :style="cpSpinnerStyle">
+            :class="{
+                [`van-loading__spinner--${type}`]: !hasIcon,
+            }"
+            :style="{
+                color: color,
+                width: !isEmpty(size) ? addUnit(size) : '',
+                height: !isEmpty(size) ? addUnit(size) : '',
+            }">
             <slot name="icon">
                 <template v-if="'spinner' === type">
                     <view
@@ -17,7 +25,10 @@
         </view>
         <view
             class="van-loading__text"
-            :style="cpTextStyle">
+            :style="{
+                fontSize: isDef(textSize) ? addUnit(textSize) : '',
+                color: textColor || color,
+            }">
             <slot></slot>
         </view>
     </view>
@@ -25,9 +36,9 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { addUnit, isDef } from '../utils'
+import { addUnit, isDef, isEmpty } from '../utils'
 
-const props = defineProps({
+defineProps({
     color: String,
     type: { type: String, default: 'circular', validator: (value) => ['circular', 'spinner'].includes(value) },
     size: [Number, String],
@@ -37,52 +48,7 @@ const props = defineProps({
 })
 const slots = useSlots()
 
-const cpHasIcon = computed(() => {
-    return slots.icon
-})
-const cpClass = computed(() => {
-    const { vertical } = props
-    return {
-        [`van-loading--vertical`]: vertical,
-    }
-})
-const cpSpinnerClass = computed(() => {
-    const { type } = props
-    const classNames = {}
-
-    if (!cpHasIcon.value) {
-        classNames[`van-loading__spinner--${type}`] = true
-    }
-
-    return classNames
-})
-const cpSpinnerStyle = computed(() => {
-    const { color, size } = props
-    const style = {
-        color,
-    }
-
-    if (isDef(size)) {
-        style.width = addUnit(size)
-        style.height = addUnit(size)
-    }
-
-    return style
-})
-const cpTextStyle = computed(() => {
-    const { textSize, textColor, color } = props
-    const style = {}
-
-    if (isDef(textSize)) {
-        style.fontSize = addUnit(textSize)
-    }
-
-    if (textColor || color) {
-        style.color = textColor || color
-    }
-
-    return style
-})
+const hasIcon = computed(() => slots.icon)
 </script>
 
 <style lang="scss" scoped>

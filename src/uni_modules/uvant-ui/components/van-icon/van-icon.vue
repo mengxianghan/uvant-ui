@@ -4,13 +4,16 @@
         :badge="badge"
         :badge-props="badgeProps">
         <view
-            :class="cpClass"
-            :style="cpStyle"
+            :class="classNames"
+            :style="styles"
             @click="handleClick">
-            <template v-if="cpIsImage">
+            <template v-if="isImage">
                 <image
                     class="van-icon__image"
-                    :style="cpImageStyle"
+                    :style="{
+                        width: addUnit(size),
+                        height: addUnit(size),
+                    }"
                     :src="name" />
             </template>
         </view>
@@ -32,40 +35,15 @@ const props = defineProps({
 })
 const emits = defineEmits(['click'])
 
-const cpIsImage = computed(() => props.name?.includes('/'))
-const cpClass = computed(() => {
-    const { classPrefix, name } = props
-    const classNames = {
-        [`${classPrefix}`]: true,
-    }
-
-    if (!cpIsImage.value) {
-        classNames[`${classPrefix}-${name}`] = !!name
-    }
-
-    return classNames
-})
-const cpStyle = computed(() => {
-    const { color, size } = props
-    const style = {}
-
-    if (color) {
-        style.color = color
-    }
-
-    if (size) {
-        style.fontSize = addUnit(size)
-    }
-
-    return style
-})
-const cpImageStyle = computed(() => {
-    const { size } = props
-    return {
-        width: addUnit(size),
-        height: addUnit(size),
-    }
-})
+const isImage = computed(() => props.name?.includes('/'))
+const classNames = computed(() => ({
+    [`${props.classPrefix}`]: true,
+    [`${props.classPrefix}-${props.name}`]: !isImage.value && !!props.name,
+}))
+const styles = computed(() => ({
+    color: props.color || '',
+    fontSize: props.size ? addUnit(props.size) : '',
+}))
 
 function handleClick(e) {
     emits('click', e)

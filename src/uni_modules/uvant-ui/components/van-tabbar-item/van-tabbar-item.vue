@@ -1,7 +1,9 @@
 <template>
     <view
         class="van-tabbar-item"
-        :class="cpClass"
+        :class="{
+            'van-tabbar-item--active': isActive,
+        }"
         :style="cpStyle"
         @click="handleClick">
         <view class="van-tabbar-item__icon">
@@ -11,7 +13,7 @@
                 :badge-props="badgeProps">
                 <slot
                     name="icon"
-                    :active="cpIsActive">
+                    :active="isActive">
                     <van-icon
                         :name="icon"
                         :class-prefix="iconPrefix"></van-icon>
@@ -39,32 +41,11 @@ const props = defineProps({
 
 const { parent, index } = useParent('van-tabbar')
 
-const cpKey = computed(() => {
-    return props.name || index.value
-})
-const cpIsActive = computed(() => {
-    return parent.active.value === cpKey.value
-})
-const cpClass = computed(() => {
-    const classNames = {
-        'van-tabbar-item--active': cpIsActive.value,
-    }
-
-    return classNames
-})
-const cpStyle = computed(() => {
-    const style = {}
-
-    if (parent.props.activeColor && cpIsActive.value) {
-        style.color = parent.props.activeColor
-    }
-
-    if (parent.props.inactiveColor && !cpIsActive.value) {
-        style.color = parent.props.inactiveColor
-    }
-
-    return style
-})
+const key = computed(() => props.name || index.value)
+const isActive = computed(() => parent.active.value === key.value)
+const cpStyle = computed(() => ({
+    color: parent.props.activeColor && isActive.value ? parent.props.activeColor : parent.props.inactiveColor,
+}))
 
 function handleClick() {
     const { name } = props

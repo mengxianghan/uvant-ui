@@ -1,23 +1,32 @@
 <template>
     <view class="van-tabs">
         <scroll-view
-            class="van-tabs__wrap"
             scroll-with-animation
-            :scroll-x="cpScrollable"
+            :scroll-x="scrollable"
             :scroll-left="scrollLeft"
             :show-scrollbar="false"
-            :class="cpWrapClass">
+            :class="[
+                'van-tabs__wrap',
+                scrollViewSelector,
+                {
+                    'van-hairline--top-bottom': border,
+                    'van-tabs__wrap--shrink': shrink,
+                },
+            ]">
             <view
                 class="van-tabs__nav"
-                :class="cpNavClass">
+                :class="{
+                    'van-tabs__nav--shrink': shrink,
+                }">
                 <view
                     v-for="(item, index) in list"
                     :key="item.value"
                     :class="{
+                        [`${tabSelector}-${index}`]: true,
                         'van-tab--active': item.value === active,
                         'van-tab--disabled': item.disabled,
-                        [`${tabSelector}-${index}`]: true,
-                        ...cpTabClass,
+                        'van-tab--shrink': shrink,
+                        'van-tab--grow': scrollable,
                     }"
                     :style="{
                         color: item.value === active ? titleActiveColor : titleInactiveColor,
@@ -30,7 +39,9 @@
                         :badge-props="item.badgeProps">
                         <view
                             class="van-tab__text"
-                            :class="cpTextClass">
+                            :class="{
+                                'van-tab__text--ellipsis': ellipsis,
+                            }">
                             <slot
                                 :record="item"
                                 :index="index">
@@ -42,7 +53,7 @@
                 <view
                     class="van-tabs__line"
                     :class="[lineSelector]"
-                    :style="cpLineStyle"></view>
+                    :style="lineStyles"></view>
             </view>
         </scroll-view>
     </view>
@@ -80,60 +91,15 @@ const scrollViewSelector = ref(uniqueId('van-tabs-wrap-'))
 const scrollLeft = ref(0)
 const lineOffsetLeft = ref(0)
 
-const cpWrapClass = computed(() => {
-    const className = {
-        'van-hairline--top-bottom': props.border,
-        'van-tabs__wrap--shrink': props.shrink,
-        [scrollViewSelector.value]: true,
-    }
-
-    return className
-})
-const cpNavClass = computed(() => {
-    const className = {
-        'van-tabs__nav--shrink': props.shrink,
-    }
-
-    return className
-})
-const cpTabClass = computed(() => {
-    const className = {
-        'van-tab--shrink': props.shrink,
-        'van-tab--grow': cpScrollable.value,
-    }
-
-    return className
-})
-const cpTextClass = computed(() => {
-    const className = {
-        'van-tab__text--ellipsis': props.ellipsis,
-    }
-
-    return className
-})
-const cpLineStyle = computed(() => {
-    const { lineWidth, lineHeight, lineColor, duration } = props
-    const style = {
-        transform: `translate(${addUnit(lineOffsetLeft.value)})`,
-        transitionDuration: `${duration}s`,
-    }
-
-    if (!isEmpty(lineWidth)) {
-        style.width = addUnit(lineWidth)
-    }
-
-    if (!isEmpty(lineHeight)) {
-        style.height = addUnit(lineHeight)
-    }
-
-    if (!isEmpty(lineColor)) {
-        style.background = lineColor
-    }
-
-    return style
-})
-const cpActiveIndex = computed(() => findIndex(props.list, { value: active.value }))
-const cpScrollable = computed(() => props.list.length > +props.swipeThreshold || !props.ellipsis)
+const lineStyles = computed(() => ({
+    transform: `translate(${addUnit(lineOffsetLeft.value)})`,
+    transitionDuration: `${props.duration}s`,
+    width: !isEmpty(props.lineWidth) ? addUnit(props.lineWidth) : '',
+    height: !isEmpty(props.lineHeight) ? addUnit(props.lineHeight) : '',
+    background: !isEmpty(props.lineColor) ? props.lineColor : '',
+}))
+const activeIndex = computed(() => findIndex(props.list, { value: active.value }))
+const scrollable = computed(() => props.list.length > +props.swipeThreshold || !props.ellipsis)
 
 watch([() => active.value, () => props.list, () => props.swipeThreshold], () => {
     initialize()
@@ -155,8 +121,7 @@ async function initialize() {
  * @param {number} [count] - 个数
  */
 function getItemRect(start = 0, count = props.list.length) {
-    const { list } = props
-    const queue = list.map((item, index) => getRect(instance.proxy, `.${tabSelector.value}-${index}`))
+    const queue = props.list.map((item, index) => getRect(instance.proxy, `.${tabSelector.value}-${index}`))
     return new Promise((resolve) => {
         Promise.all(queue).then((data) => {
             resolve(data.slice(start, start + count))
@@ -202,8 +167,8 @@ async function handleClick(record, index) {
  * 设置底部条偏移位置
  */
 async function setLineOffset() {
-    const offsetLeft = await getItemRectWidth(0, cpActiveIndex.value)
-    const itemRect = head(await getItemRect(cpActiveIndex.value, 1))
+    const offsetLeft = await getItemRectWidth(0, activeIndex.value)
+    const itemRect = head(await getItemRect(activeIndex.value, 1))
     const lineRect = await getLineRect()
 
     lineOffsetLeft.value = offsetLeft + (itemRect.width - lineRect.width) / 2
@@ -213,8 +178,8 @@ async function setLineOffset() {
  * 设置滚动条位置
  */
 async function setScrollLeft() {
-    const itemRect = head(await getItemRect(cpActiveIndex.value, 1))
-    const offsetLeft = await getItemRectWidth(0, cpActiveIndex.value)
+    const itemRect = head(await getItemRect(activeIndex.value, 1))
+    const offsetLeft = await getItemRectWidth(0, activeIndex.value)
     const scrollViewRect = await getScrollViewRect()
     const itemsWith = await getItemRectWidth()
 

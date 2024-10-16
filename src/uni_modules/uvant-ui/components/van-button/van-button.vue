@@ -2,8 +2,17 @@
     <button
         class="van-button"
         hover-class="none"
-        :class="cpClass"
-        :style="cpStyle"
+        :class="{
+            [`van-button--${type}`]: true,
+            [`van-button--${size}`]: true,
+            'van-button--plain': plain,
+            'van-button--square': square,
+            'van-button--round': round,
+            'van-button--hairline': hairline,
+            'van-button--block': block,
+            'van-button--disabled': disabled,
+        }"
+        :style="styles"
         :disabled="disabled"
         @click="handleClick">
         <view class="van-button__content">
@@ -13,14 +22,14 @@
                         <van-loading :type="loadingType"></van-loading>
                     </slot>
                 </view>
-                <template v-if="cpHasLoadingText">
+                <template v-if="!isEmpty(loadingText)">
                     <view class="van-button__text">
                         {{ loadingText }}
                     </view>
                 </template>
             </template>
             <template v-else>
-                <template v-if="'left' === iconPosition && cpHasIcon">
+                <template v-if="'left' === iconPosition && hasIcon">
                     <view class="van-button__icon">
                         <van-icon
                             :name="icon"
@@ -28,13 +37,13 @@
                     </view>
                 </template>
 
-                <template v-if="cpHasText">
+                <template v-if="hasText">
                     <view class="van-button__text">
                         <slot>{{ text }}</slot>
                     </view>
                 </template>
 
-                <template v-if="'right' === iconPosition && cpHasIcon">
+                <template v-if="'right' === iconPosition && hasIcon">
                     <view class="van-button__icon">
                         <van-icon
                             :name="icon"
@@ -72,57 +81,23 @@ const emits = defineEmits(['click'])
 
 const slots = useSlots()
 
-const cpClass = computed(() => {
-    const { type, size, plain, square, round, hairline, block, disabled } = props
-    const classNames = {
-        'van-button': true,
-        [`van-button--${type}`]: true,
-        [`van-button--${size}`]: true,
-        'van-button--plain': plain,
-        'van-button--square': square,
-        'van-button--round': round,
-        'van-button--hairline': hairline,
-        'van-button--block': block,
-        'van-button--disabled': disabled,
-    }
-
-    return classNames
-})
-const cpStyle = computed(() => {
-    const isLinear = props.color?.startsWith('linear-gradient')
-    const style = {}
-
+const styles = computed(() => {
     if (!props.color) {
-        return style
+        return
     }
 
-    style.color = '#fff'
+    const isLinear = props.color?.startsWith('linear-gradient')
 
-    if (!props.plain) {
-        style.background = props.color
+    return {
+        color: props.plain ? props.color : '#fff',
+        background: !props.plain ? props.color : '',
+        ...(isLinear ? { border: 0 } : { borderColor: props.color }),
     }
-
-    if (props.plain) {
-        style.color = props.color
-    }
-
-    if (isLinear) {
-        style.border = 0
-    } else {
-        style.borderColor = props.color
-    }
-
-    return style
 })
-const cpHasLoadingText = computed(() => {
-    const { loadingText } = props
-
-    return loadingText
-})
-const cpHasIcon = computed(() => {
+const hasIcon = computed(() => {
     return !isEmpty(props.icon)
 })
-const cpHasText = computed(() => {
+const hasText = computed(() => {
     return !isEmpty(props.text) || slots.default
 })
 

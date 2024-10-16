@@ -1,15 +1,18 @@
 <template>
     <template v-if="!disabled">
         <view
-            :class="[placeholderSelector, cpClass]"
+            :class="[placeholderSelector, customClass]"
             :style="customStyle">
             <slot></slot>
         </view>
-        <view :style="cpPlaceholderStyle"></view>
+        <view
+            :style="{
+                height: addUnit(height),
+            }"></view>
     </template>
     <template v-else>
         <view
-            :class="cpClass"
+            :class="[customClass]"
             :style="customStyle">
             <slot></slot>
         </view>
@@ -17,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, ref, getCurrentInstance, onMounted, onUpdated } from 'vue'
+import { ref, getCurrentInstance, onMounted, onUpdated } from 'vue'
 import { addUnit, getRect } from '../utils'
 import { uniqueId } from 'lodash-es'
 
@@ -30,13 +33,6 @@ const props = defineProps({
 const instance = getCurrentInstance()
 const placeholderSelector = ref(uniqueId('van-placeholder-'))
 const height = ref(0)
-
-const cpPlaceholderStyle = computed(() => {
-    return {
-        height: addUnit(height.value),
-    }
-})
-const cpClass = computed(() => props.customClass)
 
 onMounted(() => {
     initialize()

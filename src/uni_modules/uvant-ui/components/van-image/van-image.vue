@@ -1,8 +1,13 @@
 <template>
     <div
         class="van-image"
-        :class="cpClass"
-        :style="cpStyle"
+        :class="{
+            'van-image--round': round,
+        }"
+        :style="{
+            width: !isEmpty(width) ? addUnit(width) : '',
+            height: !isEmpty(height) ? addUnit(height) : '',
+        }"
         @click="handleClick">
         <image
             :src="src"
@@ -27,7 +32,7 @@
             </div>
         </template>
 
-        <template v-if="cpShowError">
+        <template v-if="error.value && props.showError">
             <div class="van-image__error">
                 <slot name="error">
                     <view class="van-image__error-icon">
@@ -43,7 +48,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { isEmpty, addUnit } from '../utils'
 
 const props = defineProps({
@@ -88,32 +93,6 @@ const emits = defineEmits(['click', 'load', 'error'])
 
 const loading = ref(true)
 const error = ref(false)
-
-const cpClass = computed(() => {
-    const { round } = props
-    const classNames = {
-        'van-image--round': round,
-    }
-
-    return classNames
-})
-const cpStyle = computed(() => {
-    const { width, height } = props
-    const style = {}
-
-    if (!isEmpty(width)) {
-        style.width = addUnit(width)
-    }
-
-    if (!isEmpty(height)) {
-        style.height = addUnit(height)
-    }
-
-    return style
-})
-const cpShowError = computed(() => {
-    return error.value && props.showError
-})
 
 function handleClick(e) {
     emits('click', e)

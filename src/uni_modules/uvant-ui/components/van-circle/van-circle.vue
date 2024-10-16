@@ -1,14 +1,20 @@
 <template>
     <view
         class="van-circle"
-        :style="cpStyle">
+        :style="{
+            width: addUnit(size),
+            height: addUnit(size),
+        }">
         <canvas
             class="van-circle__canvas"
             :id="canvasId"
             :canvas-id="canvasId"
             :type="type"
-            :style="cpCanvasStyle"></canvas>
-        <template v-if="cpHasText">
+            :style="{
+                width: addUnit(size),
+                height: addUnit(size),
+            }"></canvas>
+        <template v-if="hasText">
             <view class="van-circle__text">
                 <slot>{{ text }}</slot>
             </view>
@@ -63,25 +69,7 @@ const currentValue = ref(props.modelValue)
 const interval = ref()
 const canvasId = ref(`van-circle--${uuid()}`)
 
-const cpStyle = computed(() => {
-    const { size } = props
-    const style = {
-        width: addUnit(size),
-        height: addUnit(size),
-    }
-
-    return style
-})
-const cpCanvasStyle = computed(() => {
-    const { size } = props
-    const style = {
-        width: addUnit(size),
-        height: addUnit(size),
-    }
-
-    return style
-})
-const cpHasText = computed(() => {
+const hasText = computed(() => {
     return props.text || slots.default
 })
 
@@ -122,7 +110,6 @@ function getContext() {
             .in(instance.proxy)
             .select(`#${canvasId.value}`)
             .fields({ node: true, size: true })
-            // .node()
             .exec((res) => {
                 const canvas = res[0].node
                 const ctx = canvas.getContext(type)

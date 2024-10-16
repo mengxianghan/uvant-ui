@@ -1,7 +1,12 @@
 <template>
     <view
         class="van-space"
-        :class="cpClass"
+        :class="{
+            [`van-space--${direction}`]: direction,
+            [`van-space--align-${align}`]: align,
+            'van-space--wrap': wrap,
+            'van-space--fill': fill,
+        }"
         :style="cpStyle">
         <slot></slot>
     </view>
@@ -23,31 +28,16 @@ const props = defineProps({
     fill: { type: Boolean, default: false },
 })
 
-const cpClass = computed(() => {
-    const { direction, align, wrap, fill } = props
-    const classNames = {
-        [`van-space--${direction}`]: true,
-        'van-space--wrap': wrap,
-        'van-space--fill': fill,
-    }
-
-    if (align) {
-        classNames[`van-space--align-${align}`] = true
-    }
-
-    return classNames
-})
 const cpStyle = computed(() => {
-    const { size } = props
     const style = {}
 
-    if (isEmpty(size)) return style
+    if (isEmpty(props.size)) return
 
-    if (isArray(size)) {
-        const [x = 0, y = 0] = size
+    if (isArray(props.size)) {
+        const [x = 0, y = 0] = props.size
         style.gap = `${addUnit(x)} ${addUnit(y)}`
     } else {
-        style.gap = addUnit(size)
+        style.gap = addUnit(props.size)
     }
 
     return style

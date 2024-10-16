@@ -4,10 +4,13 @@
         :position="fixed && 'bottom'">
         <view
             class="van-submit-bar"
-            :class="cpClass">
-            <template v-if="cpHasTip">
+            :class="{
+                'van-submit-bar--fixed': fixed,
+                'van-safe-area-bottom': safeAreaInsetBottom,
+            }">
+            <template v-if="hasTip">
                 <view class="van-submit-bar__tip">
-                    <template v-if="cpHasTipIcon">
+                    <template v-if="hasTipIcon">
                         <view class="van-submit-bar__tip-icon">
                             <van-icon :name="tipIcon"></van-icon>
                         </view>
@@ -22,10 +25,10 @@
             </template>
             <view class="van-submit-bar__bar">
                 <slot></slot>
-                <template v-if="cpHasPrice">
+                <template v-if="hasPrice">
                     <view
                         class="van-submit-bar__text"
-                        :style="cpTextStyle">
+                        :style="textStyles">
                         <text>{{ label }}</text>
                         <view class="van-submit-bar__price">
                             {{ currency }}<text class="van-submit-bar__price-integer">{{ integer }}</text
@@ -83,25 +86,15 @@ const integer = ref(0)
 const decimal = ref()
 
 watchEffect(() => {
-    const { price, decimalLength } = props
-    const [_integet = '', _decimal = ''] = (price / 100).toFixed(+decimalLength).split('.')
+    const [_integet = '', _decimal = ''] = (props.price / 100).toFixed(+props.decimalLength).split('.')
     integer.value = _integet
-    decimal.value = decimalLength ? `.${_decimal}` : ''
+    decimal.value = props.decimalLength ? `.${_decimal}` : ''
 })
 
-const cpHasTipIcon = computed(() => props.tipIcon)
-const cpHasTip = computed(() => props.tip || slots.tip)
-const cpHasPrice = computed(() => isNumber(props.price))
-const cpClass = computed(() => {
-    const { safeAreaInsetBottom, fixed } = props
-    const classNames = {
-        'van-submit-bar--fixed': fixed,
-        'van-safe-area-bottom': safeAreaInsetBottom,
-    }
-
-    return classNames
-})
-const cpTextStyle = computed(() => {
+const hasTipIcon = computed(() => props.tipIcon)
+const hasTip = computed(() => props.tip || slots.tip)
+const hasPrice = computed(() => isNumber(props.price))
+const textStyles = computed(() => {
     const { textAlign } = props
     const style = {}
 

@@ -1,22 +1,22 @@
 <template>
-    <template v-if="cpHasDefault">
+    <template v-if="hasDefault">
         <view class="van-badge__wrapper">
             <slot></slot>
             <view
-                :class="cpClass"
-                :style="cpStyle">
-                <template v-if="cpHasContent">
-                    <slot name="content">{{ cpContent }}</slot>
+                :class="classNames"
+                :style="styles">
+                <template v-if="hasContent">
+                    <slot name="content">{{ content }}</slot>
                 </template>
             </view>
         </view>
     </template>
     <template v-else>
         <view
-            :class="cpClass"
-            :style="cpStyle">
-            <template v-if="cpHasContent">
-                <slot name="content">{{ cpContent }}</slot>
+            :class="classNames"
+            :style="styles">
+            <template v-if="hasContent">
+                <slot name="content">{{ content }}</slot>
             </template>
         </view>
     </template>
@@ -41,29 +41,32 @@ const props = defineProps({
 })
 const slots = useSlots()
 
-const cpHasDefault = computed(() => slots.default)
-const cpHasContent = computed(() => {
+const hasDefault = computed(() => slots.default)
+const hasContent = computed(() => {
     if (slots.content) {
         return true
     }
-    const { content, showZero } = props
-    return isDef(content) && content !== '' && (showZero || (content !== 0 && content !== '0'))
+    return (
+        isDef(props.content) &&
+        props.content !== '' &&
+        (props.showZero || (props.content !== 0 && props.content !== '0'))
+    )
 })
-const cpClass = computed(() => {
+const classNames = computed(() => {
     const { position, dot } = props
     const classNames = {
         'van-badge': true,
         'van-badge--dot': dot,
     }
 
-    if (cpHasDefault.value) {
+    if (hasDefault.value) {
         classNames[`van-badge--${position}`] = true
         classNames['van-badge--fixed'] = true
     }
 
     return classNames
 })
-const cpStyle = computed(() => {
+const styles = computed(() => {
     const { color } = props
     const style = {}
 
@@ -73,7 +76,7 @@ const cpStyle = computed(() => {
 
     return style
 })
-const cpContent = computed(() => {
+const content = computed(() => {
     const { max, content } = props
     if (isDef(max) && isNumber(content) && +content > +max) {
         return `${max}+`

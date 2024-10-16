@@ -1,13 +1,16 @@
 <template>
     <view
         class="van-tabbar"
-        :class="cpClass">
+        :class="{
+            'van-tabbar--fixed': fixed,
+            'van-hairline--top-bottom': border,
+            'van-safe-area-bottom': safeAreaInsetBottom,
+        }">
         <slot></slot>
     </view>
 </template>
 
 <script setup>
-import { computed } from 'vue'
 import { useChildren } from '../composables'
 
 const props = defineProps({
@@ -25,17 +28,6 @@ const modelValue = defineModel({ type: [Number, String] })
 const emits = defineEmits(['change'])
 
 const { linkChildren } = useChildren('van-tabbar')
-
-const cpClass = computed(() => {
-    const { fixed, border, safeAreaInsetBottom } = props
-    const classNames = {
-        'van-tabbar--fixed': fixed,
-        'van-hairline--top-bottom': border,
-        'van-safe-area-bottom': safeAreaInsetBottom,
-    }
-
-    return classNames
-})
 
 async function onChange(val) {
     if (!(await props.beforeChange())) {

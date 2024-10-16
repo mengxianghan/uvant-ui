@@ -2,8 +2,17 @@
     <template v-if="show">
         <view
             class="van-tag"
-            :class="cpClass"
-            :style="cpStyle"
+            :class="{
+                [`van-tag--${type}`]: true,
+                [`van-tag--plain`]: plain,
+                [`van-tag--round`]: round,
+                [`van-tag--mark`]: mark,
+                [`van-tag--${size}`]: size,
+            }"
+            :style="{
+                background: props.color && !props.plain ? props.color : '',
+                color: props.plain ? props.color : props.textColor || props.color,
+            }"
             @click="handleClick">
             <slot></slot>
             <template v-if="closeable">
@@ -18,8 +27,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-
 const props = defineProps({
     type: {
         type: String,
@@ -37,38 +44,6 @@ const props = defineProps({
 })
 
 const emits = defineEmits(['click', 'close'])
-
-const cpClass = computed(() => {
-    const { type, size, plain, round, mark } = props
-    const classNames = {
-        [`van-tag--${type}`]: true,
-        [`van-tag--plain`]: plain,
-        [`van-tag--round`]: round,
-        [`van-tag--mark`]: mark,
-    }
-
-    if (size) {
-        classNames[`van-tag--${size}`] = true
-    }
-
-    return classNames
-})
-const cpStyle = computed(() => {
-    const { textColor, color, plain } = props
-
-    const style = { color: textColor || color }
-
-    if (color && !plain) {
-        style.background = color
-        style.color = textColor || color
-    }
-
-    if (plain) {
-        style.color = color
-    }
-
-    return style
-})
 
 function handleClick(e) {
     emits('click', e)

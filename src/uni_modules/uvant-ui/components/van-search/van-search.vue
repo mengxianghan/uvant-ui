@@ -1,19 +1,25 @@
 <template>
     <view
         class="van-search"
-        :style="cpStyle">
+        :style="{
+            background,
+        }">
         <view
             class="van-search__content"
-            :class="cpContentClass">
-            <template v-if="cpHasLabel">
+            :class="{
+                [`van-search__content--${shape}`]: shape,
+            }">
+            <template v-if="hasLabel">
                 <view class="van-search__label">
                     <slot name="label">{{ label }}</slot>
                 </view>
             </template>
             <view
                 class="van-cell van-cell--borderless van-field van-search__field"
-                :class="cpFieldClass">
-                <template v-if="cpHasLeftIcon">
+                :class="{
+                    'van-field--disabled': disabled,
+                }">
+                <template v-if="hasLeftIcon">
                     <view
                         class="van-field__left-icon"
                         @click="handleLeftIcon">
@@ -29,7 +35,9 @@
                             :disabled="disabled"
                             :placeholder="placeholder"
                             :id="id"
-                            :class="cpControlClass"
+                            :class="{
+                                [`van-field__control--${inputAlign}`]: inputAlign,
+                            }"
                             :maxlength="maxlength"
                             :focus="autofocus"
                             type="search"
@@ -41,7 +49,7 @@
                             @search="onSearch" />
 
                         <!-- 清除按钮 -->
-                        <template v-if="cpHasClear">
+                        <template v-if="hasClear">
                             <view
                                 class="van-field__clear"
                                 @click="handleClear">
@@ -50,7 +58,7 @@
                         </template>
 
                         <!-- 右侧 icon -->
-                        <template v-if="cpHasRightIcon">
+                        <template v-if="hasRightIcon">
                             <view
                                 class="van-field__right-icon"
                                 @click="handleRightIcon">
@@ -118,67 +126,22 @@ const slots = useSlots()
 
 const isFocus = ref(false)
 
-const cpContentClass = computed(() => {
-    const { shape } = props
-    const classNames = {
-        [`van-search__content--${shape}`]: true,
-    }
-
-    return classNames
-})
-const cpFieldClass = computed(() => {
-    const { disabled } = props
-    const classNames = {
-        'van-field--disabled': disabled,
-    }
-
-    return classNames
-})
-const cpControlClass = computed(() => {
-    const { inputAlign } = props
-    const classNames = {
-        [`van-field__control--${inputAlign}`]: true,
-    }
-
-    return classNames
-})
-const cpStyle = computed(() => {
-    const { background } = props
-    const style = {}
-
-    if (!isEmpty(background)) {
-        style.background = background
-    }
-
-    return style
-})
-const cpHasLeftIcon = computed(() => {
-    const { leftIcon } = props
-    return !isEmpty(leftIcon) || slots.leftIcon
-})
-const cpHasLabel = computed(() => {
-    const { label } = props
-    return !isEmpty(label) || slots.label
-})
-const cpHasClear = computed(() => {
-    const { clearable, clearTrigger } = props
+const hasLeftIcon = computed(() => !isEmpty(props.leftIcon) || slots.leftIcon)
+const hasLabel = computed(() => !isEmpty(props.label) || slots.label)
+const hasClear = computed(() => {
     const checkValue = !isEmpty(modelValue.value)
 
-    if (clearTrigger === 'focus') {
-        return clearable && checkValue && isFocus.value
+    if (props.clearTrigger === 'focus') {
+        return props.clearable && checkValue && isFocus.value
     }
 
-    return clearable && checkValue
+    return props.clearable && checkValue
 })
-const cpHasRightIcon = computed(() => {
-    return !isEmpty(props.rightIcon) || slots.rightIcon
-})
+const hasRightIcon = computed(() => !isEmpty(props.rightIcon) || slots.rightIcon)
 
 const onInput = debounce(() => {
-    const { formatTrigger, formatter } = props
-
-    if ('onChange' === formatTrigger) {
-        modelValue.value = formatter(modelValue.value)
+    if ('onChange' === props.formatTrigger) {
+        modelValue.value = props.formatter(modelValue.value)
     }
 
     emits('change', modelValue.value)
@@ -211,14 +174,12 @@ function onFocus(e) {
 }
 
 function onBlur(e) {
-    const { formatTrigger, formatter } = props
-
     setTimeout(() => {
         isFocus.value = false
     }, 5)
 
-    if ('onBlur' === formatTrigger) {
-        modelValue.value = formatter(modelValue.value)
+    if ('onBlur' === props.formatTrigger) {
+        modelValue.value = props.formatter(modelValue.value)
     }
 
     emits('blur', e)

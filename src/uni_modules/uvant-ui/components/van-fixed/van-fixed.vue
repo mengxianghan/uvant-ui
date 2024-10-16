@@ -2,7 +2,7 @@
     <template v-if="position">
         <vc-placeholder
             :disabled="!placeholder"
-            :custom-style="cpCustomStyle"
+            :custom-style="customStyles"
             :custom-class="customClass">
             <slot></slot>
         </vc-placeholder>
@@ -29,19 +29,18 @@ const props = defineProps({
     customClass: { type: [String, Object], default: '' },
 })
 
-const cpCustomStyle = computed(() => {
-    const { position, offset, zIndex, safeArea } = props
-    const { windowTop, windowBottom, safeArea: _safeArea } = getSystemInfoSync()
+const customStyles = computed(() => {
+    const { windowTop, windowBottom, safeArea } = getSystemInfoSync()
 
-    if (!position) {
+    if (!props.position) {
         return
     }
 
     const style = {
-        zIndex,
+        zIndex: props.zIndex,
         position: 'fixed',
-        [`${position}`]: `calc(${addUnit(offset)} + ${addUnit(position === 'top' ? windowTop : windowBottom)})`,
-        [`padding-${position}`]: safeArea ? _safeArea[position] : '',
+        [`${props.position}`]: `calc(${addUnit(props.offset)} + ${addUnit(props.position === 'top' ? windowTop : windowBottom)})`,
+        [`padding-${props.position}`]: props.safeArea ? safeArea[props.position] : '',
         ['left']: 0,
         ['right']: 0,
     }

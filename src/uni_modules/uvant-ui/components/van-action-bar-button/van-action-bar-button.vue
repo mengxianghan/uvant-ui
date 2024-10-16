@@ -1,7 +1,12 @@
 <template>
     <view
         class="van-action-bar-button"
-        :class="cpClass">
+        :class="{
+            'van-action-bar-button--first': isFirst && !isOnly,
+            'van-action-bar-button--last': isLast && !isOnly,
+            'van-action-bar-button--only-one': isOnly,
+            [`van-action-bar-button--${type}`]: true,
+        }">
         <van-button
             :type="type"
             :color="color"
@@ -17,7 +22,7 @@
 import { computed } from 'vue'
 import { useParent, useExpose } from '../composables'
 
-const props = defineProps({
+defineProps({
     text: String,
     type: String,
     color: String,
@@ -29,7 +34,7 @@ const props = defineProps({
 const { parent, index } = useParent('van-action-bar')
 useExpose({ isButton: true })
 
-const cpIsFirst = computed(() => {
+const isFirst = computed(() => {
     if (!parent) {
         return false
     }
@@ -37,7 +42,7 @@ const cpIsFirst = computed(() => {
     return !(prev && 'isButton' in prev)
 })
 
-const cpIsLast = computed(() => {
+const isLast = computed(() => {
     if (!parent) {
         return false
     }
@@ -45,25 +50,7 @@ const cpIsLast = computed(() => {
     return !(next && 'isButton' in next)
 })
 
-const cpIsOnlyOne = computed(() => {
-    if (!parent) {
-        return false
-    }
-    return parent.children.filter((item) => item.isButton).length === 1
-})
-
-const cpClass = computed(() => {
-    const { type } = props
-
-    const className = {
-        'van-action-bar-button--first': cpIsFirst.value && !cpIsOnlyOne.value,
-        'van-action-bar-button--last': cpIsLast.value && !cpIsOnlyOne.value,
-        'van-action-bar-button--only-one': cpIsOnlyOne.value,
-        [`van-action-bar-button--${type}`]: true,
-    }
-
-    return className
-})
+const isOnly = computed(() => parent && parent.children.filter((item) => item.isButton).length === 1)
 </script>
 
 <style lang="scss" scoped>

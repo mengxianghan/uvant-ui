@@ -134,6 +134,12 @@
             "style": {
                 "navigationBarTitleText": "Grid"
             }
+        },
+        {
+            "path": "pages/component/sidebar",
+            "style": {
+                "navigationBarTitleText": "Sidebar"
+            }
         }
     ],
     "globalStyle": {

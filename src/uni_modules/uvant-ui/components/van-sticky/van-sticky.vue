@@ -1,9 +1,8 @@
 <template>
     <view
-        class="van-sticky"
-        :class="cpClass"
-        :style="cpStyle">
-        <view :style="cpInnerStyle">
+        :class="['van-sticky', stickySelector]"
+        :style="styles">
+        <view :style="innerStyles">
             <slot></slot>
         </view>
     </view>
@@ -11,7 +10,7 @@
 
 <script setup>
 import { computed, getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
-import { addUnit, getRect, getSystemInfoSync, isFunction } from '../utils'
+import { addUnit, getRect, getSizeStyle, getSystemInfoSync, isFunction } from '../utils'
 import { uniqueId } from 'lodash-es'
 
 const props = defineProps({
@@ -35,18 +34,13 @@ const state = reactive({
     fixed: false,
 })
 
-const cpIsTop = computed(() => props.position === 'top')
-const cpOffset = computed(() => {
+const isTop = computed(() => props.position === 'top')
+const currentOffset = computed(() => {
     const { offset } = props
     const { windowTop, windowBottom = 0 } = getSystemInfoSync()
-    return cpIsTop.value ? offset + windowTop : offset + windowBottom
+    return isTop.value ? offset + windowTop : offset + windowBottom
 })
-const cpClass = computed(() => {
-    return {
-        [`${stickySelector.value}`]: true,
-    }
-})
-const cpStyle = computed(() => {
+const styles = computed(() => {
     if (!state.fixed) {
         return
     }
@@ -56,23 +50,18 @@ const cpStyle = computed(() => {
         zIndex: props.zIndex,
     }
 })
-const cpInnerStyle = computed(() => {
-    const { zIndex, position } = props
-
+const innerStyles = computed(() => {
     if (!state.fixed) {
         return
     }
 
-    const style = {
-        zIndex,
-        [position]: addUnit(cpOffset.value),
-        width: addUnit(state.width),
-        height: addUnit(state.height),
+    return {
+        zIndex: props.zIndex,
+        [props.position]: addUnit(currentOffset.value),
         position: 'fixed',
         transform: state.transform ? `translate3d(0, ${addUnit(state.transform)}, 0)` : '',
+        ...getSizeStyle([state.width, state.height]),
     }
-
-    return style
 })
 
 watch([() => scrollTop.value, () => props.disabled, () => props.position], () => {
@@ -96,9 +85,7 @@ onMounted(() => {
 })
 
 async function onScroll({ scrollTop: _scrollTop } = {}) {
-    const { disabled } = props
-
-    if (disabled) {
+    if (props.disabled) {
         state.fixed = false
         state.transform = 0
         return
@@ -113,22 +100,22 @@ async function onScroll({ scrollTop: _scrollTop } = {}) {
     state.width = rootRect.width
     state.height = rootRect.height
 
-    if (cpIsTop.value) {
+    if (isTop.value) {
         if (containerRect) {
-            const difference = containerRect.bottom - cpOffset.value - state.height + windowTop
-            state.fixed = cpOffset.value > rootRect.top + windowTop && containerRect.bottom > 0
+            const difference = containerRect.bottom - currentOffset.value - state.height + windowTop
+            state.fixed = currentOffset.value > rootRect.top + windowTop && containerRect.bottom > 0
             state.transform = difference < 0 ? difference : 0
         } else {
-            state.fixed = cpOffset.value > rootRect.top + windowTop
+            state.fixed = currentOffset.value > rootRect.top + windowTop
         }
     } else {
         if (containerRect) {
-            const difference = clientHeight - containerRect.top - cpOffset.value - state.height - windowTop
+            const difference = clientHeight - containerRect.top - currentOffset.value - state.height - windowTop
             state.fixed =
-                clientHeight - cpOffset.value < rootRect.bottom + windowTop && clientHeight > containerRect.top
+                clientHeight - currentOffset.value < rootRect.bottom + windowTop && clientHeight > containerRect.top
             state.transform = difference < 0 ? -difference : 0
         } else {
-            state.fixed = clientHeight - cpOffset.value < rootRect.bottom + windowTop
+            state.fixed = clientHeight - currentOffset.value < rootRect.bottom
         }
     }
 

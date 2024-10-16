@@ -5,7 +5,7 @@
             [`van-col--${span}`]: span,
             [`van-col--offset-${offset}`]: offset,
         }"
-        :style="cpStyle"
+        :style="styles"
         @click="handleClick">
         <slot></slot>
     </view>
@@ -30,7 +30,7 @@ const emits = defineEmits(['click'])
 
 const { parent, index } = useParent('van-row')
 
-const cpStyle = computed(() => {
+const styles = computed(() => {
     if (!parent) {
         return
     }

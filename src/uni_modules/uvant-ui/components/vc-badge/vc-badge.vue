@@ -1,5 +1,5 @@
 <template>
-    <template v-if="cpShow">
+    <template v-if="!disabled">
         <van-badge
             v-bind="badgeProps"
             :dot="dot"
@@ -22,10 +22,7 @@ const props = defineProps({
     badgeProps: Object,
 })
 
-const cpShow = computed(() => {
-    const { dot, badge, badgeProps } = props
-    return dot || isDef(badge) || isObject(badgeProps)
-})
+const disabled = computed(() => !(props.dot || isDef(props.badge) || isObject(props.badgeProps)))
 </script>
 
 <style lang="scss" scoped></style>

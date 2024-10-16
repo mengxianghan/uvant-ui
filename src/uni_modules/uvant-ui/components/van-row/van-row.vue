@@ -28,7 +28,7 @@ const emits = defineEmits(['click'])
 
 const { children, linkChildren } = useChildren('van-row')
 
-const cpGroups = computed(() => {
+const groups = computed(() => {
     const groups = [[]]
 
     let totalSpan = 0
@@ -46,7 +46,7 @@ const cpGroups = computed(() => {
     return groups
 })
 
-const cpSpaces = computed(() => {
+const spaces = computed(() => {
     let gutter = 0
     if (Array.isArray(props.gutter)) {
         gutter = Number(props.gutter[0]) || 0
@@ -59,7 +59,7 @@ const cpSpaces = computed(() => {
         return spaces
     }
 
-    cpGroups.value.forEach((group) => {
+    groups.value.forEach((group) => {
         const averagePadding = (gutter * (group.length - 1)) / group.length
 
         group.forEach((item, index) => {
@@ -76,7 +76,7 @@ const cpSpaces = computed(() => {
     return spaces
 })
 
-const cpVerticalSpaces = computed(() => {
+const verticalSpaces = computed(() => {
     const { gutter } = props
     const spaces = []
     if (Array.isArray(gutter) && gutter.length > 1) {
@@ -84,8 +84,8 @@ const cpVerticalSpaces = computed(() => {
         if (bottom <= 0) {
             return spaces
         }
-        cpGroups.value.forEach((group, index) => {
-            if (index === cpGroups.value.length - 1) return
+        groups.value.forEach((group, index) => {
+            if (index === groups.value.length - 1) return
             group.forEach(() => {
                 spaces.push({ bottom })
             })
@@ -98,7 +98,7 @@ function handleClick(e) {
     emits('click', e)
 }
 
-linkChildren({ spaces: cpSpaces, verticalSpaces: cpVerticalSpaces })
+linkChildren({ spaces, verticalSpaces })
 </script>
 
 <style lang="scss" scoped>

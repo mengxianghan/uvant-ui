@@ -1,9 +1,16 @@
 <template>
     <view
         class="van-cell van-field"
-        :class="cpClass">
+        :class="{
+            'van-field--disabled': disabled,
+            'van-field--error': error,
+            'van-cell--center': center,
+            'van-cell--clickable': isLink || clickable,
+            'van-cell--borderless': !border,
+            [`van-field--label-${labelAlign}`]: true,
+        }">
         <!-- 左侧 icon -->
-        <template v-if="cpHasLeftIcon">
+        <template v-if="hasLeftIcon">
             <view
                 class="van-field__left-icon"
                 @click="handleLeftIcon">
@@ -14,11 +21,17 @@
         </template>
 
         <!-- label -->
-        <template v-if="cpHasLabel">
+        <template v-if="hasLabel">
             <view
                 class="van-cell__title van-field__label"
-                :class="cpLabelClass"
-                :style="cpLabelStyle">
+                :class="{
+                    [`van-field__label--${labelAlign}`]: labelAlign !== 'left',
+                    'van-field__label--required': required,
+                    'van-field__label--colon': colon,
+                }"
+                :style="{
+                    width: !isEmpty(labelWidth) ? addUnit(labelWidth) : '',
+                }">
                 <slot name="label">{{ label }}</slot>
             </view>
         </template>
@@ -27,15 +40,17 @@
         <view class="van-cell__value van-field__value">
             <view
                 class="van-field__body"
-                :class="cpBodyClass">
+                :class="{
+                    'van-field__body--textarea': type === 'textarea',
+                }">
                 <slot name="input">
                     <!-- textarea -->
                     <template v-if="'textarea' === type">
                         <textarea
                             v-model="modelValue"
-                            :class="cpControlClass"
-                            :style="cpTextareaStyle"
-                            :placeholder-class="cpPlaceholderClass"
+                            :class="controlClassNames"
+                            :style="textareaStyles"
+                            :placeholder-class="placeholderClassNames"
                             :name="name"
                             :placeholder="placeholder"
                             :disabled="disabled"
@@ -68,8 +83,8 @@
                     <template v-else>
                         <input
                             v-model="modelValue"
-                            :placeholder-class="cpPlaceholderClass"
-                            :class="cpControlClass"
+                            :placeholder-class="placeholderClassNames"
+                            :class="controlClassNames"
                             :name="name"
                             :type="type"
                             :password="password"
@@ -108,7 +123,7 @@
                     </template>
 
                     <!-- 清除按钮 -->
-                    <template v-if="cpHasClear">
+                    <template v-if="hasClear">
                         <view
                             class="van-field__clear"
                             @click="handleClear">
@@ -118,7 +133,7 @@
                 </slot>
 
                 <!-- 右侧 icon -->
-                <template v-if="cpHasRightIcon">
+                <template v-if="hasRightIcon">
                     <view
                         class="van-field__right-icon"
                         @click="handleRightIcon">
@@ -129,32 +144,34 @@
                 </template>
 
                 <!-- button -->
-                <template v-if="cpHasButton">
+                <template v-if="hasButton">
                     <view class="van-field__button">
                         <slot name="button"></slot>
                     </view>
                 </template>
             </view>
 
-            <template v-if="cpHasWordLimit">
-                <view class="van-field__word-limit"> {{ cpWordCount }}/{{ maxlength }} </view>
+            <template v-if="hasWordLimit">
+                <view class="van-field__word-limit"> {{ String(modelValue).length }}/{{ maxlength }} </view>
             </template>
 
             <!-- 错误信息 -->
-            <template v-if="cpHasErrorMessage">
+            <template v-if="hasErrorMessage">
                 <view
                     class="van-field__error-message"
-                    :class="cpErrorMessageClass">
+                    :class="{
+                        [`van-field__error-message--${errorMessageAlign}`]: errorMessageAlign !== 'left',
+                    }">
                     <slot name="errorMessage">{{ errorMessage }}</slot>
                 </view>
             </template>
         </view>
 
         <!-- arrow -->
-        <template v-if="cpHasCellRightIcon">
+        <template v-if="hasCellRightIcon">
             <view class="van-cell__right-icon">
                 <slot name="rightIcon">
-                    <van-icon :name="cpArrow"></van-icon>
+                    <van-icon :name="arrow"></van-icon>
                 </slot>
             </view>
         </template>
@@ -275,116 +292,43 @@ const modelValue = defineModel('modelValue', { type: [String, Number] })
 
 const isFocus = ref(false)
 
-const cpClass = computed(() => {
-    const { disabled, error, center, labelAlign, isLink, clickable, border } = props
-    const classNames = {
-        'van-field--disabled': disabled,
-        'van-field--error': error,
-        'van-cell--center': center,
-        'van-cell--clickable': isLink || clickable,
-        'van-cell--borderless': !border,
-        [`van-field--label-${labelAlign}`]: true,
-    }
-
-    return classNames
-})
-const cpLabelClass = computed(() => {
-    const { required, labelAlign, colon } = props
-    const classNames = {
-        [`van-field__label--${labelAlign}`]: labelAlign !== 'left',
-        'van-field__label--required': required,
-        'van-field__label--colon': colon,
-    }
-
-    return classNames
-})
-const cpLabelStyle = computed(() => {
-    const { labelWidth } = props
-    const style = {}
-
-    if (!isEmpty(labelWidth)) {
-        style.width = addUnit(labelWidth)
-    }
-
-    return style
-})
-const cpBodyClass = computed(() => {
-    const { type } = props
-    const classNames = {
-        'van-field__body--textarea': type === 'textarea',
-    }
-
-    return classNames
-})
-const cpControlClass = computed(() => {
-    const { error, inputAlign, type } = props
-    const classNames = {
-        'van-field__control--error': error,
-        'van-field__control--textarea': type === 'textarea',
-        [`van-field__control--${inputAlign}`]: inputAlign !== 'left',
-    }
-
-    return classNames
-})
-const cpPlaceholderClass = computed(() => {
-    const { placeholderClass } = props
-    let classNames = 'van-field__placeholder '
-
-    if (placeholderClass) {
-        classNames += placeholderClass
-    }
-
-    return classNames
-})
-const cpErrorMessageClass = computed(() => {
-    const { errorMessageAlign } = props
-    const classNames = {
-        [`van-field__error-message--${errorMessageAlign}`]: errorMessageAlign !== 'left',
-    }
-
-    return classNames
-})
-const cpTextareaStyle = computed(() => {
-    const { autosize } = props
-    const style = {}
-
-    if (autosize && typeof autosize === 'object') {
-        style.minHeight = addUnit(autosize.minHeight)
-        style.maxHeight = addUnit(autosize.maxHeight)
-    }
-
-    return style
-})
-const cpWordCount = computed(() => {
-    return String(modelValue.value).length
-})
-const cpHasLeftIcon = computed(() => {
+const placeholderClassNames = computed(() => `van-field__placeholder ${props.placeholderClass}`)
+const controlClassNames = computed(() => ({
+    [`van-field__control--${props.inputAlign}`]: props.inputAlign !== 'left',
+    'van-field__control--error': props.error,
+    'van-field__control--textarea': props.type === 'textarea',
+}))
+const textareaStyles = computed(() => ({
+    ...(props.autosize && typeof props.autosize === 'object'
+        ? { minHeight: addUnit(props.autosize.minHeight), maxHeight: addUnit(props.autosize.maxHeight) }
+        : {}),
+}))
+const hasLeftIcon = computed(() => {
     return !isEmpty(props.leftIcon) || slots.leftIcon
 })
-const cpHasLabel = computed(() => {
+const hasLabel = computed(() => {
     return !isEmpty(props.label) || slots.label
 })
-const cpHasRightIcon = computed(() => {
+const hasRightIcon = computed(() => {
     return !isEmpty(props.rightIcon) || slots.rightIcon
 })
-const cpHasErrorMessage = computed(() => {
+const hasErrorMessage = computed(() => {
     return !isEmpty(props.errorMessage) || slots.errorMessage
 })
-const cpHasButton = computed(() => {
+const hasButton = computed(() => {
     return slots.button
 })
-const cpHasClear = computed(() => {
-    const { clearable, clearTrigger } = props
+const hasClear = computed(() => {
     const checkValue = !isEmpty(modelValue.value)
 
-    if (clearTrigger === 'focus') {
-        return clearable && checkValue && isFocus.value
+    if (props.clearTrigger === 'focus') {
+        return props.clearable && checkValue && isFocus.value
     }
 
-    return clearable && checkValue
+    return props.clearable && props.arrowDirectioncheckValue
 })
-const cpHasCellRightIcon = computed(() => slots['rightIcon'] || props.isLink)
-const cpArrow = computed(() => {
+const hasCellRightIcon = computed(() => slots['rightIcon'] || props.isLink)
+const arrow = computed(() => {
     const { arrowDirection } = props
     let name
 
@@ -408,16 +352,11 @@ const cpArrow = computed(() => {
 
     return name
 })
-const cpHasWordLimit = computed(() => {
-    const { maxlength, showWordLimit } = props
-    return !isEmpty(maxlength) && showWordLimit
-})
+const hasWordLimit = computed(() => !isEmpty(props.maxlength) && props.showWordLimit)
 
 const onInput = debounce(() => {
-    const { formatTrigger, formatter } = props
-
-    if ('onChange' === formatTrigger) {
-        modelValue.value = formatter(modelValue.value)
+    if ('onChange' === props.formatTrigger) {
+        modelValue.value = props.formatter(modelValue.value)
     }
     emits('input', modelValue.value)
     emits('change', modelValue.value)
@@ -443,14 +382,12 @@ function onFocus(e) {
 }
 
 function onBlur(e) {
-    const { formatter, formatTrigger } = props
-
     setTimeout(() => {
         isFocus.value = false
     }, 5)
 
-    if ('onBlur' === formatTrigger) {
-        modelValue.value = formatter(modelValue.value)
+    if ('onBlur' === props.formatTrigger) {
+        modelValue.value = props.formatter(modelValue.value)
     }
 
     emits('blur', e)

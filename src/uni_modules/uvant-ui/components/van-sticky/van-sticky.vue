@@ -115,7 +115,7 @@ async function onScroll({ scrollTop: _scrollTop } = {}) {
                 clientHeight - currentOffset.value < rootRect.bottom + windowTop && clientHeight > containerRect.top
             state.transform = difference < 0 ? -difference : 0
         } else {
-            state.fixed = clientHeight - currentOffset.value < rootRect.bottom + windowTop
+            state.fixed = clientHeight - currentOffset.value < rootRect.bottom
         }
     }
 

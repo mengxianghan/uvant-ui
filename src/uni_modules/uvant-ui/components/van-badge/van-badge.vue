@@ -52,30 +52,15 @@ const hasContent = computed(() => {
         (props.showZero || (props.content !== 0 && props.content !== '0'))
     )
 })
-const classNames = computed(() => {
-    const { position, dot } = props
-    const classNames = {
-        'van-badge': true,
-        'van-badge--dot': dot,
-    }
-
-    if (hasDefault.value) {
-        classNames[`van-badge--${position}`] = true
-        classNames['van-badge--fixed'] = true
-    }
-
-    return classNames
-})
-const styles = computed(() => {
-    const { color } = props
-    const style = {}
-
-    if (color) {
-        style.background = color
-    }
-
-    return style
-})
+const classNames = computed(() => ({
+    'van-badge': true,
+    'van-badge--dot': props.dot,
+    [`van-badge--${props.position}`]: hasDefault.value,
+    ['van-badge--fixed']: hasDefault.value,
+}))
+const styles = computed(() => ({
+    background: props.color,
+}))
 const content = computed(() => {
     const { max, content } = props
     if (isDef(max) && isNumber(content) && +content > +max) {

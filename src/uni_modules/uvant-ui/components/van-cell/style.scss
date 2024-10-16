@@ -86,7 +86,7 @@ $van-cell-large-value-font-size: var(--van-cell-large-value-font-size, inherit);
     }
 
     &--clickable {
-        cursor: pointer;
+        // cursor: pointer;
 
         &:active {
             background-color: $van-cell-active-color;

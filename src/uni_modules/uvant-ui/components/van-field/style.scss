@@ -187,7 +187,7 @@ $van-field-required-mark-color: var(--van-field-required-mark-color, $van-red);
     &__clear {
         color: $van-field-clear-icon-color;
         font-size: $van-field-clear-icon-size;
-        cursor: pointer;
+        // cursor: pointer;
     }
 
     &__left-icon .van-icon,

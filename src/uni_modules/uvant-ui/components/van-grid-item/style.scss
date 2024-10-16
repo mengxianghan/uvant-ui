@@ -88,7 +88,7 @@ $van-grid-item-text-font-size: var(--van-grid-item-text-font-size, $van-font-siz
         }
 
         &--clickable {
-            cursor: pointer;
+            // cursor: pointer;
 
             &:active {
                 background-color: $van-grid-item-content-active-color;

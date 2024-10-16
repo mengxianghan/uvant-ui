@@ -76,7 +76,7 @@ $van-search-action-font-size: var(--van-search-action-font-size, $van-font-size-
         color: $van-search-action-text-color;
         font-size: $van-search-action-font-size;
         line-height: $van-search-input-height;
-        cursor: pointer;
+        // cursor: pointer;
         user-select: none;
 
         &:active {

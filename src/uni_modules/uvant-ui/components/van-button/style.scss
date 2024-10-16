@@ -50,7 +50,7 @@ $van-button-loading-icon-size: var(--van-button-loading-icon-size, 20px);
     line-height: $van-button-default-line-height;
     text-align: center;
     border-radius: $van-button-radius;
-    cursor: pointer;
+    // cursor: pointer;
     transition: opacity $van-duration-fast;
     -webkit-font-smoothing: auto;
 

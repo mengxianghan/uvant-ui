@@ -24,7 +24,7 @@ $van-sidebar-selected-background: var(--van-sidebar-selected-background, $van-ba
     font-size: $van-sidebar-font-size;
     line-height: $van-sidebar-line-height;
     background: $van-sidebar-background;
-    cursor: pointer;
+    // cursor: pointer;
     user-select: none;
 
     &:active {

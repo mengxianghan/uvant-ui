@@ -160,3 +160,19 @@ export function isPromise(val) {
 }
 
 export function noop() {}
+
+/**
+ * @param {*} object
+ * @param {string} path
+ * @returns {*}
+ */
+export function get(object, path) {
+    const keys = path.split('.')
+    let result = object
+
+    keys.forEach((key) => {
+        result = isObject(result) ? (result[key] ?? '') : ''
+    })
+
+    return result
+}

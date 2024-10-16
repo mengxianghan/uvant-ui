@@ -56,3 +56,6 @@ export function addNumber(num1, num2) {
     const cardinal = 10 ** 10
     return Math.round((num1 + num2) * cardinal) / cardinal
 }
+
+const camelizeRE = /-(\w)/g
+export const camelize = (str) => str.replace(camelizeRE, (_, c) => c.toUpperCase())

@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 @keyframes van-slide-up-enter {
     from {
         transform: translate3d(0, 100%, 0);

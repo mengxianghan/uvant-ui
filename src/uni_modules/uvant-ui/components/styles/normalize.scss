@@ -5,6 +5,7 @@ html {
 body,
 page {
     font-family: var(--van-base-font);
+    -webkit-font-smoothing: antialiased;
 }
 
 navigator {

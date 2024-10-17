@@ -128,6 +128,18 @@
             "style": {
                 "navigationBarTitleText": "Sidebar"
             }
+        },
+        {
+            "path": "pages/component/overlay",
+            "style": {
+                "navigationBarTitleText": "Overlay"
+            }
+        },
+        {
+            "path": "pages/component/style",
+            "style": {
+                "navigationBarTitleText": "Style"
+            }
         }
     ],
     "globalStyle": {

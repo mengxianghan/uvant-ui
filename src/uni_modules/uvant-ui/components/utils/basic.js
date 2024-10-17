@@ -1,3 +1,5 @@
+export const extend = Object.assign
+
 /**
  * @param {*} value
  * @returns

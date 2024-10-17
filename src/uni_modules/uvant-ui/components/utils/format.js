@@ -19,3 +19,15 @@ export function getSizeStyle(originSize) {
         }
     }
 }
+
+/**
+ * @param {Number} zIndex
+ * @returns
+ */
+export function getZIndexStyle(zIndex) {
+    const style = {}
+    if (zIndex !== undefined) {
+        style.zIndex = +zIndex
+    }
+    return style
+}

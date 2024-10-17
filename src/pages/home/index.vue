@@ -48,7 +48,7 @@ const list = ref([
             { key: 'Icon', name: '图标', url: '/pages/component/icon' },
             { key: 'Image', name: '图片', url: '/pages/component/image' },
             { key: 'Layout', name: '布局', url: '/pages/component/layout' },
-            { key: 'Popup', name: '弹出层', url: '' },
+            { key: 'Popup', name: '弹出层', url: '/pages/component/popup' },
             { key: 'Space', name: '间距', url: '/pages/component/space' },
             { key: 'Style', name: '内置样式', url: '/pages/component/style' },
             { key: 'Toast', name: '轻提示', url: '' },

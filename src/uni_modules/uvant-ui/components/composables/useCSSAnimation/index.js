@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { isDef, isEmpty, isFunction } from '../utils'
+import { isDef, isEmpty, isFunction } from '../../utils'
 
 /**
  * @typedef Option
@@ -105,5 +105,5 @@ export function useCSSAnimation(_options = {}) {
         }
     }
 
-    return { classes, styles, onAnimationstart, onAnimationend, open, close, setOption }
+    return { classes, styles, onAnimationstart, onAnimationend, open, close, setOption, visible }
 }

@@ -140,6 +140,12 @@
             "style": {
                 "navigationBarTitleText": "Style"
             }
+        },
+        {
+            "path": "pages/component/popup",
+            "style": {
+                "navigationBarTitleText": "Popup"
+            }
         }
     ],
     "globalStyle": {

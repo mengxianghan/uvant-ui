@@ -52,7 +52,6 @@ watch(
 )
 
 function handleClick() {
-    console.log('click')
     emits('click')
 }
 </script>

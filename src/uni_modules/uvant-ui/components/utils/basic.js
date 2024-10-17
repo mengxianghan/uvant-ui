@@ -1,5 +1,7 @@
 export const extend = Object.assign
 
+export function noop() {}
+
 /**
  * @param {*} value
  * @returns
@@ -20,23 +22,19 @@ export function isFunction(value) {
  * @param {*} value
  * @returns
  */
-export function isObject(value) {
-    return value !== null && typeof value === 'object'
-}
+export const isObject = (value) => value !== null && typeof value === 'object'
 
 /**
  * @param {*} value
  * @returns
  */
-export function isNumber(value) {
-    return typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)
-}
+export const isNumber = (value) => typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)
 
 /**
  * @param {*} value
  * @returns
  */
-export function isMobile(value) {
+export const isMobile = (value) => {
     value = value.replace(/[^-|\d]/g, '')
     return /^((\+86)|(86))?(1)\d{10}$/.test(value) || /^0[0-9-]{10,13}$/.test(value)
 }
@@ -45,17 +43,19 @@ export function isMobile(value) {
  * @param {*} value
  * @returns
  */
-export function isEmpty(value) {
-    return value === '' || value === undefined || value === null
-}
+export const isEmpty = (value) => value === '' || value === undefined || value === null
 
 /**
  * @param {*} value
  * @returns
  */
-export function isArray(value) {
-    return Array.isArray(value)
-}
+export const isArray = (value) => Array.isArray(value)
+
+/**
+ * @param {*} val
+ * @returns
+ */
+export const isPromise = (val) => isObject(val) && isFunction(val.then) && isFunction(val.catch)
 
 /**
  * @returns
@@ -115,9 +115,7 @@ function gte(version) {
     return compareVersion(system.SDKVersion, version) >= 0
 }
 
-export function canIUseCanvas2d() {
-    return gte('2.9.0')
-}
+export const canIUseCanvas2d = () => gte('2.9.0')
 
 /**
  * @param {*} context

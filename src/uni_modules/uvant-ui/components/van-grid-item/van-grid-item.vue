@@ -1,7 +1,8 @@
 <template>
     <view
         class="van-grid-item"
-        :style="styles">
+        :style="styles"
+        @click="handleClick">
         <view
             :class="['van-grid-item__content', classNames]"
             :style="contentStyles">
@@ -47,6 +48,7 @@ defineProps({
     badge: [Number, String],
     badgeProps: Object,
 })
+const emits = defineEmits(['click'])
 
 const { parent, index } = useParent('van-grid')
 
@@ -97,6 +99,10 @@ const classNames = computed(() => {
         'van-hairline': border,
     }
 })
+
+function handleClick(e) {
+    emits('click', e)
+}
 </script>
 
 <style lang="scss" scoped>

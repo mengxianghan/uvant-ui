@@ -4,7 +4,7 @@
         :z-index="curZIndex"
         :duration="duration"
         @click="onClickOverlay"></van-overlay>
-    <div
+    <view
         :class="[
             'van-popup',
             {
@@ -35,7 +35,7 @@
                     :name="closeIcon"></van-icon>
             </view>
         </template>
-    </div>
+    </view>
 </template>
 
 <script setup>
@@ -91,7 +91,6 @@ const {
     onAnimationstart,
     onAnimationend,
 } = useCSSAnimation({
-    name: 'van-fade',
     onAfterEnter: () => {
         emits('opened')
     },
@@ -125,6 +124,7 @@ onMounted(() => {
 
 function open() {
     animationOpen({
+        name: `van-popup-slide-${props.position}`,
         zIndex: curZIndex.value,
     })
     emits('open')

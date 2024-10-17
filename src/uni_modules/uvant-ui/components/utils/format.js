@@ -34,18 +34,6 @@ export function getSizeStyle(originSize) {
     }
 }
 
-/**
- * @param {Number} zIndex
- * @returns
- */
-export function getZIndexStyle(zIndex) {
-    const style = {}
-    if (zIndex !== undefined) {
-        style.zIndex = +zIndex
-    }
-    return style
-}
-
 export function formatNumber(value, allowDot = true, allowMinus = true) {
     if (allowDot) {
         value = trimExtraChar(value, '.', /\./g)
@@ -70,4 +58,18 @@ export function addNumber(num1, num2) {
 }
 
 const camelizeRE = /-(\w)/g
-export const camelize = (str) => str.replace(camelizeRE, (_, c) => c.toUpperCase())
+export function camelize(str) {
+    return str.replace(camelizeRE, (_, c) => c.toUpperCase())
+}
+
+/**
+ * @param {Number} zIndex
+ * @returns
+ */
+export function getZIndexStyle(zIndex) {
+    const style = {}
+    if (zIndex !== undefined) {
+        style.zIndex = +zIndex
+    }
+    return style
+}

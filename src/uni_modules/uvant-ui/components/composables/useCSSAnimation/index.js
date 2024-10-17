@@ -69,6 +69,7 @@ export function useCSSAnimation(_options = {}) {
     }
 
     function onAnimationstart() {
+        console.log('onAnimationstart')
         if (visible.value) {
             classes.value = getClassNames('enter-to')
             dispatch('onEnter')
@@ -79,6 +80,7 @@ export function useCSSAnimation(_options = {}) {
     }
 
     function onAnimationend() {
+        console.log('onAnimationend')
         classes.value = null
         display.value = visible.value
 
@@ -105,5 +107,5 @@ export function useCSSAnimation(_options = {}) {
         }
     }
 
-    return { classes, styles, onAnimationstart, onAnimationend, open, close, setOption, visible }
+    return { classes, styles, onAnimationstart, onAnimationend, open, close, setOption }
 }

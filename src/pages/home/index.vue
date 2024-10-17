@@ -73,7 +73,7 @@ const list = ref([
             { key: 'Search', name: '搜索', url: '/pages/component/search' },
             { key: 'Slider', name: '滑块', url: '' },
             { key: 'Signature', name: '签名', url: '' },
-            { key: 'Stepper', name: '步进器', url: '' },
+            { key: 'Stepper', name: '步进器', url: '/pages/component/stepper' },
             { key: 'Switch', name: '开关', url: '' },
             { key: 'TimePicker', name: '时间选择', url: '' },
             { key: 'Uploader', name: '文件上传', url: '' },
@@ -130,7 +130,7 @@ const list = ref([
         children: [
             { key: 'ActionBar', name: '动作栏', url: '/pages/component/action-bar' },
             { key: 'BackTop', name: '回到顶部', url: '' },
-            { key: 'Grid', name: '宫格', url: '' },
+            { key: 'Grid', name: '宫格', url: '/pages/component/grid' },
             { key: 'IndexBar', name: '索引栏', url: '' },
             { key: 'NavBar', name: '导航栏', url: '' },
             { key: 'Pagination', name: '分页', url: '' },

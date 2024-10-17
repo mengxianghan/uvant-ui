@@ -46,7 +46,6 @@ function initialize() {
     if (props.disabled) return
 
     getRect(instance.proxy, `.${placeholderSelector.value}`).then((data) => {
-        console.log(data)
         if (!data) return
         height.value = data.height
     })

@@ -154,3 +154,19 @@ export function mergeClassNames(...args) {
 
     return classNames.join(' ')
 }
+
+/**
+ * @param {*} object
+ * @param {string} path
+ * @returns {*}
+ */
+export function get(object, path) {
+    const keys = path.split('.')
+    let result = object
+
+    keys.forEach((key) => {
+        result = isObject(result) ? (result[key] ?? '') : ''
+    })
+
+    return result
+}

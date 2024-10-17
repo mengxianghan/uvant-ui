@@ -124,6 +124,18 @@
             }
         },
         {
+            "path": "pages/component/stepper",
+            "style": {
+                "navigationBarTitleText": "Stepper"
+            }
+        },
+        {
+            "path": "pages/component/grid",
+            "style": {
+                "navigationBarTitleText": "Grid"
+            }
+        },
+        {
             "path": "pages/component/sidebar",
             "style": {
                 "navigationBarTitleText": "Sidebar"

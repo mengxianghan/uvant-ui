@@ -20,7 +20,7 @@ $van-action-bar-icon-background: var(--van-action-bar-icon-background, $van-back
     line-height: 1;
     text-align: center;
     background: $van-action-bar-icon-background;
-    cursor: pointer;
+    // cursor: pointer;
 
     &:active {
         background-color: $van-action-bar-icon-active-color;

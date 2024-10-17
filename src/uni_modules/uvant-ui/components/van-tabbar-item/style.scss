@@ -18,7 +18,7 @@ $van-tabbar-item-icon-margin-bottom: var(--van-tabbar-item-icon-margin-bottom, $
     color: $van-tabbar-item-text-color;
     font-size: $van-tabbar-item-font-size;
     line-height: $van-tabbar-item-line-height;
-    cursor: pointer;
+    // cursor: pointer;
 
     &__icon {
         margin-bottom: $van-tabbar-item-icon-margin-bottom;

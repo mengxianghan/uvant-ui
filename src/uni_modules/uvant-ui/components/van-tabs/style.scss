@@ -72,7 +72,7 @@ $van-tabs-bottom-bar-color: var(--van-tabs-bottom-bar-color, $van-primary-color)
     color: $van-tab-text-color;
     font-size: $van-tab-font-size;
     line-height: $van-tab-line-height;
-    cursor: pointer;
+    // cursor: pointer;
 
     &--active {
         color: $van-tab-active-text-color;

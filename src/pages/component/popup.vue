@@ -7,7 +7,7 @@
                 <van-cell
                     title="展示弹出层"
                     is-link
-                    @click="showPopup" />
+                    @click="show = true" />
             </van-cell-group>
             <van-popup v-model:show="show">
                 <view class="p-16 bg-white">内容</view>
@@ -20,7 +20,7 @@
             <van-gird>
                 <van-gird-item>111</van-gird-item>
             </van-gird>
-            <van-popup v-model:show="show">
+            <van-popup v-model:show="show2">
                 <view class="p-16 bg-white">内容</view>
             </van-popup>
         </demo-block>
@@ -31,9 +31,7 @@
 import { ref } from 'vue'
 
 const show = ref(false)
-const showPopup = () => {
-    show.value = true
-}
+const show2 = ref(false)
 </script>
 
 <style lang="scss" scoped></style>

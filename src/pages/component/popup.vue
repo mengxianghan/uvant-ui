@@ -7,9 +7,9 @@
                 <van-cell
                     title="展示弹出层"
                     is-link
-                    @click="show = true" />
+                    @click="showBasic = true" />
             </van-cell-group>
-            <van-popup v-model:show="show">
+            <van-popup v-model:show="showBasic">
                 <view class="p-16 bg-white">内容</view>
             </van-popup>
         </demo-block>
@@ -62,34 +62,93 @@
                 <van-cell
                     title="关闭图标"
                     is-link
-                    @click="showIcon = true" />
+                    @click="showCloseIcon = true" />
                 <van-cell
                     title="自定义图标"
                     is-link
-                    @click="showIconCustom = true" />
+                    @click="showCustomCloseIcon = true" />
                 <van-cell
                     title="图标位置"
                     is-link
-                    @click="showIconPosition = true" />
+                    @click="showCustomIconPosition = true" />
             </van-cell-group>
             <van-popup
-                v-model:show="showClose"
+                v-model:show="showCloseIcon"
                 closeable
                 position="bottom">
                 <view class="h-40 bg-white"></view>
             </van-popup>
             <van-popup
-                v-model:show="showCustomClose"
+                v-model:show="showCustomCloseIcon"
                 closeable
                 close-icon="close"
                 position="bottom">
                 <view class="h-40 bg-white"></view>
             </van-popup>
             <van-popup
-                v-model:show="showIconPosition"
+                v-model:show="showCustomIconPosition"
                 closeable
                 close-icon-position="top-left"
                 position="bottom">
+                <view class="h-40 bg-white"></view>
+            </van-popup>
+        </demo-block>
+
+        <demo-block
+            title="圆角弹窗"
+            :card="false">
+            <van-cell-group inset>
+                <van-cell
+                    title="圆角弹窗（居中）"
+                    is-link
+                    @click="showRoundCornerCenter = true" />
+                <van-cell
+                    title="圆角弹窗（底部）"
+                    is-link
+                    @click="showRoundCornerBottom = true" />
+            </van-cell-group>
+            <van-popup
+                v-model:show="showRoundCornerCenter"
+                round>
+                <view class="w-40 h-40 bg-white"></view>
+            </van-popup>
+            <van-popup
+                v-model:show="showRoundCornerBottom"
+                round
+                position="bottom">
+                <view class="h-40 bg-white"></view>
+            </van-popup>
+        </demo-block>
+
+        <demo-block
+            title="事件监听"
+            :card="false">
+            <van-cell-group inset>
+                <van-cell
+                    title="监听点击事件"
+                    is-link
+                    @click="showClickEvents = true" />
+                <van-cell
+                    title="监听显示事件"
+                    is-link
+                    @click="showDisplayEvents = true" />
+            </van-cell-group>
+            <van-popup
+                v-model:show="showClickEvents"
+                position="bottom"
+                closeable
+                @click-overlay="showToast('click-overlay')"
+                @click-close-icon="showToast('click-close-icon')">
+                <view class="h-40 bg-white"></view>
+            </van-popup>
+            <van-popup
+                v-model:show="showDisplayEvents"
+                round
+                position="bottom"
+                @open="showToast('open')"
+                @opened="showToast('opened')"
+                @close="showToast('close')"
+                @closed="showToast('closed')">
                 <view class="h-40 bg-white"></view>
             </van-popup>
         </demo-block>
@@ -99,14 +158,20 @@
 <script setup>
 import { ref } from 'vue'
 
-const show = ref(false)
+const showBasic = ref(false)
 const showTop = ref(false)
 const showBottom = ref(false)
 const showLeft = ref(false)
 const showRight = ref(false)
-const showIcon = ref(false)
-const showIconCustom = ref(false)
-const showIconPosition = ref(false)
+const showCloseIcon = ref(false)
+const showRoundCornerBottom = ref(false)
+const showRoundCornerCenter = ref(false)
+const showCustomCloseIcon = ref(false)
+const showCustomIconPosition = ref(false)
+const showClickEvents = ref(false)
+const showDisplayEvents = ref(false)
+
+const showToast = (title) => uni.showToast({ title, icon: 'none' })
 </script>
 
 <style lang="scss" scoped></style>

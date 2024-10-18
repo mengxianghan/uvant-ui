@@ -40,7 +40,7 @@
 
 <script setup>
 import { computed, watch, onMounted } from 'vue'
-import { isDef } from '../utils'
+import { callInterceptor, isDef } from '../utils'
 import { useCSSAnimation, useGlobalZIndex } from '../composables'
 import { isEmpty } from 'lodash-es'
 
@@ -68,7 +68,6 @@ const props = defineProps({
     beforeClose: { type: Function, default: () => true },
     iconPrefix: String,
     transition: String,
-    transitionAppear: { type: Boolean, default: false },
     safeAreaInsetTop: { type: Boolean, default: false },
     safeAreaInsetBottom: { type: Boolean, default: false },
 })
@@ -84,6 +83,7 @@ const emits = defineEmits([
     'clickCloseIcon',
 ])
 const {
+    visible,
     styles: animationStyles,
     classes: animationClasses,
     open: animationOpen,
@@ -91,14 +91,20 @@ const {
     onAnimationstart,
     onAnimationend,
 } = useCSSAnimation({
+    onEnter: () => {
+        emits('open')
+    },
     onAfterEnter: () => {
         emits('opened')
+    },
+    onLeave: () => {
+        emits('close')
     },
     onAfterLeave: () => {
         emits('closed')
     },
 })
-
+let opened
 const curZIndex = computed(() => (!isEmpty(props.zIndex) ? +props.zIndex : useGlobalZIndex()))
 const styles = computed(() => {
     const style = {}
@@ -113,7 +119,14 @@ const styles = computed(() => {
 
 watch(
     () => show.value,
-    (val) => (val ? open() : close())
+    (val) => {
+        if (val && !opened) {
+            open()
+        }
+        if (!val && opened) {
+            close()
+        }
+    }
 )
 
 onMounted(() => {
@@ -123,18 +136,26 @@ onMounted(() => {
 })
 
 function open() {
+    if (opened) return
+    opened = true
     animationOpen({
         name: `van-popup-slide-${props.position}`,
         zIndex: curZIndex.value,
     })
     emits('open')
-    show.value = true
+    show.value = visible.value
 }
 
 function close() {
-    animationClose()
-    emits('close')
-    show.value = false
+    if (!opened) return
+    callInterceptor(props.beforeClose, {
+        done() {
+            opened = false
+            animationClose()
+            emits('close')
+            show.value = visible.value
+        },
+    })
 }
 
 function onClickOverlay(event) {

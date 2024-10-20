@@ -4,7 +4,7 @@
         :class="{
             'van-image--round': round,
         }"
-        :style="getSizeStyle([width, height])"
+        :style="styles"
         @click="handleClick">
         <image
             :src="src"
@@ -45,8 +45,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { getSizeStyle } from '../utils'
+import { computed, ref } from 'vue'
+import { getSizeStyle, isEmpty, addUnit } from '../utils'
 
 const props = defineProps({
     src: String,
@@ -90,6 +90,19 @@ const emits = defineEmits(['click', 'load', 'error'])
 
 const loading = ref(true)
 const error = ref(false)
+
+const styles = computed(() => {
+    const style = {
+        ...getSizeStyle([props.width, props.height]),
+    }
+
+    if (!isEmpty(props.radius)) {
+        style.overflow = 'hidden'
+        style.borderRadius = addUnit(props.radius)
+    }
+
+    return style
+})
 
 function handleClick(e) {
     emits('click', e)

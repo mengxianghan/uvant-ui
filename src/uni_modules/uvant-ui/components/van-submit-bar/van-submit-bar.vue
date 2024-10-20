@@ -1,13 +1,9 @@
 <template>
     <van-fixed
         :placeholder="placeholder"
-        :position="fixed && 'bottom'">
-        <view
-            class="van-submit-bar"
-            :class="{
-                'van-submit-bar--fixed': fixed,
-                'van-safe-area-bottom': safeAreaInsetBottom,
-            }">
+        :position="fixed && 'bottom'"
+        :safe-area="safeAreaInsetBottom">
+        <view class="van-submit-bar">
             <template v-if="hasTip">
                 <view class="van-submit-bar__tip">
                     <template v-if="hasTipIcon">

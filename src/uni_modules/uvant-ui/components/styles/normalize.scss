@@ -4,7 +4,7 @@ html {
 
 body,
 page {
-    font-family: var(--van-base-font);
+    font-family: var(--van-base-font, $van-base-font);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -33,4 +33,10 @@ uni-textarea,
     &:focus {
         outline: none;
     }
+}
+
+image,
+video,
+audio {
+    vertical-align: middle;
 }

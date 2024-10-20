@@ -27,7 +27,7 @@ const props = defineProps({
     badge: [Number, String],
     badgeProps: Object,
     color: String,
-    size: String,
+    size: [String, Number],
     classPrefix: { type: String, default: 'van-icon' },
 })
 const emits = defineEmits(['click'])

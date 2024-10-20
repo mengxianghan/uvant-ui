@@ -3,7 +3,13 @@
         <vc-placeholder
             :disabled="!placeholder"
             :custom-style="customStyles"
-            :custom-class="customClass">
+            :custom-class="[
+                customClass,
+                {
+                    'van-safe-area-bottom': safeArea && position === 'bottom',
+                    'van-safe-area-top': safeArea && position === 'top',
+                },
+            ]">
             <slot></slot>
         </vc-placeholder>
     </template>
@@ -30,7 +36,7 @@ const props = defineProps({
 })
 
 const customStyles = computed(() => {
-    const { windowTop, windowBottom, safeArea } = getSystemInfoSync()
+    const { windowTop, windowBottom } = getSystemInfoSync()
 
     if (!props.position) {
         return
@@ -40,7 +46,6 @@ const customStyles = computed(() => {
         zIndex: props.zIndex,
         position: 'fixed',
         [`${props.position}`]: `calc(${addUnit(props.offset)} + ${addUnit(props.position === 'top' ? windowTop : windowBottom)})`,
-        [`padding-${props.position}`]: props.safeArea ? safeArea[props.position] : '',
         ['left']: 0,
         ['right']: 0,
     }

@@ -13,14 +13,14 @@
             :class="[
                 'van-checkbox__icon',
                 {
-                    [`van-checkbox__icon--${shape}`]: shape,
+                    [`van-checkbox__icon--${computedShape}`]: computedShape,
                     'van-checkbox__icon--disabled': disabled,
                     'van-checkbox__icon--checked': checked,
                     'van-checkbox__icon--indeterminate': indeterminate,
                 },
             ]"
             :style="{
-                fontSize: addUnit(iconSize),
+                fontSize: addUnit(computedIconSize),
             }">
             <slot name="icon">
                 <view
@@ -92,7 +92,7 @@ const checked = computed(() => {
     return !!modelValue.value
 })
 const direction = computed(() => getParentProp('direction'))
-const shape = computed(() => {
+const computedShape = computed(() => {
     return props.shape || getParentProp('shape') || 'round'
 })
 const iconStyles = computed(() => {
@@ -106,6 +106,7 @@ const iconStyles = computed(() => {
     }
     return null
 })
+const computedIconSize = computed(() => props.iconSize || getParentProp('iconSize'))
 
 watch(
     () => modelValue.value,

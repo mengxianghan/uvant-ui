@@ -68,7 +68,7 @@ const list = ref([
             { key: 'PasswordInput', name: '密码输入框', url: '' },
             { key: 'Picker', name: '选择器', url: '' },
             { key: 'PickerGroup', name: '选择器组', url: '' },
-            { key: 'Radio', name: '单选框', url: '' },
+            { key: 'Radio', name: '单选框', url: '/pages/component/radio' },
             { key: 'Rate', name: '评分', url: '' },
             { key: 'Search', name: '搜索', url: '/pages/component/search' },
             { key: 'Slider', name: '滑块', url: '' },

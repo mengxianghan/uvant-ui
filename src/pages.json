@@ -170,6 +170,12 @@
             "style": {
                 "navigationBarTitleText": "Checkbox"
             }
+        },
+        {
+            "path": "pages/component/radio",
+            "style": {
+                "navigationBarTitleText": "Radio"
+            }
         }
     ],
     "globalStyle": {

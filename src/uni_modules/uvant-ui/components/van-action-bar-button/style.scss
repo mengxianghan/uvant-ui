@@ -31,6 +31,10 @@ $van-action-bar-button-danger-color: var(--van-action-bar-button-danger-color, $
         --van-button-radius: 0 #{$van-radius-max} #{$van-radius-max} 0;
     }
 
+    &--center {
+        --van-button-radius: 0;
+    }
+
     &--warning {
         --van-button-warning-background: #{$van-action-bar-button-warning-color};
     }

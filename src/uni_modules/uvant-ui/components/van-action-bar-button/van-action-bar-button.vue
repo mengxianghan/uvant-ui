@@ -5,6 +5,7 @@
             'van-action-bar-button--first': isFirst && !isOnly,
             'van-action-bar-button--last': isLast && !isOnly,
             'van-action-bar-button--only-one': isOnly,
+            'van-action-bar-button--center': !isFirst && !isLast && !isOnly,
             [`van-action-bar-button--${type}`]: true,
         }">
         <van-button

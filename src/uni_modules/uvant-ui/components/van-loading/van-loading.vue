@@ -22,14 +22,16 @@
                 </template>
             </slot>
         </view>
-        <view
-            class="van-loading__text"
-            :style="{
-                fontSize: isDef(textSize) ? addUnit(textSize) : '',
-                color: textColor || color,
-            }">
-            <slot></slot>
-        </view>
+        <template v-if="slots.default">
+            <view
+                class="van-loading__text"
+                :style="{
+                    fontSize: isDef(textSize) ? addUnit(textSize) : '',
+                    color: textColor || color,
+                }">
+                <slot></slot>
+            </view>
+        </template>
     </view>
 </template>
 

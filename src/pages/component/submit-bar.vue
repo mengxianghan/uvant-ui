@@ -46,7 +46,7 @@
                 :safe-area-inset-bottom="false"
                 button-text="提交订单"
                 @submit="onSubmit">
-                <label><checkbox class="scale-75"></checkbox>全选</label>
+                <van-checkbox>全选</van-checkbox>
                 <template #tip>
                     你的收货地址不支持配送,
                     <text

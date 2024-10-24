@@ -176,6 +176,12 @@
             "style": {
                 "navigationBarTitleText": "Radio"
             }
+        },
+        {
+            "path": "pages/component/switch",
+            "style": {
+                "navigationBarTitleText": "Switch"
+            }
         }
     ],
     "globalStyle": {

@@ -3,6 +3,7 @@
         :show="show"
         :z-index="curZIndex"
         :duration="duration"
+        :lock-scroll="lockScroll"
         @click="onClickOverlay"></van-overlay>
     <view
         :class="[
@@ -56,6 +57,7 @@ const props = defineProps({
     duration: { type: [Number, String], default: 0.3 },
     zIndex: [Number, String],
     round: { type: Boolean, default: false },
+    lockScroll: { type: Boolean, default: true },
     closeOnPopustate: { type: Boolean, default: false },
     closeOnClickOverlay: { type: Boolean, default: true },
     closeable: { type: Boolean, default: false },

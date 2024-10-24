@@ -4,7 +4,7 @@
         :badge="badge"
         :badge-props="badgeProps">
         <view
-            :class="classNames"
+            :class="classes"
             :style="styles"
             @click="handleClick">
             <template v-if="isImage">
@@ -33,7 +33,7 @@ const props = defineProps({
 const emits = defineEmits(['click'])
 
 const isImage = computed(() => props.name?.includes('/'))
-const classNames = computed(() => ({
+const classes = computed(() => ({
     [`${props.classPrefix}`]: true,
     [`${props.classPrefix}-${props.name}`]: !isImage.value && !!props.name,
 }))

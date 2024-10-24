@@ -20,7 +20,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useParent, useExpose } from '../composables'
+import { useParent } from '../composables'
 
 defineProps({
     text: String,
@@ -32,14 +32,13 @@ defineProps({
 })
 
 const { parent, index } = useParent('van-action-bar')
-useExpose({ isButton: true })
 
 const isFirst = computed(() => {
     if (!parent) {
         return false
     }
     const prev = parent.children[index.value - 1]
-    return !(prev && 'isButton' in prev)
+    return !(prev && 'isButton' in prev.exposed)
 })
 
 const isLast = computed(() => {
@@ -47,10 +46,12 @@ const isLast = computed(() => {
         return false
     }
     const next = parent.children[index.value + 1]
-    return !(next && 'isButton' in next)
+    return !(next && 'isButton' in next.exposed)
 })
 
-const isOnly = computed(() => parent && parent.children.filter((item) => item.isButton).length === 1)
+const isOnly = computed(() => parent && parent.children.filter((item) => item.exposed.isButton).length === 1)
+
+defineExpose({ isButton: true })
 </script>
 
 <style lang="scss" scoped>

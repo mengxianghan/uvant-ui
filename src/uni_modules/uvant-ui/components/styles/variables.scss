@@ -56,9 +56,20 @@ $van-line-height-lg: var(--van-line-height-lg, 22px);
 /* stylelint-disable */
 $van-base-font: var(
     --van-base-font,
-    "-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,Segoe UI,Arial,Roboto,'PingFang SC','miui','Hiragino Sans GB','Microsoft Yahei',sans-serif"
+    -apple-system,
+    BlinkMacSystemFont,
+    'Helvetica Neue',
+    Helvetica,
+    Segoe UI,
+    Arial,
+    Roboto,
+    'PingFang SC',
+    'miui',
+    'Hiragino Sans GB',
+    'Microsoft Yahei',
+    sans-serif
 );
-$van-price-font: var(--van-price-font, "avenir-heavy, 'PingFang SC', helvetica neue, arial, sans-serif");
+$van-price-font: var(--van-price-font, avenir-heavy, 'PingFang SC', helvetica neue, arial, sans-serif);
 /* stylelint-enable */
 
 // Animation

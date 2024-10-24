@@ -62,7 +62,7 @@
 <script setup>
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
 import { addUnit, isEmpty, getRect, getSizeStyle } from '../utils'
-import { findIndex, head, uniqueId } from 'lodash-es'
+import { findIndex, head, uniqueId, get } from 'lodash-es'
 
 const props = defineProps({
     list: { type: Array, default: () => [] },
@@ -109,6 +109,9 @@ onMounted(async () => {
 })
 
 async function initialize() {
+    if (isEmpty(active.value)) {
+        active.value = get(head(props.list), 'value')
+    }
     await nextTick()
     setLineOffset()
     setScrollLeft()

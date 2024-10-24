@@ -1,5 +1,6 @@
 export * from './useRelation'
-export * from './useExpose'
 export * from './useLazyRender'
 export * from './useCSSAnimation'
 export * from './useGlobalZIndex'
+export * from './useTouch'
+export * from './useRefs'

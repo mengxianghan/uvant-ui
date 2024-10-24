@@ -158,6 +158,18 @@
             "style": {
                 "navigationBarTitleText": "Popup"
             }
+        },
+        {
+            "path": "pages/component/floating-panel",
+            "style": {
+                "navigationBarTitleText": "FloatingPanel"
+            }
+        },
+        {
+            "path": "pages/component/checkbox",
+            "style": {
+                "navigationBarTitleText": "Checkbox"
+            }
         }
     ],
     "globalStyle": {

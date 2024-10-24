@@ -1,5 +1,5 @@
 <template>
-    <view class="container">
+    <view class="home-container">
         <view class="flex pl-6">
             <image
                 class="w-8 h-8"
@@ -60,7 +60,7 @@ const list = ref([
         children: [
             { key: 'Calendar', name: '日历', url: '' },
             { key: 'Cascader', name: '级联选择', url: '' },
-            { key: 'Checkbox', name: '复选框', url: '' },
+            { key: 'Checkbox', name: '复选框', url: '/pages/component/checkbox' },
             { key: 'DatePicker', name: '日期选择', url: '' },
             { key: 'Field', name: '输入框', url: '/pages/component/field' },
             { key: 'Form', name: '表单', url: '' },
@@ -87,7 +87,7 @@ const list = ref([
             { key: 'Barrage', name: '弹幕', url: '' },
             { key: 'Dialog', name: '弹出框', url: '' },
             { key: 'DropdownMenu', name: '下拉菜单', url: '' },
-            { key: 'FloatingPanel', name: '浮动面板', url: '' },
+            { key: 'FloatingPanel', name: '浮动面板', url: '/pages/component/floating-panel' },
             { key: 'FloatingBubble', name: '浮动气泡', url: '' },
             { key: 'Loading', name: '加载', url: '/pages/component/loading' },
             { key: 'Notify', name: '消息通知', url: '' },
@@ -164,7 +164,7 @@ function handleNavigator(url) {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.home-container {
     @apply px-5 pb-6 min-h-svh bg-white;
 
     /* #ifdef H5 */

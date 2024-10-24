@@ -74,6 +74,8 @@ $van-cell-large-value-font-size: var(--van-cell-large-value-font-size, inherit);
         height: $van-cell-line-height;
         font-size: $van-cell-icon-size;
         line-height: $van-cell-line-height;
+        display: inline-flex;
+        align-items: center;
     }
 
     &__left-icon {
@@ -86,8 +88,6 @@ $van-cell-large-value-font-size: var(--van-cell-large-value-font-size, inherit);
     }
 
     &--clickable {
-        // cursor: pointer;
-
         &:active {
             background-color: $van-cell-active-color;
         }

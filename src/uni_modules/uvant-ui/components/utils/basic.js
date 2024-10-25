@@ -1,3 +1,5 @@
+import { defaultTo } from 'lodash-es'
+
 export const extend = Object.assign
 
 export function noop() {}
@@ -177,7 +179,7 @@ export function get(object, path) {
     let result = object
 
     keys.forEach((key) => {
-        result = isObject(result) ? (result[key] ?? '') : ''
+        result = isObject(result) ? defaultTo(result[key], '') : ''
     })
 
     return result

@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { isDef, isEmpty, isFunction } from '../../utils'
+import { defaultTo } from 'lodash-es'
 
 /**
  * @typedef Option
@@ -29,7 +30,7 @@ export function useCSSAnimation(_options = {}) {
         return {
             animationDuration: !isEmpty(options.value.duration) ? `${options.value.duration}s` : '',
             display: display.value ? 'block' : 'none',
-            zIndex: !isEmpty(options.value.zIndex) ? options.value.zIndex : '',
+            zIndex: defaultTo(options.value.zIndex),
         }
     })
 

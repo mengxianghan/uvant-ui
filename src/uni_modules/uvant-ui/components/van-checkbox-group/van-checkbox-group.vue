@@ -13,6 +13,7 @@
 <script setup>
 import { watch } from 'vue'
 import { useChildren } from '../composables'
+import { defaultTo } from 'lodash-es'
 
 const props = defineProps({
     disabled: { type: Boolean, default: false },
@@ -52,7 +53,7 @@ function toggleAll(options = {}) {
         if (item.props.disabled && skipDisabled) {
             return item.exposed.checked
         }
-        return checked ?? !item.exposed.checked
+        return defaultTo(checked, !item.exposed.checked)
     })
 
     const names = checkedChildren.map((item) => item.props.name)

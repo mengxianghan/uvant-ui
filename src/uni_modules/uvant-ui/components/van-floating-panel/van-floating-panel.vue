@@ -34,6 +34,7 @@
 import { computed, onMounted, ref, watch } from 'vue'
 import { getSystemInfoSync, addUnit, closest, preventDefault } from '../utils'
 import { useTouch } from '../composables/useTouch'
+import { defaultTo } from 'lodash-es'
 
 const props = defineProps({
     anchors: { type: Array, default: () => [] },
@@ -56,8 +57,8 @@ const scrollTop = ref(0)
 const boundary = computed(() => {
     const { windowHeight } = getSystemInfoSync()
     return {
-        min: props.anchors[0] ?? 100,
-        max: props.anchors[props.anchors.length - 1] ?? Math.round(windowHeight * 0.6),
+        min: defaultTo(props.anchors[0], 100),
+        max: defaultTo(props.anchors[props.anchors.length - 1], Math.round(windowHeight * 0.6)),
     }
 })
 const anchors = computed(() => (props.anchors.length >= 2 ? props.anchors : [boundary.value.min, boundary.value.max]))

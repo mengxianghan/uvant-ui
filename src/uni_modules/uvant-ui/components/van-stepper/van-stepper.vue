@@ -46,6 +46,7 @@
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
 import { isDef, formatNumber, addNumber, callInterceptor, addUnit, getSizeStyle } from '../utils'
+import { defaultTo } from 'lodash-es'
 
 const props = defineProps({
     min: { type: [Number, String], default: 1 },
@@ -98,7 +99,7 @@ function handleClick(_actionType) {
 }
 
 function getInitialValue() {
-    const defaultValue = props.modelValue ?? props.defaultValue
+    const defaultValue = defaultTo(props.modelValue, props.defaultValue)
     const value = format(defaultValue)
 
     if (!isEqual(value, props.modelValue)) {

@@ -1,12 +1,12 @@
 <template>
     <view>
-        <van-tabs
+        <van-data-tab
             v-model:active="active"
             :list="[
                 { label: '基础用法', value: 1 },
                 { label: '自定义锚点', value: 2 },
                 { label: '仅头部拖拽', value: 3 },
-            ]"></van-tabs>
+            ]"></van-data-tab>
 
         <template v-if="active === 1">
             <van-floating-panel>

@@ -1,23 +1,23 @@
 @import '../styles/variables.scss';
 
-$van-data-tabs-text-color: var(--van-data-tabs-text-color, $van-gray-7);
-$van-data-tabs-active-text-color: var(--van-data-tabs-active-text-color, $van-text-color);
-$van-data-tabs-disabled-text-color: var(--van-data-tabs-disabled-text-color, $van-text-color-3);
-$van-data-tabs-font-size: var(--van-data-tabs-font-size, $van-font-size-md);
-$van-data-tabs-default-color: var(--van-data-tabs-default-color, $van-primary-color);
-$van-data-tabs-line-height: var(--van-data-tabs-line-height, 44px);
-$van-data-tabs-nav-background: var(--van-data-tabs-nav-background, $van-background-2);
-$van-data-tabs-bottom-bar-width: var(--van-data-tabs-bottom-bar-width, 40px);
-$van-data-tabs-bottom-bar-height: var(--van-data-tabs-bottom-bar-height, 3px);
-$van-data-tabs-bottom-bar-color: var(--van-data-tabs-bottom-bar-color, $van-primary-color);
+$van-data-tab-text-color: var(--van-data-tab-text-color, $van-gray-7);
+$van-data-tab-active-text-color: var(--van-data-tab-active-text-color, $van-text-color);
+$van-data-tab-disabled-text-color: var(--van-data-tab-disabled-text-color, $van-text-color-3);
+$van-data-tab-font-size: var(--van-data-tab-font-size, $van-font-size-md);
+$van-data-tab-default-color: var(--van-data-tab-default-color, $van-primary-color);
+$van-data-tab-line-height: var(--van-data-tab-line-height, 44px);
+$van-data-tab-nav-background: var(--van-data-tab-nav-background, $van-background-2);
+$van-data-tab-bottom-bar-width: var(--van-data-tab-bottom-bar-width, 40px);
+$van-data-tab-bottom-bar-height: var(--van-data-tab-bottom-bar-height, 3px);
+$van-data-tab-bottom-bar-color: var(--van-data-tab-bottom-bar-color, $van-primary-color);
 
-.van-tabs {
+.van-data-tab {
     position: relative;
 
     &__scroll {
         overflow: hidden;
-        height: $van-data-tabs-line-height;
-        background: $van-data-tabs-nav-background;
+        height: $van-data-tab-line-height;
+        background: $van-data-tab-nav-background;
     }
 
     &__nav {
@@ -33,10 +33,10 @@ $van-data-tabs-bottom-bar-color: var(--van-data-tabs-bottom-bar-color, $van-prim
         bottom: 0;
         left: 0;
         z-index: 1;
-        width: $van-data-tabs-bottom-bar-width;
-        height: $van-data-tabs-bottom-bar-height;
-        background: $van-data-tabs-bottom-bar-color;
-        border-radius: $van-data-tabs-bottom-bar-height;
+        width: $van-data-tab-bottom-bar-width;
+        height: $van-data-tab-bottom-bar-height;
+        background: $van-data-tab-bottom-bar-color;
+        border-radius: $van-data-tab-bottom-bar-height;
     }
 
     &__track {
@@ -61,16 +61,16 @@ $van-data-tabs-bottom-bar-color: var(--van-data-tabs-bottom-bar-color, $van-prim
         justify-content: center;
         box-sizing: border-box;
         padding: 0 $van-padding-base;
-        color: $van-data-tabs-text-color;
-        font-size: $van-data-tabs-font-size;
+        color: $van-data-tab-text-color;
+        font-size: $van-data-tab-font-size;
 
         &--active {
-            color: $van-data-tabs-active-text-color;
+            color: $van-data-tab-active-text-color;
             font-weight: $van-font-bold;
         }
 
         &--disabled {
-            color: $van-data-tabs-disabled-text-color;
+            color: $van-data-tab-disabled-text-color;
             cursor: not-allowed;
         }
 

@@ -5,13 +5,13 @@
         </demo-block>
 
         <demo-block title="图片类型">
-            <van-tabs
+            <van-data-tab
                 v-model:active="imageType"
                 :list="[
                     { label: '通用错误', value: 'error' },
                     { label: '网络错误', value: 'network' },
                     { label: '搜索提示', value: 'search' },
-                ]"></van-tabs>
+                ]"></van-data-tab>
             <van-empty
                 :image="imageType"
                 description="描述文字" />
@@ -51,7 +51,7 @@ const imageType = ref('error')
 
 <style lang="scss" scoped>
 .empty {
-    --van-tabs-nav-background: transparent;
+    --van-data-tab-nav-background: transparent;
     --van-button-normal-padding: 0 56px;
 }
 </style>

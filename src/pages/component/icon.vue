@@ -1,7 +1,7 @@
 <template>
     <view class="icon-container">
         <van-fixed position="top">
-            <van-tabs
+            <van-data-tab
                 v-model:active="active"
                 sticky
                 :list="[
@@ -9,7 +9,7 @@
                     { label: '基础图标', value: 2 },
                     { label: '线框风格', value: 3 },
                     { label: '实底风格', value: 4 },
-                ]"></van-tabs>
+                ]"></van-data-tab>
         </van-fixed>
 
         <view class="p-5">

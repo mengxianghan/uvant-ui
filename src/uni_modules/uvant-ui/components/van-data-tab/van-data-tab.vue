@@ -46,9 +46,7 @@
                                     ellipsis,
                                 })
                             ">
-                            <slot
-                                :record="item"
-                                :index="index">
+                            <slot>
                                 {{ item.label }}
                             </slot>
                         </view>
@@ -98,7 +96,7 @@ const props = defineProps({
 const active = defineModel('active', { type: numericProp })
 const emits = defineEmits(['click', 'change'])
 
-const { name, bem } = createNamespace('tabs')
+const { name, bem } = createNamespace('data-tab')
 const [tabSelector, lineSelector, scrollViewSelector] = createUniqueSelector(name, 3)
 const instance = getCurrentInstance()
 const scrollLeft = ref(0)

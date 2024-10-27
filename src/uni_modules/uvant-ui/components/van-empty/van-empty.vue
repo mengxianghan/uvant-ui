@@ -1,22 +1,22 @@
 <template>
-    <view class="van-empty">
+    <view :class="bem()">
         <view
-            class="van-empty__image"
+            :class="bem('image')"
             :style="getSizeStyle(imageSize)">
             <slot name="image">
                 <image
-                    class="van-empty__image-img"
+                    :class="bem('image-img')"
                     :src="imageSrc"
                     mode="aspectFit" />
             </slot>
         </view>
         <template v-if="hasDescription">
-            <view class="van-empty__description">
+            <view :class="bem('description')">
                 <slot name="description">{{ description }}</slot>
             </view>
         </template>
         <template v-if="slots.default">
-            <view class="van-empty__bottom">
+            <view :class="bem('bottom')">
                 <slot></slot>
             </view>
         </template>
@@ -25,19 +25,16 @@
 
 <script setup>
 import { useSlots, computed } from 'vue'
-import { get, isEmpty } from 'lodash-es'
-import { getSizeStyle } from '../utils'
+import { getSizeStyle, isNullOrEmpty, get, createNamespace, makeStringProp } from '../utils'
 
 const props = defineProps({
-    image: {
-        type: String,
-        default: 'default',
-    },
+    image: makeStringProp('default'),
     imageSize: [Number, String, Array],
     description: String,
 })
 
 const slots = useSlots()
+const { bem } = createNamespace('empty')
 
 const PRESET_IMAGES = {
     error: 'https://img01.yzcdn.cn/vant/empty-image-error.png',
@@ -47,7 +44,7 @@ const PRESET_IMAGES = {
 }
 
 const imageSrc = computed(() => get(PRESET_IMAGES, props.image, props.image))
-const hasDescription = computed(() => !isEmpty(props.description) || slots.description)
+const hasDescription = computed(() => !isNullOrEmpty(props.description) || slots.description)
 </script>
 
 <style lang="scss" scoped>

@@ -1,39 +1,40 @@
 <template>
     <view
-        class="van-cell"
-        :class="{
-            'van-cell--center': center,
-            'van-cell--clickable': isLink || clickable,
-            'van-cell--borderless': !border,
-            [`van-cell--${size}`]: size,
-        }"
-        @click="handleClick">
+        :class="
+            bem({
+                center,
+                clickable: isLink || clickable,
+                borderless: !border,
+                [size]: size,
+            })
+        "
+        @click="onClick">
         <template v-if="hasLeftIcon">
-            <view class="van-cell__left-icon">
+            <view :class="bem('left-icon')">
                 <slot name="icon">
                     <van-icon :name="icon"></van-icon>
                 </slot>
             </view>
         </template>
         <template v-if="hasTitle">
-            <view class="van-cell__title">
+            <view :class="bem('title')">
                 <view>
                     <slot name="title">{{ title }}</slot>
                 </view>
                 <template v-if="hasLabel">
-                    <view class="van-cell__label">
+                    <view :class="bem('label')">
                         <slot name="label">{{ label }}</slot>
                     </view>
                 </template>
             </view>
         </template>
         <template v-if="hasValue">
-            <view class="van-cell__value">
+            <view :class="bem('value')">
                 <slot name="value">{{ value }}</slot>
             </view>
         </template>
         <template v-if="hasRightIcon">
-            <view class="van-cell__right-icon">
+            <view :class="bem('right-icon')">
                 <slot name="rightIcon">
                     <van-icon :name="arrow"></van-icon>
                 </slot>
@@ -45,28 +46,32 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { isDef } from '../utils'
+import { isDef, createNamespace, numericProp, truthProp } from '../utils'
 
 const props = defineProps({
-    title: [Number, String],
-    value: [Number, String],
-    label: [Number, String],
-    size: { type: String, validator: (value) => ['large', 'normal'].includes(value) },
     icon: String,
+    size: String,
+    title: numericProp,
+    value: numericProp,
+    label: numericProp,
+    center: Boolean,
+    isLink: Boolean,
+    border: truthProp,
     iconPrefix: String,
-    border: { type: Boolean, default: true },
-    clickable: { type: Boolean, default: false },
-    isLink: { type: Boolean, default: false },
-    required: { type: Boolean, default: false },
-    center: { type: Boolean, default: false },
-    arrowDirection: {
-        type: String,
-        default: 'right',
-        validator: (value) => ['left', 'right', 'up', 'down'].includes(value),
+    arrowDirection: String,
+    required: {
+        type: [Boolean, String],
+        default: null,
+    },
+    clickable: {
+        type: Boolean,
+        default: null,
     },
 })
 const emits = defineEmits(['click'])
 const slots = useSlots()
+
+const { bem } = createNamespace('cell')
 
 const hasLeftIcon = computed(() => isDef(props.icon) || slots.icon)
 const hasTitle = computed(() => isDef(props.title) || slots.title || hasLabel.value)
@@ -98,7 +103,7 @@ const arrow = computed(() => {
     return name
 })
 
-function handleClick(e) {
+function onClick(e) {
     emits('click', e)
 }
 </script>

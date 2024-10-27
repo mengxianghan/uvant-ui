@@ -4,10 +4,12 @@
         :position="fixed && 'bottom'"
         :safe-area="safeAreaInsetBottom">
         <view
-            class="van-action-bar"
-            :class="{
-                'van-safe-area-bottom': safeAreaInsetBottom,
-            }">
+            :class="[
+                bem(),
+                {
+                    'van-safe-area-bottom': safeAreaInsetBottom,
+                },
+            ]">
             <slot></slot>
         </view>
     </van-fixed>
@@ -15,14 +17,16 @@
 
 <script setup>
 import { useChildren } from '../composables'
+import { createNamespace, truthProp } from '../utils'
 
 defineProps({
-    safeAreaInsetBottom: { type: Boolean, default: true },
-    placeholder: { type: Boolean, default: false },
-    fixed: { type: Boolean, default: true },
+    placeholder: Boolean,
+    safeAreaInsetBottom: truthProp,
+    fixed: truthProp,
 })
 
 const { linkChildren } = useChildren('van-action-bar')
+const { bem } = createNamespace('action-bar')
 
 linkChildren()
 </script>

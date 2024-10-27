@@ -1,13 +1,14 @@
 <template>
     <view
-        class="van-action-bar-button"
-        :class="{
-            'van-action-bar-button--first': isFirst && !isOnly,
-            'van-action-bar-button--last': isLast && !isOnly,
-            'van-action-bar-button--only-one': isOnly,
-            'van-action-bar-button--center': !isFirst && !isLast && !isOnly,
-            [`van-action-bar-button--${type}`]: true,
-        }">
+        :class="[
+            bem({
+                first: isFirst && !isOnly,
+                last: isLast && !isOnly,
+                'only-one': isOnly,
+                center: !isFirst && !isLast && !isOnly,
+                [type]: type,
+            }),
+        ]">
         <van-button
             :type="type"
             :color="color"
@@ -22,17 +23,19 @@
 <script setup>
 import { computed } from 'vue'
 import { useParent } from '../composables'
+import { createNamespace } from '../utils'
 
 defineProps({
     text: String,
     type: String,
     color: String,
     icon: String,
-    disabled: { type: Boolean, default: false },
-    loading: { type: Boolean, default: false },
+    disabled: Boolean,
+    loading: Boolean,
 })
 
 const { parent, index } = useParent('van-action-bar')
+const { bem } = createNamespace('action-bar-button')
 
 const isFirst = computed(() => {
     if (!parent) {

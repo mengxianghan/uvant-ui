@@ -1,18 +1,21 @@
 <template>
     <view
-        class="van-cell van-field"
-        :class="{
-            'van-field--disabled': disabled,
-            'van-field--error': error,
-            'van-cell--center': center,
-            'van-cell--clickable': isLink || clickable,
-            'van-cell--borderless': !border,
-            [`van-field--label-${labelAlign}`]: true,
-        }">
+        :class="[
+            bem({
+                disabled,
+                error,
+                [`label-${labelAlign}`]: true,
+            }),
+            bemCell({
+                center,
+                clickable: isLink || clickable,
+                borderless: !border,
+            }),
+        ]">
         <!-- 左侧 icon -->
         <template v-if="hasLeftIcon">
             <view
-                class="van-field__left-icon"
+                :class="bem('left-icon')"
                 @click="handleLeftIcon">
                 <slot name="leftIcon">
                     <van-icon :name="leftIcon"></van-icon>
@@ -23,34 +26,37 @@
         <!-- label -->
         <template v-if="hasLabel">
             <view
-                class="van-cell__title van-field__label"
-                :class="{
-                    [`van-field__label--${labelAlign}`]: labelAlign !== 'left',
-                    'van-field__label--required': required,
-                    'van-field__label--colon': colon,
-                }"
+                :class="[
+                    bem('label', {
+                        [labelAlign]: labelAlign !== 'left',
+                        required,
+                        colon,
+                    }),
+                    bemCell('title'),
+                ]"
                 :style="{
-                    width: !isEmpty(labelWidth) ? addUnit(labelWidth) : '',
+                    width: !isNullOrEmpty(labelWidth) ? addUnit(labelWidth) : '',
                 }">
                 <slot name="label">{{ label }}</slot>
             </view>
         </template>
 
         <!-- value -->
-        <view class="van-cell__value van-field__value">
+        <view :class="[bem('value'), bemCell('value')]">
             <view
-                class="van-field__body"
-                :class="{
-                    'van-field__body--textarea': type === 'textarea',
-                }">
+                :class="
+                    bem('body', {
+                        textarea: type === 'textarea',
+                    })
+                ">
                 <slot name="input">
                     <!-- textarea -->
                     <template v-if="'textarea' === type">
                         <textarea
                             v-model="modelValue"
-                            :class="controlClassNames"
+                            :class="controlClasses"
                             :style="textareaStyles"
-                            :placeholder-class="placeholderClassNames"
+                            :placeholder-class="placeholderClasses"
                             :name="name"
                             :placeholder="placeholder"
                             :disabled="disabled"
@@ -71,7 +77,6 @@
                             :adjust-keyboard-to="adjustKeyBoardTo"
                             :show-confirm-bar="showConfirmBar"
                             :fixed="fixed"
-                            class="van-field__control"
                             @focus="onFocus"
                             @blur="onBlur"
                             @linechange="onLineChange"
@@ -83,8 +88,8 @@
                     <template v-else>
                         <input
                             v-model="modelValue"
-                            :placeholder-class="placeholderClassNames"
-                            :class="controlClassNames"
+                            :placeholder-class="placeholderClasses"
+                            :class="controlClasses"
                             :name="name"
                             :type="type"
                             :password="password"
@@ -113,7 +118,6 @@
                             :controlled="controlled"
                             :always-system="alwaysSystem"
                             :inputmode="inputmode"
-                            class="van-field__control"
                             @input="onInput"
                             @focus="onFocus"
                             @blur="onBlur"
@@ -125,7 +129,7 @@
                     <!-- 清除按钮 -->
                     <template v-if="hasClear">
                         <view
-                            class="van-field__clear"
+                            :class="bem('clear')"
                             @click="handleClear">
                             <van-icon :name="clearIcon"></van-icon>
                         </view>
@@ -135,7 +139,7 @@
                 <!-- 右侧 icon -->
                 <template v-if="hasRightIcon">
                     <view
-                        class="van-field__right-icon"
+                        :class="bem('right-icon')"
                         @click="handleRightIcon">
                         <slot name="rightIcon">
                             <van-icon :name="rightIcon"></van-icon>
@@ -145,23 +149,24 @@
 
                 <!-- button -->
                 <template v-if="hasButton">
-                    <view class="van-field__button">
+                    <view :class="bem('button')">
                         <slot name="button"></slot>
                     </view>
                 </template>
             </view>
 
             <template v-if="hasWordLimit">
-                <view class="van-field__word-limit"> {{ String(modelValue).length }}/{{ maxlength }} </view>
+                <view :class="bem('word-limit')"> {{ String(modelValue).length }}/{{ maxlength }} </view>
             </template>
 
             <!-- 错误信息 -->
             <template v-if="hasErrorMessage">
                 <view
-                    class="van-field__error-message"
-                    :class="{
-                        [`van-field__error-message--${errorMessageAlign}`]: errorMessageAlign !== 'left',
-                    }">
+                    :class="
+                        bem('error-message', {
+                            [errorMessageAlign]: errorMessageAlign !== 'left',
+                        })
+                    ">
                     <slot name="errorMessage">{{ errorMessage }}</slot>
                 </view>
             </template>
@@ -169,7 +174,7 @@
 
         <!-- arrow -->
         <template v-if="hasCellRightIcon">
-            <view class="van-cell__right-icon">
+            <view :class="bemCell('right-icon')">
                 <slot name="rightIcon">
                     <van-icon :name="arrow"></van-icon>
                 </slot>
@@ -180,96 +185,80 @@
 
 <script setup>
 import { computed, ref, useSlots } from 'vue'
-import { isEmpty, addUnit } from '../utils'
+import {
+    isNullOrEmpty,
+    addUnit,
+    createNamespace,
+    makeStringProp,
+    makeNumericProp,
+    truthProp,
+    numericProp,
+    makeNumberProp,
+} from '../utils'
 import { debounce } from 'lodash-es'
 
 const props = defineProps({
     label: String,
     name: String,
-    id: { type: String, default: 'van-field-n-input' },
-    type: {
-        type: String,
-        default: 'text',
-        validator: (value) =>
-            ['text', 'number', 'idcard', 'digit', 'tel', 'safe-password', 'nickname', 'textarea'].includes(value),
-    },
-    fixed: { type: Boolean, default: false },
-    focus: { type: Boolean, default: false },
-    size: { type: String, validator: (value) => ['normal', 'large'].includes(value) },
-    maxlength: { type: [Number, String], default: -1 },
+    id: String,
+    type: makeStringProp('text'), // ['text', 'number', 'idcard', 'digit', 'tel', 'safe-password', 'nickname', 'textarea']
+    fixed: Boolean,
+    focus: Boolean,
+    size: String,
+    maxlength: makeNumericProp(-1),
     min: Number,
     max: Number,
     placeholder: String,
-    border: { type: Boolean, default: true },
-    disabled: { type: Boolean, default: false },
-    colon: { type: Boolean, default: false },
-    required: { type: Boolean, default: false },
-    center: { type: Boolean, default: false },
-    clearable: { type: Boolean, default: false },
-    clearIcon: { type: String, default: 'clear' },
-    clearTrigger: { type: String, default: 'focus', validator: (value) => ['always', 'focus'].includes(value) },
-    clickable: { type: Boolean, default: false },
-    isLink: { type: Boolean, default: false },
-    showWordLimit: { type: Boolean, default: false },
-    error: { type: Boolean, default: false },
+    border: truthProp,
+    disabled: Boolean,
+    colon: Boolean,
+    required: Boolean,
+    center: Boolean,
+    clearable: Boolean,
+    clearIcon: makeStringProp('clear'),
+    clearTrigger: makeStringProp('focus'),
+    clickable: Boolean,
+    isLink: Boolean,
+    showWordLimit: Boolean,
+    error: Boolean,
     errorMessage: String,
-    errorMessageAlign: {
-        type: String,
-        default: 'left',
-        validator: (value) => ['left', 'center', 'right'].includes(value),
-    },
-    arrowDirection: {
-        type: String,
-        default: 'right',
-        validator: (value) => ['left', 'right', 'up', 'down'].includes(value),
-    },
-    labelWidth: [Number, String],
-    labelAlign: {
-        type: String,
-        default: 'left',
-        validator: (value) => ['left', 'center', 'right', 'top'].includes(value),
-    },
-    inputAlign: { type: String, default: 'left', validator: (value) => ['left', 'center', 'right'].includes(value) },
+    errorMessageAlign: makeStringProp('left'),
+    arrowDirection: makeStringProp('right'),
+    labelWidth: numericProp,
+    labelAlign: makeStringProp('left'),
+    inputAlign: makeStringProp('left'),
     autosize: { type: [Boolean, Object], default: false },
     leftIcon: String,
     rightIcon: String,
-    confirmType: {
-        type: String,
-        default: 'done',
-        validator: (value) => ['send', 'search', 'next', 'go', 'done'].includes(value),
-    },
-    confirmHold: { type: Boolean, default: false },
-    holdKeyboard: { type: Boolean, default: false },
-    cursorSpacing: { type: Number, default: 50 },
-    adjustPosition: { type: Boolean, default: true },
-    showConfirmBar: { type: Boolean, default: true },
-    selectionStart: { type: Number, default: -1 },
-    selectionEnd: { type: Number, default: -1 },
-    cursor: { type: Number, default: -1 },
-    alwaysEmbed: { type: Boolean, default: false },
-    disableDefaultPadding: { type: Boolean, default: true },
+    confirmType: makeStringProp('done'),
+    confirmHold: Boolean,
+    holdKeyboard: Boolean,
+    cursorSpacing: makeNumberProp(50),
+    adjustPosition: truthProp,
+    showConfirmBar: truthProp,
+    selectionStart: makeNumberProp(-1),
+    selectionEnd: makeNumberProp(-1),
+    cursor: makeNumberProp(-1),
+    alwaysEmbed: Boolean,
+    disableDefaultPadding: truthProp,
     iconPrefix: String,
     placeholderClass: String,
-    autoBlur: { type: Boolean, default: false },
-    ignoreCompositionEvent: { type: Boolean, default: true },
+    autoBlur: Boolean,
+    ignoreCompositionEvent: truthProp,
     safePasswordCertPath: String,
     safePasswordLength: Number,
     safePasswordTimeStamp: Number,
     safePasswordNonce: String,
     safePasswordSalt: String,
     safePasswordCustomHash: String,
-    randomNumber: { type: Boolean, default: false },
-    controlled: { type: Boolean, default: false },
-    alwaysSystem: { type: Boolean, default: false },
-    inputmode: {
-        type: String,
-        default: 'text',
-        validator: (value) => ['none', 'text', 'decimal', 'numberic', 'tel', 'search', 'email', 'url'].includes(value),
-    },
-    adjustKeyBoardTo: { type: String, default: 'bottom', validator: (value) => ['cursor', 'bottom'].includes(value) },
-    password: { type: Boolean, default: false },
+    randomNumber: Boolean,
+    controlled: Boolean,
+    alwaysSystem: Boolean,
+    inputmode: makeStringProp('text'),
+    adjustKeyBoardTo: makeStringProp('bottom'),
+    password: Boolean,
     formatter: { type: Function, default: (val) => val },
-    formatTrigger: { type: String, default: 'onChange', validator: (value) => ['onChange', 'onBlur'].includes(value) },
+    formatTrigger: makeStringProp('onChange'),
 })
 const emits = defineEmits([
     'input',
@@ -285,41 +274,44 @@ const emits = defineEmits([
     'linechange',
     'nicknamereview',
 ])
+const modelValue = defineModel('modelValue', { type: [String, Number] })
 
 const slots = useSlots()
-
-const modelValue = defineModel('modelValue', { type: [String, Number] })
+const { name: bemName, bem } = createNamespace('field')
+const { bem: bemCell } = createNamespace('cell')
 
 const isFocus = ref(false)
 
-const placeholderClassNames = computed(() => `van-field__placeholder ${props.placeholderClass}`)
-const controlClassNames = computed(() => ({
-    [`van-field__control--${props.inputAlign}`]: props.inputAlign !== 'left',
-    'van-field__control--error': props.error,
-    'van-field__control--textarea': props.type === 'textarea',
-}))
+const placeholderClasses = computed(() => `${bemName}__placeholder ${props.placeholderClass}`)
+const controlClasses = computed(() =>
+    bem('control', {
+        [props.inputAlign]: props.inputAlign !== 'left',
+        error: props.error,
+        textarea: props.type === 'textarea',
+    })
+)
 const textareaStyles = computed(() => ({
     ...(props.autosize && typeof props.autosize === 'object'
         ? { minHeight: addUnit(props.autosize.minHeight), maxHeight: addUnit(props.autosize.maxHeight) }
         : {}),
 }))
 const hasLeftIcon = computed(() => {
-    return !isEmpty(props.leftIcon) || slots.leftIcon
+    return !isNullOrEmpty(props.leftIcon) || slots.leftIcon
 })
 const hasLabel = computed(() => {
-    return !isEmpty(props.label) || slots.label
+    return !isNullOrEmpty(props.label) || slots.label
 })
 const hasRightIcon = computed(() => {
-    return !isEmpty(props.rightIcon) || slots.rightIcon
+    return !isNullOrEmpty(props.rightIcon) || slots.rightIcon
 })
 const hasErrorMessage = computed(() => {
-    return !isEmpty(props.errorMessage) || slots.errorMessage
+    return !isNullOrEmpty(props.errorMessage) || slots.errorMessage
 })
 const hasButton = computed(() => {
     return slots.button
 })
 const hasClear = computed(() => {
-    const checkValue = !isEmpty(modelValue.value)
+    const checkValue = !isNullOrEmpty(modelValue.value)
 
     if (props.clearTrigger === 'focus') {
         return props.clearable && checkValue && isFocus.value
@@ -352,7 +344,7 @@ const arrow = computed(() => {
 
     return name
 })
-const hasWordLimit = computed(() => !isEmpty(props.maxlength) && props.showWordLimit)
+const hasWordLimit = computed(() => !isNullOrEmpty(props.maxlength) && props.showWordLimit)
 
 const onInput = debounce(() => {
     if ('onChange' === props.formatTrigger) {

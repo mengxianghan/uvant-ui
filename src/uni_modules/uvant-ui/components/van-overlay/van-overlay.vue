@@ -1,17 +1,17 @@
 <template>
     <view
-        :class="['van-overlay', classes]"
+        :class="[bem(), classes]"
         :style="[styles, animationStyles]"
         @animationstart="onAnimationstart"
         @animationend="onAnimationend"
-        @click="handleClick">
+        @click="onClick">
         <slot></slot>
     </view>
 </template>
 
 <script setup>
 import { computed, watch } from 'vue'
-import { getZIndexStyle } from '../utils'
+import { getZIndexStyle, createNamespace } from '../utils'
 import { useCSSAnimation } from '../composables'
 
 const props = defineProps({
@@ -24,6 +24,7 @@ const props = defineProps({
     customStyle: Object,
 })
 const emits = defineEmits(['click'])
+const { bem } = createNamespace('overlay')
 
 const {
     styles: animationStyles,
@@ -51,7 +52,7 @@ watch(
     }
 )
 
-function handleClick() {
+function onClick() {
     emits('click')
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <view
-        :class="['van-sticky', stickySelector]"
+        :class="[bem(), stickySelector]"
         :style="styles">
         <view :style="innerStyles">
             <slot></slot>
@@ -9,23 +9,33 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, ref, onMounted, watch, reactive } from 'vue'
-import { addUnit, getRect, getSizeStyle, getSystemInfoSync, isFunction } from '../utils'
-import { uniqueId } from 'lodash-es'
+import { computed, getCurrentInstance, onMounted, watch, reactive } from 'vue'
+import {
+    addUnit,
+    getRect,
+    getSizeStyle,
+    getSystemInfoSync,
+    createUniqueSelector,
+    createNamespace,
+    makeStringProp,
+    makeNumericProp,
+} from '../utils'
+import { isFunction } from 'lodash-es'
 
 const props = defineProps({
-    position: { type: String, default: 'top', validator: (value) => ['top', 'bottom'].includes(value) },
-    offset: { type: [Number, String], default: 0 },
-    zIndex: { type: [Number, String], default: 99 },
+    position: makeStringProp('top'),
+    offset: makeNumericProp(0),
+    zIndex: makeNumericProp(99),
     container: Function,
-    disabled: { type: Boolean, default: false },
+    disabled: Boolean,
     pageScroll: { type: Function, default: () => {}, required: true },
 })
 const emits = defineEmits(['scroll', 'change'])
 const scrollTop = defineModel('scrollTop', { type: Number, default: null })
 
 const instance = getCurrentInstance()
-const stickySelector = ref(uniqueId('van-sticky-'))
+const { name, bem } = createNamespace('sticky')
+const [stickySelector] = createUniqueSelector(name)
 
 const state = reactive({
     width: 0,
@@ -93,7 +103,7 @@ async function onScroll({ scrollTop: _scrollTop } = {}) {
 
     scrollTop.value = _scrollTop || scrollTop.value
 
-    const rootRect = await getRect(instance.proxy, `.${stickySelector.value}`)
+    const rootRect = await getRect(instance.proxy, `.${stickySelector}`)
     const containerRect = await getContainerRect()
     const { windowTop = 0, windowHeight: clientHeight } = getSystemInfoSync()
 

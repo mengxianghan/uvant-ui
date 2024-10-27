@@ -1,30 +1,28 @@
 <template>
     <view
-        :class="[
-            'van-checkbox',
-            {
-                'van-checkbox--disabled': disabled,
-                'van-checkbox--label-disabled': labelDisabled,
-                [`van-checkbox--${direction}`]: direction,
-            },
-        ]"
-        @click="handleClick">
+        :class="
+            bem({
+                disabled,
+                'label-disabled': labelDisabled,
+                [direction]: direction,
+            })
+        "
+        @click="onClick">
         <view
-            :class="[
-                'van-checkbox__icon',
-                {
-                    [`van-checkbox__icon--${computedShape}`]: computedShape,
-                    'van-checkbox__icon--disabled': disabled,
-                    'van-checkbox__icon--checked': checked,
-                    'van-checkbox__icon--indeterminate': indeterminate,
-                },
-            ]"
+            :class="
+                bem('icon', {
+                    [computedShape]: computedShape,
+                    disabled,
+                    checked,
+                    indeterminate,
+                })
+            "
             :style="{
                 fontSize: addUnit(computedIconSize),
             }">
             <slot name="icon">
                 <view
-                    class="van-checkbox__icon-default"
+                    :class="bem('icon-default')"
                     :style="iconStyles">
                     <van-icon :name="indeterminate ? 'minus' : 'success'"></van-icon>
                 </view>
@@ -32,14 +30,13 @@
         </view>
         <template v-if="slots.default">
             <view
-                :class="[
-                    'van-checkbox__label',
-                    {
-                        [`van-checkbox__label--${labelPosition}`]: labelPosition,
-                        'van-checkbox__label--disabled': disabled,
-                    },
-                ]"
-                @click="handleLabel">
+                :class="
+                    bem('label', {
+                        [labelPosition]: labelPosition,
+                        disabled,
+                    })
+                "
+                @click="onLabelClick">
                 <slot></slot>
             </view>
         </template>
@@ -49,24 +46,26 @@
 <script setup>
 import { computed, watch, useSlots } from 'vue'
 import { useParent } from '../composables'
-import { addUnit } from '../utils'
+import { addUnit, createNamespace, numericProp, truthProp } from '../utils'
 
 const props = defineProps({
-    name: [Number, String],
-    shape: { type: String, validator: (value) => ['round', 'square'].includes(value) },
-    disabled: { type: Boolean, default: false },
-    labelDisabled: { type: Boolean, default: false },
+    name: numericProp,
+    shape: String,
+    disabled: Boolean,
+    labelDisabled: Boolean,
     labelPosition: String,
-    iconSize: [Number, String],
+    iconSize: numericProp,
     checkedColor: String,
-    bindGroup: { type: Boolean, default: true },
-    indeterminate: { type: Boolean, default: false },
+    bindGroup: truthProp,
+    indeterminate: Boolean,
 })
 const modelValue = defineModel({ type: Boolean, default: false })
 const emits = defineEmits(['change', 'click', 'toggle'])
 
 const { parent } = useParent('van-checkbox')
 const slots = useSlots()
+
+const { bem } = createNamespace('checkbox')
 
 const disabled = computed(() => {
     if (parent && props.bindGroup) {
@@ -159,14 +158,14 @@ function toggle(newValue = !checked.value) {
     if (props.indeterminate !== null) emits('change', newValue)
 }
 
-function handleClick(event) {
+function onClick(event) {
     if (!disabled.value) {
         toggle()
     }
     emits('click', event)
 }
 
-function handleLabel(e) {
+function onLabelClick(e) {
     if (props.labelDisabled) {
         e.stopPropagation()
     }

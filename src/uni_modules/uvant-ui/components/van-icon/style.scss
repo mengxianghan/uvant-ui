@@ -1,14 +1,13 @@
 @import '../styles/variables.scss';
 @import './encode-woff2.scss';
 
-$van-icon-size: var(--van-icon-size, $van-font-size-md);
+$van-icon-size: var(--van-icon-size, inherit);
 
 .van-icon {
     &__image {
         display: block;
         width: 1em;
         height: 1em;
-        object-fit: contain;
         font-size: $van-icon-size;
     }
 }

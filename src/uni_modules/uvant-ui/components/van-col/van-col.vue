@@ -1,10 +1,11 @@
 <template>
     <view
-        class="van-col"
-        :class="{
-            [`van-col--${span}`]: span,
-            [`van-col--offset-${offset}`]: offset,
-        }"
+        :class="
+            bem({
+                [span]: span,
+                [`offset-${offset}`]: offset,
+            })
+        "
         :style="styles"
         @click="handleClick">
         <slot></slot>
@@ -20,15 +21,17 @@ export default {
 <script setup>
 import { computed } from 'vue'
 import { useParent } from '../composables'
+import { createNamespace, numericProp } from '../utils'
 
 defineProps({
-    span: [Number, String],
-    offset: [Number, String],
+    span: numericProp,
+    offset: numericProp,
 })
 
 const emits = defineEmits(['click'])
 
 const { parent, index } = useParent('van-row')
+const { bem } = createNamespace('col')
 
 const styles = computed(() => {
     if (!parent) {

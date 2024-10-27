@@ -1,12 +1,13 @@
 <template>
     <view
-        class="van-row"
-        :class="{
-            [`van-row--justify-${justify}`]: justify,
-            [`van-row--align-${align}`]: align,
-            'van-row--nowrap': !wrap,
-        }"
-        @click="handleClick">
+        :class="
+            bem({
+                [`justify-${justify}`]: justify,
+                [`align-${align}`]: align,
+                nowrap: !wrap,
+            })
+        "
+        @click="onClick">
         <slot></slot>
     </view>
 </template>
@@ -14,19 +15,19 @@
 <script setup>
 import { computed } from 'vue'
 import { useChildren } from '../composables'
+import { isArray } from 'lodash-es'
+import { createNamespace, truthProp } from '../utils'
 
 const props = defineProps({
     gutter: [Number, String, Array],
-    justify: {
-        type: String,
-        validator: (value) => ['start', 'end', 'center', 'space-around', 'space-between'].includes(value),
-    },
-    align: { type: String, validator: (value) => ['top', 'center', 'bottom'].includes(value) },
-    wrap: { type: Boolean, default: true },
+    justify: String,
+    align: String,
+    wrap: truthProp,
 })
 const emits = defineEmits(['click'])
 
 const { children, linkChildren } = useChildren('van-row')
+const { bem } = createNamespace('row')
 
 const groups = computed(() => {
     const groups = [[]]
@@ -48,7 +49,7 @@ const groups = computed(() => {
 
 const spaces = computed(() => {
     let gutter = 0
-    if (Array.isArray(props.gutter)) {
+    if (isArray(props.gutter)) {
         gutter = Number(props.gutter[0]) || 0
     } else {
         gutter = Number(props.gutter)
@@ -79,7 +80,7 @@ const spaces = computed(() => {
 const verticalSpaces = computed(() => {
     const { gutter } = props
     const spaces = []
-    if (Array.isArray(gutter) && gutter.length > 1) {
+    if (isArray(gutter) && gutter.length > 1) {
         const bottom = Number(gutter[1]) || 0
         if (bottom <= 0) {
             return spaces
@@ -94,7 +95,7 @@ const verticalSpaces = computed(() => {
     return spaces
 })
 
-function handleClick(e) {
+function onClick(e) {
     emits('click', e)
 }
 

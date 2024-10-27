@@ -1,5 +1,6 @@
-import { get, isFunction } from './basic'
+import { get } from './basic'
 import { camelize } from './format'
+import { uniqueId, isFunction, isArray } from 'lodash-es'
 import locale from '../locale'
 
 export function createTranslate(name) {
@@ -22,7 +23,7 @@ function genBem(name, mods) {
         return ` ${name}--${mods}`
     }
 
-    if (Array.isArray(mods)) {
+    if (isArray(mods)) {
         return mods.reduce((ret, item) => ret + genBem(name, item), '')
     }
 
@@ -52,5 +53,9 @@ export function createBEM(name) {
 
 export function createNamespace(name) {
     const prefixedName = `van-${name}`
-    return [prefixedName, createBEM(prefixedName), createTranslate(prefixedName)]
+    return { name: prefixedName, bem: createBEM(prefixedName), t: createTranslate(prefixedName) }
+}
+
+export function createUniqueSelector(prefix, length = 1) {
+    return Array.from({ length }, () => uniqueId(`${prefix}-`))
 }

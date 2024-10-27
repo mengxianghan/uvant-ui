@@ -1,12 +1,13 @@
 <template>
     <view
-        class="van-tabbar-item"
-        :class="{
-            'van-tabbar-item--active': isActive,
-        }"
-        :style="cpStyle"
-        @click="handleClick">
-        <view class="van-tabbar-item__icon">
+        :class="
+            bem({
+                active: isActive,
+            })
+        "
+        :style="styles"
+        @click="onClick">
+        <view :class="bem('icon')">
             <vc-badge
                 :dot="dot"
                 :badge="badge"
@@ -20,7 +21,7 @@
                 </slot>
             </vc-badge>
         </view>
-        <view class="van-tabbar-item__text">
+        <view :class="bem('text')">
             <slot></slot>
         </view>
     </view>
@@ -29,25 +30,27 @@
 <script setup>
 import { computed } from 'vue'
 import { useParent } from '../composables'
+import { createNamespace, numericProp } from '../utils'
 
 const props = defineProps({
-    name: [Number, String],
+    name: numericProp,
     icon: String,
     iconPrefix: String,
-    dot: { type: Boolean, default: false },
-    badge: [Number, String],
+    dot: Boolean,
+    badge: numericProp,
     badgeProps: Object,
 })
 
 const { parent, index } = useParent('van-tabbar')
+const { bem } = createNamespace('tabbar-item')
 
 const key = computed(() => props.name || index.value)
 const isActive = computed(() => parent.active.value === key.value)
-const cpStyle = computed(() => ({
+const styles = computed(() => ({
     color: parent.props.activeColor && isActive.value ? parent.props.activeColor : parent.props.inactiveColor,
 }))
 
-function handleClick() {
+function onClick() {
     const { name } = props
     parent.onChange(name || index.value)
 }

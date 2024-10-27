@@ -14,11 +14,12 @@
 
 <script setup>
 import { computed } from 'vue'
-import { isDef, isObject } from '../utils'
+import { isDef, numericProp } from '../utils'
+import { isObject } from 'lodash-es'
 
 const props = defineProps({
-    dot: { type: Boolean, default: false },
-    badge: [Number, String],
+    dot: Boolean,
+    badge: numericProp,
     badgeProps: Object,
 })
 

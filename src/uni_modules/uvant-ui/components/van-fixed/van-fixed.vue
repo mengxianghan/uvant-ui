@@ -20,18 +20,18 @@
 
 <script setup>
 import { computed } from 'vue'
-import { getSystemInfoSync, addUnit } from '../utils'
+import { getSystemInfoSync, addUnit, truthProp, makeNumericProp } from '../utils'
 
 const props = defineProps({
-    placeholder: { type: Boolean, default: true },
+    placeholder: truthProp,
     position: {
         type: [String, Boolean],
         default: 'bottom',
         validator: (value) => [false, 'top', 'bottom'].includes(value),
     },
-    offset: { type: [Number, String], default: 0 },
-    zIndex: { type: [Number, String], default: 99 },
-    safeArea: { type: Boolean, default: true },
+    offset: makeNumericProp(0),
+    zIndex: makeNumericProp(99),
+    safeArea: truthProp,
     customClass: { type: [String, Object], default: '' },
 })
 

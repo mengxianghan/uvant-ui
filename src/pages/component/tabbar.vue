@@ -143,10 +143,11 @@
 
 <script setup>
 import { ref } from 'vue'
+import { cdnURL } from '@/utils'
 
 const icon = {
-    active: 'https://fastly.jsdelivr.net/npm/@vant/assets/user-active.png',
-    inactive: 'https://fastly.jsdelivr.net/npm/@vant/assets/user-inactive.png',
+    active: cdnURL('user-active.png'),
+    inactive: cdnURL('user-inactive.png'),
 }
 const active = ref(0)
 const active1 = ref('home')

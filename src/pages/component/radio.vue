@@ -83,11 +83,7 @@
                     单选框 1
                     <template #icon>
                         <van-image
-                            :src="
-                                radio4 === '1'
-                                    ? 'https://fastly.jsdelivr.net/npm/@vant/assets/user-active.png'
-                                    : 'https://fastly.jsdelivr.net/npm/@vant/assets/user-inactive.png'
-                            "
+                            :src="radio4 === '1' ? cdnURL('user-active.png') : cdnURL('user-inactive.png')"
                             width="20px"
                             height="20px"
                             fit="aspectFit" />
@@ -98,13 +94,8 @@
                     单选框 2
                     <template #icon>
                         <van-image
-                            :src="
-                                radio4 === '2'
-                                    ? 'https://fastly.jsdelivr.net/npm/@vant/assets/user-active.png'
-                                    : 'https://fastly.jsdelivr.net/npm/@vant/assets/user-inactive.png'
-                            "
-                            width="20px"
-                            height="20px"
+                            :src="radio4 === '2' ? cdnURL('user-active.png') : cdnURL('user-inactive.png')"
+                            height="16px"
                             fit="aspectFit" />
                     </template>
                 </van-radio>
@@ -172,6 +163,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { cdnURL } from '@/utils'
 
 const radio1 = ref('1')
 const radio2 = ref('2')

@@ -3,47 +3,47 @@
         :placeholder="placeholder"
         :position="fixed && 'bottom'"
         :safe-area="safeAreaInsetBottom">
-        <view class="van-submit-bar">
+        <view :class="bem()">
             <template v-if="hasTip">
-                <view class="van-submit-bar__tip">
+                <view :class="bem('tip')">
                     <template v-if="hasTipIcon">
-                        <view class="van-submit-bar__tip-icon">
+                        <view :class="bem('tip-icon')">
                             <van-icon :name="tipIcon"></van-icon>
                         </view>
                     </template>
                     <template v-if="tip">
-                        <text class="van-submit-bar__tip-text">{{ tip }}</text>
+                        <text :class="bem('tip-text')">{{ tip }}</text>
                     </template>
                     <template v-if="slots.tip">
                         <slot name="tip"></slot>
                     </template>
                 </view>
             </template>
-            <view class="van-submit-bar__bar">
+            <view :class="bem('bar')">
                 <slot></slot>
                 <template v-if="hasPrice">
                     <view
-                        class="van-submit-bar__text"
+                        :class="bem('text')"
                         :style="textStyles">
                         <text>{{ label }}</text>
-                        <view class="van-submit-bar__price">
-                            {{ currency }}<text class="van-submit-bar__price-integer">{{ integer }}</text
+                        <view :class="bem('price')">
+                            {{ currency }}<text :class="bem('price-integer')">{{ integer }}</text
                             >{{ decimal }}
                         </view>
-                        <text class="van-submit-bar__suffix-label">{{ suffixLabel }}</text>
+                        <text :class="bem('suffix-label')">{{ suffixLabel }}</text>
                     </view>
                 </template>
 
                 <slot name="button">
                     <van-button
-                        class="van-submit-bar__button"
                         round
+                        :class="bem('button')"
                         :disabled="disabled"
                         :border="false"
                         :type="buttonType"
                         :loading="loading"
                         :color="buttonColor"
-                        @click="handleSubmit">
+                        @click="onSubmit">
                         {{ buttonText }}
                     </van-button>
                 </slot>
@@ -54,29 +54,30 @@
 
 <script setup>
 import { computed, useSlots, watchEffect, ref } from 'vue'
-import { isNumber } from '../utils'
+import { isNumber, createNamespace, makeNumericProp, makeStringProp, truthProp } from '../utils'
 
 const props = defineProps({
     price: Number,
-    decimalLength: { type: [Number, String], default: 2 },
-    label: { type: String, default: '合计:' },
+    decimalLength: makeNumericProp(2),
+    label: makeStringProp('合计:'),
     suffixLabel: String,
-    textAlign: { type: String, validator: (value) => ['left', 'right'].includes(value) },
+    textAlign: String,
     buttonText: String,
-    buttonType: { type: String, default: 'danger' },
+    buttonType: makeStringProp('danger'),
     buttonColor: String,
     tip: String,
     tipIcon: String,
-    currency: { type: String, default: '￥' },
-    disabled: { type: Boolean, default: false },
-    loading: { type: Boolean, default: false },
-    safeAreaInsetBottom: { type: Boolean, default: true },
-    placeholder: { type: Boolean, default: false },
-    fixed: { type: Boolean, default: true },
+    currency: makeStringProp('￥'),
+    disabled: Boolean,
+    loading: Boolean,
+    safeAreaInsetBottom: truthProp,
+    placeholder: Boolean,
+    fixed: truthProp,
 })
 const emits = defineEmits(['submit'])
 
 const slots = useSlots()
+const { bem } = createNamespace('submit-bar')
 
 const integer = ref(0)
 const decimal = ref()
@@ -112,7 +113,7 @@ const textStyles = computed(() => {
     return style
 })
 
-function handleSubmit(e) {
+function onSubmit(e) {
     emits('submit', e)
 }
 </script>

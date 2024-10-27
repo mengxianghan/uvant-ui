@@ -1,4 +1,5 @@
 import { isDef } from './index'
+import { isArray } from 'lodash-es'
 
 function trimExtraChar(value, char, regExp) {
     const index = value.indexOf(char)
@@ -20,7 +21,7 @@ export function addUnit(value) {
 
 export function getSizeStyle(originSize) {
     if (isDef(originSize)) {
-        if (Array.isArray(originSize)) {
+        if (isArray(originSize)) {
             return {
                 width: addUnit(originSize[0]),
                 height: addUnit(originSize[1]),
@@ -52,11 +53,6 @@ export function formatNumber(value, allowDot = true, allowMinus = true) {
     return value.replace(regExp, '')
 }
 
-export function addNumber(num1, num2) {
-    const cardinal = 10 ** 10
-    return Math.round((num1 + num2) * cardinal) / cardinal
-}
-
 const camelizeRE = /-(\w)/g
 export function camelize(str) {
     return str.replace(camelizeRE, (_, c) => c.toUpperCase())
@@ -72,4 +68,14 @@ export function getZIndexStyle(zIndex) {
         style.zIndex = +zIndex
     }
     return style
+}
+
+export function clamp(num, min, max) {
+    return Math.min(Math.max(num, min), max)
+}
+
+// add num and avoid float number
+export function addNumber(num1, num2) {
+    const cardinal = 10 ** 10
+    return Math.round((num1 + num2) * cardinal) / cardinal
 }

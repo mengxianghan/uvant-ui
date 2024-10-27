@@ -25,7 +25,7 @@
 
         <demo-block title="自定义图片">
             <van-empty
-                image="https://fastly.jsdelivr.net/npm/@vant/assets/custom-empty-image.png"
+                :image="cdnURL('custom-empty-image.png')"
                 image-size="80"
                 description="描述文字" />
         </demo-block>
@@ -44,6 +44,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { cdnURL } from '@/utils'
 
 const imageType = ref('error')
 </script>

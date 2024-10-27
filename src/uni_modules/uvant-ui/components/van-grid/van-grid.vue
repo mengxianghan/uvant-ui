@@ -1,10 +1,12 @@
 <template>
     <view
-        class="van-grid"
-        :class="{
-            'van-hairline--top': border && !gutter,
-            'van-hairline--left': border && !gutter,
-        }"
+        :class="[
+            bem(),
+            {
+                'van-hairline--top': border && !gutter,
+                'van-hairline--left': border && !gutter,
+            },
+        ]"
         :style="{
             paddingLeft: addUnit(gutter),
         }">
@@ -14,21 +16,22 @@
 
 <script setup>
 import { useChildren } from '../composables'
-import { addUnit } from '../utils'
+import { addUnit, createNamespace, makeNumericProp, truthProp, makeStringProp } from '../utils'
 
 const props = defineProps({
-    columnNum: { type: [Number, String], default: 4 },
-    iconSize: { type: [Number, String], default: '28px' },
-    gutter: { type: [Number, String], default: 0 },
-    border: { type: Boolean, default: true },
-    center: { type: Boolean, default: true },
-    square: { type: Boolean, default: false },
-    clickable: { type: Boolean, default: false },
-    direction: { type: String, default: 'vertical', validator: (value) => ['horizontal', 'vertical'].includes(value) },
-    reverse: { type: Boolean, default: false },
+    columnNum: makeNumericProp(4),
+    iconSize: makeNumericProp('28px'),
+    gutter: makeNumericProp(0),
+    border: truthProp,
+    center: truthProp,
+    square: Boolean,
+    clickable: Boolean,
+    direction: makeStringProp('vertical'),
+    reverse: Boolean,
 })
 
 const { linkChildren } = useChildren('van-grid')
+const { bem } = createNamespace('grid')
 
 linkChildren({ props })
 </script>

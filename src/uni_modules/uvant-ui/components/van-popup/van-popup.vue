@@ -7,10 +7,11 @@
         @click="onClickOverlay"></van-overlay>
     <view
         :class="[
-            'van-popup',
+            bem({
+                [position]: position,
+                round,
+            }),
             {
-                [`van-popup--${position}`]: position,
-                'van-popup--round': round,
                 'van-safe-area-top': safeAreaInsetTop,
                 'van-safe-area-bottom': safeAreaInsetBottom,
             },
@@ -25,10 +26,10 @@
         <template v-if="closeable">
             <view
                 :class="[
-                    'van-popup__close-icon van-haptics-feedback',
-                    {
-                        [`van-popup__close-icon--${closeIconPosition}`]: closeIconPosition,
-                    },
+                    bem('close-icon', {
+                        [closeIconPosition]: closeIconPosition,
+                    }),
+                    'van-haptics-feedback',
                 ]"
                 @click="onClickCloseIcon">
                 <van-icon
@@ -41,37 +42,37 @@
 
 <script setup>
 import { computed, watch, onMounted } from 'vue'
-import { callInterceptor, isDef } from '../utils'
+import {
+    callInterceptor,
+    isDef,
+    isNullOrEmpty,
+    createNamespace,
+    truthProp,
+    makeStringProp,
+    makeNumericProp,
+    numericProp,
+} from '../utils'
 import { useCSSAnimation, useGlobalZIndex } from '../composables'
-import { isEmpty } from 'lodash-es'
 
 const props = defineProps({
-    overlay: { type: Boolean, default: true },
-    position: {
-        type: String,
-        default: 'center',
-        validator: (value) => ['center', 'top', 'bottom', 'right', 'left'].includes(value),
-    },
+    overlay: truthProp,
+    position: makeStringProp('center'),
     overlayClass: [String, Array, Object],
     overlayStyle: Object,
-    duration: { type: [Number, String], default: 0.3 },
-    zIndex: [Number, String],
-    round: { type: Boolean, default: false },
-    lockScroll: { type: Boolean, default: true },
-    closeOnPopustate: { type: Boolean, default: false },
-    closeOnClickOverlay: { type: Boolean, default: true },
-    closeable: { type: Boolean, default: false },
-    closeIcon: { type: String, default: 'cross' },
-    closeIconPosition: {
-        type: String,
-        default: 'top-right',
-        validator: (value) => ['top-right', 'top-left', 'bottom-left', 'bottom-right'].includes(value),
-    },
+    duration: makeNumericProp(0.3),
+    zIndex: numericProp,
+    round: Boolean,
+    lockScroll: truthProp,
+    closeOnPopustate: Boolean,
+    closeOnClickOverlay: truthProp,
+    closeable: Boolean,
+    closeIcon: makeStringProp('cross'),
+    closeIconPosition: makeStringProp('top-right'),
     beforeClose: { type: Function, default: () => true },
     iconPrefix: String,
     transition: String,
-    safeAreaInsetTop: { type: Boolean, default: false },
-    safeAreaInsetBottom: { type: Boolean, default: false },
+    safeAreaInsetTop: Boolean,
+    safeAreaInsetBottom: Boolean,
 })
 const show = defineModel('show', { type: Boolean, default: false })
 const emits = defineEmits([
@@ -106,8 +107,10 @@ const {
         emits('closed')
     },
 })
+const { bem } = createNamespace('popup')
+
 let opened
-const curZIndex = computed(() => (!isEmpty(props.zIndex) ? +props.zIndex : useGlobalZIndex()))
+const curZIndex = computed(() => (!isNullOrEmpty(props.zIndex) ? +props.zIndex : useGlobalZIndex()))
 const styles = computed(() => {
     const style = {}
 

@@ -1,16 +1,18 @@
 <template>
     <view
-        class="van-stepper"
-        :class="{
-            [`van-stepper--${theme}`]: theme,
-        }">
+        :class="
+            bem({
+                [theme]: theme,
+            })
+        ">
         <view
-            class="van-stepper__minus"
-            :class="{
-                'van-stepper__minus--disabled': cpMinusDisabled,
-            }"
-            :style="cpButtonStyle"
-            @click="handleClick('minus')">
+            :class="
+                bem('minus', {
+                    disabled: minusDisabled,
+                })
+            "
+            :style="buttonStyles"
+            @click="onClick('minus')">
             <slot name="minusIcon">
                 <van-icon name="minus" />
             </slot>
@@ -21,21 +23,24 @@
             :inputmode="integer ? 'numeric' : 'decimal'"
             :type="integer ? 'number' : 'digit'"
             :disabled="disabled || disableInput"
-            :class="{
-                'van-stepper__input--disabled': disabled || disableInput,
-            }"
-            :style="cpInputStyle"
-            class="van-stepper__input"
+            :class="
+                bem('input', {
+                    disabled: disabled || disableInput,
+                })
+            "
+            :style="inputStyles"
             @input="onInput"
             @focus="onFocus"
             @blur="onBlur" />
         <view
             class="van-stepper__plus"
-            :class="{
-                'van-stepper__plus--disabled': cpPlusDisabled,
-            }"
-            :style="cpButtonStyle"
-            @click="handleClick('plus')">
+            :class="
+                bem('plus', {
+                    disabled: plusDisabled,
+                })
+            "
+            :style="buttonStyles"
+            @click="onClick('plus')">
             <slot name="plusIcon">
                 <van-icon name="plus" />
             </slot>
@@ -45,45 +50,59 @@
 
 <script setup>
 import { ref, computed, watch, nextTick } from 'vue'
-import { isDef, formatNumber, addNumber, callInterceptor, addUnit, getSizeStyle } from '../utils'
+import {
+    isDef,
+    formatNumber,
+    addNumber,
+    callInterceptor,
+    addUnit,
+    getSizeStyle,
+    createNamespace,
+    truthProp,
+    makeNumericProp,
+    numericProp,
+} from '../utils'
 import { defaultTo } from 'lodash-es'
 
 const props = defineProps({
-    min: { type: [Number, String], default: 1 },
-    max: [Number, String],
-    autoFixed: { type: Boolean, default: true },
-    defaultValue: { type: [Number, String], default: 1 },
-    step: { type: [Number, String], default: 1 },
-    name: [Number, String],
-    inputWidth: [Number, String],
-    buttonSize: [Number, String],
-    decimalLength: [Number, String],
+    min: makeNumericProp(1),
+    max: numericProp,
+    autoFixed: truthProp,
+    defaultValue: makeNumericProp(1),
+    step: makeNumericProp(1),
+    name: numericProp,
+    inputWidth: numericProp,
+    buttonSize: numericProp,
+    decimalLength: numericProp,
     theme: String,
     placeholder: String,
-    integer: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    disablePlus: { type: Boolean, default: false },
-    disableMinus: { type: Boolean, default: false },
-    disableInput: { type: Boolean, default: false },
+    integer: Boolean,
+    disabled: Boolean,
+    disablePlus: Boolean,
+    disableMinus: Boolean,
+    disableInput: Boolean,
     beforeChange: { type: Function, default: () => true },
-    showPlus: { type: Boolean, default: true },
-    showMinus: { type: Boolean, default: true },
-    showInput: { type: Boolean, default: true },
-    longPress: { type: Boolean, default: true },
-    allowEmpty: { type: Boolean, default: false },
+    showPlus: truthProp,
+    showMinus: truthProp,
+    showInput: truthProp,
+    longPress: truthProp,
+    allowEmpty: Boolean,
 })
 
 const modelValue = defineModel({ type: [Number, String] })
 const emits = defineEmits(['plus', 'blur', 'minus', 'focus', 'change', 'overlimit'])
+
+const { bem } = createNamespace('stepper')
+
 const actionType = ref()
 
-const cpMinusDisabled = computed(() => props.disabled || props.disableMinus || +modelValue.value <= +props.min)
-const cpPlusDisabled = computed(() => props.disabled || props.disablePlus || +modelValue.value >= +props.max)
-const cpInputStyle = computed(() => ({
+const minusDisabled = computed(() => props.disabled || props.disableMinus || +modelValue.value <= +props.min)
+const plusDisabled = computed(() => props.disabled || props.disablePlus || +modelValue.value >= +props.max)
+const inputStyles = computed(() => ({
     width: addUnit(props.inputWidth),
     height: addUnit(props.buttonSize),
 }))
-const cpButtonStyle = computed(() => getSizeStyle(props.buttonSize))
+const buttonStyles = computed(() => getSizeStyle(props.buttonSize))
 
 watch(() => [props.max, props.min, props.integer, props.decimalLength], check)
 watch(
@@ -93,7 +112,7 @@ watch(
 
 getInitialValue()
 
-function handleClick(_actionType) {
+function onClick(_actionType) {
     actionType.value = _actionType
     onChange()
 }
@@ -161,10 +180,7 @@ function onBlur(event) {
 }
 
 function onChange() {
-    if (
-        (actionType.value === 'plus' && cpPlusDisabled.value) ||
-        (actionType.value === 'minus' && cpMinusDisabled.value)
-    ) {
+    if ((actionType.value === 'plus' && plusDisabled.value) || (actionType.value === 'minus' && minusDisabled.value)) {
         emits('overlimit', actionType)
         return
     }

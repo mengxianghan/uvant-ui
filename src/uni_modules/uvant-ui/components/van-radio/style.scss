@@ -36,28 +36,28 @@ $van-radio-disabled-background: var(--van-radio-disabled-background, $van-border
         line-height: 1em;
         cursor: pointer;
 
-        .van-radio__icon--default,
-        .van-radio__icon--dot {
-            display: block;
+        .van-radio__icon-default,
+        .van-radio__icon-dot {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-sizing: border-box;
             width: 1.25em;
             height: 1.25em;
             color: transparent;
             font-size: 0.8em;
-            line-height: 1.25;
-            text-align: center;
             border: 1px solid $van-radio-border-color;
             transition-duration: $van-radio-duration;
             transition-property: color, border-color, background-color;
         }
 
-        .van-radio__icon--dot {
+        .van-radio__icon-dot {
             border-radius: 100%;
             position: relative;
         }
 
         &--round {
-            .van-radio__icon--default {
+            .van-radio__icon-default {
                 border-radius: 100%;
             }
         }
@@ -88,13 +88,13 @@ $van-radio-disabled-background: var(--van-radio-disabled-background, $van-border
         // }
 
         &--checked {
-            .van-radio__icon--default {
+            .van-radio__icon-default {
                 color: $van-white;
                 background-color: $van-radio-checked-icon-color;
                 border-color: $van-radio-checked-icon-color;
             }
 
-            .van-radio__icon--dot {
+            .van-radio__icon-dot {
                 border-color: $van-radio-checked-icon-color;
 
                 &::before {
@@ -114,8 +114,8 @@ $van-radio-disabled-background: var(--van-radio-disabled-background, $van-border
         &--disabled {
             cursor: not-allowed;
 
-            .van-radio__icon--default,
-            .van-radio__icon--dot {
+            .van-radio__icon-default,
+            .van-radio__icon-dot {
                 background-color: $van-radio-disabled-background;
                 border-color: $van-radio-disabled-icon-color;
             }
@@ -129,8 +129,8 @@ $van-radio-disabled-background: var(--van-radio-disabled-background, $van-border
 
         &--disabled {
             &.van-radio__icon--checked {
-                .van-radio__icon--default,
-                .van-radio__icon--dot {
+                .van-radio__icon-default,
+                .van-radio__icon-dot {
                     color: $van-radio-disabled-icon-color;
                 }
             }

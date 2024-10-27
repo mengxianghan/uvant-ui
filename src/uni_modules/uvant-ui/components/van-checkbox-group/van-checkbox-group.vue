@@ -1,11 +1,10 @@
 <template>
     <view
-        :class="[
-            'van-checkbox-group',
-            {
-                [`van-checkbox-group--${direction}`]: direction,
-            },
-        ]">
+        :class="
+            bem({
+                [direction]: direction,
+            })
+        ">
         <slot></slot>
     </view>
 </template>
@@ -14,19 +13,22 @@
 import { watch } from 'vue'
 import { useChildren } from '../composables'
 import { defaultTo } from 'lodash-es'
+import { createNamespace, numericProp, makeStringProp, makeArrayProp } from '../utils'
 
 const props = defineProps({
-    disabled: { type: Boolean, default: false },
-    max: { type: [Number, String], default: 0 },
-    direction: { type: String, validator: (value) => ['vertical', 'horizontal'].includes(value) },
-    iconSize: [Number, String],
+    max: numericProp,
+    shape: makeStringProp('round'),
+    disabled: Boolean,
+    iconSize: numericProp,
+    direction: String,
     checkedColor: String,
-    shape: { type: String, validator: (value) => ['round', 'square'].includes(value) },
 })
-const modelValue = defineModel({ type: Array, default: () => [] })
+const modelValue = defineModel(makeArrayProp())
 const emits = defineEmits(['change'])
 
 const { children, linkChildren } = useChildren('van-checkbox')
+
+const { bem } = createNamespace('checkbox-group')
 
 watch(
     () => modelValue.value,

@@ -1,26 +1,30 @@
 <template>
     <view
-        class="van-tabbar"
-        :class="{
-            'van-tabbar--fixed': fixed,
-            'van-hairline--top-bottom': border,
-            'van-safe-area-bottom': safeAreaInsetBottom,
-        }">
+        :class="[
+            bem({
+                fixed,
+            }),
+            {
+                'van-hairline--top-bottom': border,
+                'van-safe-area-bottom': safeAreaInsetBottom,
+            },
+        ]">
         <slot></slot>
     </view>
 </template>
 
 <script setup>
 import { useChildren } from '../composables'
+import { createNamespace, truthProp, makeNumericProp } from '../utils'
 
 const props = defineProps({
-    fixed: { type: Boolean, default: true },
-    border: { type: Boolean, default: true },
-    zIndex: { type: [Number, String], default: 1 },
+    fixed: truthProp,
+    border: truthProp,
+    zIndex: makeNumericProp(1),
     activeColor: String,
     inactiveColor: String,
-    placeholder: { type: Boolean, default: false },
-    safeAreaInsetBottom: { type: Boolean, default: false },
+    placeholder: Boolean,
+    safeAreaInsetBottom: Boolean,
     beforeChange: { type: Function, default: () => true },
 })
 
@@ -28,6 +32,7 @@ const modelValue = defineModel({ type: [Number, String] })
 const emits = defineEmits(['change'])
 
 const { linkChildren } = useChildren('van-tabbar')
+const { bem } = createNamespace('tabbar')
 
 async function onChange(val) {
     if (!(await props.beforeChange())) {

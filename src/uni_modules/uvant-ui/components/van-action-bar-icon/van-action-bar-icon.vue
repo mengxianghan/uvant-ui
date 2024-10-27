@@ -1,7 +1,7 @@
 <template>
-    <view class="van-action-bar-icon">
+    <view :class="bem()">
         <slot name="icon">
-            <view class="van-action-bar-icon__icon">
+            <view :class="bem('icon')">
                 <van-icon
                     :name="icon"
                     :color="color"
@@ -16,15 +16,19 @@
 </template>
 
 <script setup>
+import { createNamespace, numericProp } from '../utils'
+
 defineProps({
+    dot: Boolean,
     text: String,
     icon: String,
-    color: { type: String, default: '#323233' },
-    iconPrefix: String,
-    dot: { type: Boolean, default: false },
-    badge: [Number, String],
+    color: String,
+    badge: numericProp,
     badgeProps: Object,
+    iconPrefix: String,
 })
+
+const { bem } = createNamespace('action-bar-icon')
 </script>
 
 <style lang="scss" scoped>

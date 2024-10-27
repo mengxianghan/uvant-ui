@@ -1,47 +1,41 @@
 <template>
     <view
-        class="van-search"
+        :class="bem()"
         :style="{
             background,
         }">
         <view
-            class="van-search__content"
-            :class="{
-                [`van-search__content--${shape}`]: shape,
-            }">
+            :class="
+                bem('content', {
+                    [shape]: shape,
+                })
+            ">
             <template v-if="hasLabel">
-                <view class="van-search__label">
+                <view :class="bem('label')">
                     <slot name="label">{{ label }}</slot>
                 </view>
             </template>
-            <view
-                class="van-cell van-cell--borderless van-field van-search__field"
-                :class="{
-                    'van-field--disabled': disabled,
-                }">
+            <view :class="[bemCell(['borderless']), bemField(), bem('field', { disabled })]">
                 <template v-if="hasLeftIcon">
                     <view
-                        class="van-field__left-icon"
-                        @click="handleLeftIcon">
+                        :class="bemField('left-icon')"
+                        @click="onClickLeftIcon">
                         <van-icon :name="leftIcon"></van-icon>
                     </view>
                 </template>
                 <view
-                    class="van-cell__value van-field__value"
-                    @click="handleInput">
-                    <view class="van-field__body">
+                    :class="[bemCell('value'), bemField('value')]"
+                    @click="onClickInput">
+                    <view :class="bemField('body')">
                         <input
                             v-model="modelValue"
                             :disabled="disabled"
                             :placeholder="placeholder"
                             :id="id"
-                            :class="{
-                                [`van-field__control--${inputAlign}`]: inputAlign,
-                            }"
+                            :class="bemField('control', { [inputAlign]: inputAlign })"
                             :maxlength="maxlength"
                             :focus="autofocus"
                             type="search"
-                            class="van-field__control"
                             @input="onInput"
                             @focus="onFocus"
                             @blur="onBlur"
@@ -51,8 +45,8 @@
                         <!-- 清除按钮 -->
                         <template v-if="hasClear">
                             <view
-                                class="van-field__clear"
-                                @click="handleClear">
+                                :class="bemField('clear')"
+                                @click="onClear">
                                 <van-icon :name="clearIcon"></van-icon>
                             </view>
                         </template>
@@ -60,8 +54,8 @@
                         <!-- 右侧 icon -->
                         <template v-if="hasRightIcon">
                             <view
-                                class="van-field__right-icon"
-                                @click="handleRightIcon">
+                                :class="bemField('right-icon')"
+                                @click="onClickRightIcon">
                                 <slot name="rightIcon">
                                     <van-icon :name="rightIcon"></van-icon>
                                 </slot>
@@ -74,7 +68,7 @@
         <template v-if="showAction">
             <view
                 class="van-search__action"
-                @click="handleCancel">
+                @click="onClickCancel">
                 {{ actionText }}
             </view>
         </template>
@@ -83,29 +77,29 @@
 
 <script setup>
 import { computed, useSlots, ref } from 'vue'
-import { isEmpty } from '../utils'
+import { isNullOrEmpty, createNamespace, makeStringProp, makeNumericProp, truthProp } from '../utils'
 import { debounce } from 'lodash-es'
 
 const props = defineProps({
     label: String,
     name: String,
-    shape: { type: String, default: 'square', validator: (value) => ['round', 'square'].includes(value) },
-    id: { type: String, default: 'van-search-n-input' },
+    shape: makeStringProp('square'),
+    id: String,
     background: String,
-    maxlength: { type: [Number, String], default: -1 },
+    maxlength: makeNumericProp(-1),
     placeholder: String,
-    clearable: { type: Boolean, default: true },
-    clearIcon: { type: String, default: 'clear' },
-    clearTrigger: { type: String, default: 'focus', validator: (value) => ['always ', 'focus'].includes(value) },
-    autofocus: { type: Boolean, default: false },
-    showAction: { type: Boolean, default: false },
-    actionText: { type: String, default: '取消' },
-    disabled: { type: Boolean, default: false },
-    inputAlign: { type: String, validator: (value) => ['left', 'center', 'right'].includes(value) },
-    leftIcon: { type: String, default: 'search' },
+    clearable: truthProp,
+    clearIcon: makeStringProp('clear'),
+    clearTrigger: makeStringProp('focus'),
+    autofocus: Boolean,
+    showAction: Boolean,
+    actionText: makeStringProp('取消'),
+    disabled: Boolean,
+    inputAlign: String,
+    leftIcon: makeStringProp('search'),
     rightIcon: String,
     formatter: { type: Function, default: (val) => val },
-    formatTrigger: { type: String, default: 'onChange', validator: (value) => ['onChange', 'onBlur'].includes(value) },
+    formatTrigger: makeStringProp('onChange'),
 })
 
 const emits = defineEmits([
@@ -123,13 +117,16 @@ const emits = defineEmits([
 const modelValue = defineModel('modelValue', { type: [String, Number] })
 
 const slots = useSlots()
+const { bem } = createNamespace('search')
+const { bem: bemCell } = createNamespace('cell')
+const { bem: bemField } = createNamespace('field')
 
 const isFocus = ref(false)
 
-const hasLeftIcon = computed(() => !isEmpty(props.leftIcon) || slots.leftIcon)
-const hasLabel = computed(() => !isEmpty(props.label) || slots.label)
+const hasLeftIcon = computed(() => !isNullOrEmpty(props.leftIcon) || slots.leftIcon)
+const hasLabel = computed(() => !isNullOrEmpty(props.label) || slots.label)
 const hasClear = computed(() => {
-    const checkValue = !isEmpty(modelValue.value)
+    const checkValue = !isNullOrEmpty(modelValue.value)
 
     if (props.clearTrigger === 'focus') {
         return props.clearable && checkValue && isFocus.value
@@ -137,7 +134,7 @@ const hasClear = computed(() => {
 
     return props.clearable && checkValue
 })
-const hasRightIcon = computed(() => !isEmpty(props.rightIcon) || slots.rightIcon)
+const hasRightIcon = computed(() => !isNullOrEmpty(props.rightIcon) || slots.rightIcon)
 
 const onInput = debounce(() => {
     if ('onChange' === props.formatTrigger) {
@@ -147,23 +144,23 @@ const onInput = debounce(() => {
     emits('change', modelValue.value)
 }, 10)
 
-function handleCancel() {
+function onClickCancel() {
     emits('cancel')
 }
 
-function handleInput(e) {
+function onClickInput(e) {
     emits('clickInput', e)
 }
 
-function handleLeftIcon(e) {
+function onClickLeftIcon(e) {
     emits('clickLeftIcon', e)
 }
 
-function handleRightIcon(e) {
+function onClickRightIcon(e) {
     emits('clickRightIcon', e)
 }
 
-function handleClear() {
+function onClear() {
     modelValue.value = ''
     emits('clear')
 }

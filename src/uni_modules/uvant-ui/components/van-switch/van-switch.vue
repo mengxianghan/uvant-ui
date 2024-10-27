@@ -1,21 +1,20 @@
 <template>
     <view
-        :class="[
-            'van-switch',
-            {
-                'van-switch--on': checked,
-                'van-switch--loading': loading,
-                'van-switch--disabled': disabled,
-            },
-        ]"
+        :class="
+            bem({
+                on: checked,
+                loading,
+                disabled,
+            })
+        "
         :style="{
             fontSize: addUnit(size),
             backgroundColor: checked ? activeColor : inactiveColor,
         }"
         @click="onClick">
-        <view class="van-switch__node">
+        <view :class="bem('node')">
             <template v-if="loading">
-                <view class="van-switch__loading">
+                <view :class="bem('loading')">
                     <van-loading :color="checked ? activeColor : inactiveColor"></van-loading>
                 </view>
             </template>
@@ -29,12 +28,12 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { addUnit } from '../utils'
+import { addUnit, createNamespace, numericProp } from '../utils'
 
 const props = defineProps({
-    loading: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    size: [Number, String],
+    loading: Boolean,
+    disabled: Boolean,
+    size: numericProp,
     activeColor: String,
     inactiveColor: String,
     activeValue: { type: [String, Number, Boolean], default: true },
@@ -44,6 +43,7 @@ const emits = defineEmits(['change', 'click'])
 const modelValue = defineModel({ type: [String, Number, Boolean] })
 
 const slots = useSlots()
+const { bem } = createNamespace('switch')
 
 const checked = computed(() => isChecked())
 

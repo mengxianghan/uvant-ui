@@ -1,36 +1,39 @@
 <template>
     <button
-        class="van-button"
+        :class="
+            bem({
+                [type]: type,
+                [size]: size,
+                plain,
+                square,
+                round,
+                hairline,
+                block,
+                disabled,
+            })
+        "
         hover-class="none"
-        :class="{
-            [`van-button--${type}`]: true,
-            [`van-button--${size}`]: true,
-            'van-button--plain': plain,
-            'van-button--square': square,
-            'van-button--round': round,
-            'van-button--hairline': hairline,
-            'van-button--block': block,
-            'van-button--disabled': disabled,
-        }"
         :style="styles"
         :disabled="disabled"
         @click="handleClick">
-        <view class="van-button__content">
+        <view :class="bem('content')">
             <template v-if="loading">
-                <view class="van-button__icon">
+                <view :class="bem('icon')">
                     <slot name="loading">
-                        <van-loading :type="loadingType"></van-loading>
+                        <van-loading
+                            :type="loadingType"
+                            :size="loadingSize"></van-loading>
                     </slot>
                 </view>
-                <template v-if="!isEmpty(loadingText)">
-                    <view class="van-button__text">
+                <template v-if="!isNullOrEmpty(loadingText)">
+                    <view :class="bem('text')">
                         {{ loadingText }}
                     </view>
                 </template>
             </template>
             <template v-else>
                 <template v-if="'left' === iconPosition && hasIcon">
-                    <view class="van-button__icon">
+                    <view :class="bem('icon')">
                         <van-icon
                             :name="icon"
                             :class-prefix="iconPrefix"></van-icon>
@@ -38,13 +41,13 @@
                 </template>
 
                 <template v-if="hasText">
-                    <view class="van-button__text">
+                    <view :class="bem('text')">
                         <slot>{{ text }}</slot>
                     </view>
                 </template>
 
                 <template v-if="'right' === iconPosition && hasIcon">
-                    <view class="van-button__icon">
+                    <view :class="bem('icon')">
                         <van-icon
                             :name="icon"
                             :class-prefix="iconPrefix"></van-icon>
@@ -57,29 +60,32 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { isEmpty } from '../utils'
+import { isNullOrEmpty, createNamespace, makeStringProp, numericProp } from '../utils'
 
 const props = defineProps({
-    type: { type: String, default: 'default' },
-    size: { type: String, default: 'normal' },
     text: String,
-    color: String,
     icon: String,
+    type: makeStringProp('default'),
+    size: makeStringProp('normal'),
+    color: String,
+    block: Boolean,
+    plain: Boolean,
+    round: Boolean,
+    square: Boolean,
+    loading: Boolean,
+    hairline: Boolean,
+    disabled: Boolean,
     iconPrefix: String,
-    iconPosition: { type: String, default: 'left', validator: (value) => ['left', 'right'].includes(value) },
-    block: { type: Boolean, default: false },
-    plain: { type: Boolean, default: false },
-    square: { type: Boolean, default: false },
-    round: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    hairline: { type: Boolean, default: false },
-    loading: { type: Boolean, default: false },
+    loadingSize: numericProp,
     loadingText: String,
-    loadingType: { type: String, default: 'circular' },
+    loadingType: String,
+    iconPosition: makeStringProp('left'),
 })
 const emits = defineEmits(['click'])
 
 const slots = useSlots()
+
+const { bem } = createNamespace('button')
 
 const styles = computed(() => {
     if (!props.color) {
@@ -95,10 +101,10 @@ const styles = computed(() => {
     }
 })
 const hasIcon = computed(() => {
-    return !isEmpty(props.icon)
+    return !isNullOrEmpty(props.icon)
 })
 const hasText = computed(() => {
-    return !isEmpty(props.text) || slots.default
+    return !isNullOrEmpty(props.text) || slots.default
 })
 
 function handleClick(e) {

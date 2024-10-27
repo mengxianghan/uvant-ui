@@ -1,12 +1,14 @@
 <template>
     <div
-        class="van-sidebar-item"
-        :class="{
-            'van-sidebar-item--select': index === parent.getActive(),
-            'van-sidebar-item--disabled': disabled,
-        }"
-        @click="handleClick">
-        <div class="van-badge__wrapper van-sidebar-item__text">
+        :class="
+            bem({
+                select: index === parent.getActive(),
+                disabled: disabled,
+            })
+        "
+        @click="onClick">
+        <!-- van-badge__wrapper -->
+        <div :class="bem('text')">
             <vc-badge
                 :dot="dot"
                 :badge="badge"
@@ -25,19 +27,21 @@ export default {
 
 <script setup>
 import { useParent } from '../composables'
+import { createNamespace, numericProp } from '../utils'
 
 const props = defineProps({
-    title: { type: String, default: '' },
-    dot: { type: Boolean, default: false },
-    badge: [Number, String],
+    title: String,
+    dot: Boolean,
+    badge: numericProp,
     badgeProps: Object,
-    disabled: { type: Boolean, default: false },
+    disabled: Boolean,
 })
 const emits = defineEmits(['click'])
 
 const { parent, index } = useParent('sidebar')
+const { bem } = createNamespace('sidebar-item')
 
-function handleClick() {
+function onClick() {
     if (props.disabled) {
         return
     }

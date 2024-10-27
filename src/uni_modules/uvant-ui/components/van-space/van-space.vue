@@ -1,37 +1,37 @@
 <template>
     <view
-        class="van-space"
-        :class="{
-            [`van-space--${direction}`]: direction,
-            [`van-space--align-${align}`]: align,
-            'van-space--wrap': wrap,
-            'van-space--fill': fill,
-        }"
-        :style="cpStyle">
+        :class="
+            bem({
+                [direction]: direction,
+                [`align-${align}`]: align,
+                wrap,
+                fill,
+            })
+        "
+        :style="styles">
         <slot></slot>
     </view>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { isArray, isEmpty, addUnit } from '../utils'
+import { isNullOrEmpty, addUnit, createNamespace, makeStringProp } from '../utils'
+import { isArray } from 'lodash-es'
 
 const props = defineProps({
-    direction: {
-        type: String,
-        default: 'horizontal',
-        validator: (value) => ['vertical', 'horizontal'].includes(value),
-    },
-    size: { type: [Number, String, Array] },
-    align: { type: String, validator: (value) => ['start', 'end', 'center', 'baseline'].includes(value) },
-    wrap: { type: Boolean, default: false },
-    fill: { type: Boolean, default: false },
+    direction: makeStringProp('horizontal'),
+    size: [Number, String, Array],
+    align: String,
+    wrap: Boolean,
+    fill: Boolean,
 })
 
-const cpStyle = computed(() => {
+const { bem } = createNamespace('space')
+
+const styles = computed(() => {
     const style = {}
 
-    if (isEmpty(props.size)) return
+    if (isNullOrEmpty(props.size)) return
 
     if (isArray(props.size)) {
         const [x = 0, y = 0] = props.size

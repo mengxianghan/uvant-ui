@@ -182,6 +182,12 @@
             "style": {
                 "navigationBarTitleText": "Switch"
             }
+        },
+        {
+            "path": "pages/component/uploader",
+            "style": {
+                "navigationBarTitleText": "Uploader"
+            }
         }
     ],
     "globalStyle": {

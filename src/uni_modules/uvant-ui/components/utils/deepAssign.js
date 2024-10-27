@@ -1,4 +1,5 @@
-import { isDef, isObject } from './basic'
+import { isDef } from './basic'
+import { isObject } from 'lodash-es'
 
 const { hasOwnProperty } = Object.prototype
 

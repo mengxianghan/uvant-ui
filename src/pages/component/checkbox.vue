@@ -49,13 +49,8 @@
                 自定义图标
                 <template #icon>
                     <van-image
-                        :src="
-                            state.checkbox3
-                                ? 'https://fastly.jsdelivr.net/npm/@vant/assets/user-active.png'
-                                : 'https://fastly.jsdelivr.net/npm/@vant/assets/user-inactive.png'
-                        "
-                        width="20px"
-                        height="20px"
+                        :src="state.checkbox3 ? cdnURL('user-active.png') : cdnURL('user-inactive.png')"
+                        height="16px"
                         fit="aspectFit" />
                 </template>
             </van-checkbox>
@@ -181,6 +176,7 @@
 <script setup>
 import { reactive, ref, onMounted, nextTick } from 'vue'
 import { useRefs } from '@/uni_modules/uvant-ui'
+import { cdnURL } from '@/utils'
 
 const state = reactive({
     checkbox1: true,

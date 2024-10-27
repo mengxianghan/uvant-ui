@@ -11,17 +11,21 @@ $van-image-error-icon-color: var(--van-image-error-icon-color, $van-gray-4);
 .van-image {
     position: relative;
     display: inline-block;
+    overflow: hidden;
     width: 100%;
     height: 100%;
-    vertical-align: middle;
 
     &--round {
-        overflow: hidden;
         border-radius: $van-radius-max;
 
         .van-image__img {
             border-radius: inherit;
         }
+    }
+
+    &--autosize {
+        width: 100%;
+        height: 100%;
     }
 
     &--block {
@@ -34,6 +38,13 @@ $van-image-error-icon-color: var(--van-image-error-icon-color, $van-gray-4);
         display: block;
         width: 100%;
         height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &__img {
+        vertical-align: middle;
     }
 
     &__error,

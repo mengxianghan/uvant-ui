@@ -1,14 +1,16 @@
 <template>
     <view
-        class="van-loading"
-        :class="{
-            'van-loading--vertical': vertical,
-        }">
+        :class="
+            bem({
+                vertical,
+            })
+        ">
         <view
-            class="van-loading__spinner"
-            :class="{
-                [`van-loading__spinner--${type}`]: !hasIcon,
-            }"
+            :class="
+                bem('spinner', {
+                    [type]: !hasIcon,
+                })
+            "
             :style="{
                 color: color,
                 ...getSizeStyle(size),
@@ -18,13 +20,13 @@
                     <view
                         v-for="item in 12"
                         :key="item"
-                        class="van-loading__dot"></view>
+                        :class="bem('dot')"></view>
                 </template>
             </slot>
         </view>
         <template v-if="slots.default">
             <view
-                class="van-loading__text"
+                :class="bem('text')"
                 :style="{
                     fontSize: isDef(textSize) ? addUnit(textSize) : '',
                     color: textColor || color,
@@ -37,17 +39,18 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { addUnit, getSizeStyle, isDef } from '../utils'
+import { addUnit, getSizeStyle, isDef, createNamespace, makeStringProp, numericProp } from '../utils'
 
 defineProps({
     color: String,
-    type: { type: String, default: 'circular', validator: (value) => ['circular', 'spinner'].includes(value) },
-    size: [Number, String],
-    textSize: [Number, String],
+    type: makeStringProp('circular'),
+    size: numericProp,
+    textSize: numericProp,
     textColor: String,
-    vertical: { type: Boolean, default: false },
+    vertical: Boolean,
 })
 const slots = useSlots()
+const { bem } = createNamespace('loading')
 
 const hasIcon = computed(() => slots.icon)
 </script>

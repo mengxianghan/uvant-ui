@@ -1,11 +1,10 @@
 <template>
     <view
-        :class="[
-            'van-radio-group',
-            {
-                [`van-radio-group--${direction}`]: direction,
-            },
-        ]">
+        :class="
+            bem({
+                [direction]: direction,
+            })
+        ">
         <slot></slot>
     </view>
 </template>
@@ -13,18 +12,20 @@
 <script setup>
 import { watch } from 'vue'
 import { useChildren } from '../composables'
+import { createNamespace, numericProp } from '../utils'
 
 const props = defineProps({
-    disabled: { type: Boolean, default: false },
-    direction: { type: String, validator: (value) => ['vertical', 'horizontal'].includes(value) },
-    iconSize: [String, Number],
+    disabled: Boolean,
+    direction: String,
+    iconSize: numericProp,
     checkedColor: String,
-    shape: { type: String, validator: (value) => ['round', 'square', 'dot'].includes(value) },
+    shape: String,
 })
-const modelValue = defineModel({ type: [String, Number] })
+const modelValue = defineModel({ type: numericProp })
 const emits = defineEmits(['change'])
 
 const { linkChildren } = useChildren('van-radio')
+const { bem } = createNamespace('radio-group')
 
 watch(
     () => modelValue.value,

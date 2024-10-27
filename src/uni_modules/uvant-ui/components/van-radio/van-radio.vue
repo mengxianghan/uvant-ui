@@ -1,33 +1,31 @@
 <template>
     <view
-        :class="[
-            'van-radio',
-            {
-                'van-radio--disabled': disabled,
-                'van-radio--label-disabled': labelDisabled,
-                [`van-radio--${direction}`]: direction,
-            },
-        ]"
-        @click="handleClick">
+        :class="
+            bem({
+                disabled,
+                'label-disabled': labelDisabled,
+                [direction]: direction,
+            })
+        "
+        @click="onClick">
         <view
-            :class="[
-                'van-radio__icon',
-                {
-                    [`van-radio__icon--${computedShape}`]: computedShape,
-                    'van-radio__icon--disabled': disabled,
-                    'van-radio__icon--checked': checked(),
-                },
-            ]"
+            :class="
+                bem('icon', {
+                    [computedShape]: computedShape,
+                    disabled,
+                    checked: checked(),
+                })
+            "
             :style="{
                 fontSize: addUnit(computedIconSize),
             }">
             <slot name="icon">
                 <template v-if="computedShape === 'dot'">
-                    <view class="van-radio__icon--dot"></view>
+                    <view :class="bem('icon-dot')"></view>
                 </template>
                 <template v-else>
                     <view
-                        class="van-radio__icon--default"
+                        :class="bem('icon-default')"
                         :style="iconStyles">
                         <van-icon name="success"></van-icon>
                     </view>
@@ -36,14 +34,13 @@
         </view>
         <template v-if="slots.default">
             <view
-                :class="[
-                    'van-radio__label',
-                    {
-                        [`van-radio__label--${labelPosition}`]: labelPosition,
-                        'van-radio__label--disabled': disabled,
-                    },
-                ]"
-                @click="handleLabel">
+                :class="
+                    bem('label', {
+                        [labelPosition]: labelPosition,
+                        disabled,
+                    })
+                "
+                @click="onClickLabel">
                 <slot></slot>
             </view>
         </template>
@@ -53,7 +50,7 @@
 <script setup>
 import { computed, watch, useSlots } from 'vue'
 import { useParent } from '../composables'
-import { addUnit } from '../utils'
+import { addUnit, createNamespace } from '../utils'
 
 const props = defineProps({
     name: [String, Number],
@@ -70,6 +67,7 @@ const emits = defineEmits(['click', 'toggle'])
 
 const { parent } = useParent('van-radio')
 const slots = useSlots()
+const { bem } = createNamespace('radio')
 
 const disabled = computed(() => {
     if (parent && props.bindGroup) {
@@ -109,14 +107,14 @@ function getParentProp(name) {
     }
 }
 
-function handleClick(event) {
+function onClick(event) {
     if (!disabled.value) {
         toggle()
     }
     emits('click', event)
 }
 
-function handleLabel(e) {
+function onClickLabel(e) {
     if (props.labelDisabled) {
         e.stopPropagation()
     }

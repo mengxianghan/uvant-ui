@@ -1,12 +1,13 @@
 <template>
     <view
-        class="van-cell-group"
-        :class="{
-            'van-hairline--top-bottom': border && !inset,
-            'van-cell-group--inset': inset,
-        }">
-        <template v-if="!isEmpty(title)">
-            <view class="van-cell-group__title">
+        :class="
+            bem({
+                'top-bottom': border && !inset,
+                inset,
+            })
+        ">
+        <template v-if="!isNullOrEmpty(title)">
+            <view :class="bem('title')">
                 <slot name="title">{{ title }}</slot>
             </view>
         </template>
@@ -15,13 +16,15 @@
 </template>
 
 <script setup>
-import { isEmpty } from '../utils'
+import { isNullOrEmpty, createNamespace, truthProp } from '../utils'
 
 defineProps({
     title: String,
-    inset: { type: Boolean, default: false },
-    border: { type: Boolean, default: true },
+    inset: Boolean,
+    border: truthProp,
 })
+
+const { bem } = createNamespace('cell-group')
 </script>
 
 <style lang="scss" scoped>

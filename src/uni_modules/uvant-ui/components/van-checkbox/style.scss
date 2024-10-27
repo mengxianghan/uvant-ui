@@ -61,9 +61,6 @@ $van-checkbox-disabled-background: var(--van-checkbox-disabled-background, $van-
 
         &--indeterminate {
             .van-checkbox__icon-default {
-                display: flex;
-                align-items: center;
-                justify-content: center;
                 color: $van-white;
                 border-color: $van-checkbox-checked-icon-color;
                 background-color: $van-checkbox-checked-icon-color;

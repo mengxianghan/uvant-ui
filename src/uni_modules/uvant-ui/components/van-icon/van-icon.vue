@@ -6,12 +6,17 @@
         <view
             :class="classes"
             :style="styles"
-            @click="handleClick">
+            @click="onClick">
             <template v-if="isImage">
-                <image
-                    class="van-icon__image"
-                    :style="getSizeStyle(size)"
-                    :src="name" />
+                <view
+                    :class="bem('image')"
+                    :style="getSizeStyle(size)">
+                    <van-image
+                        :src="name"
+                        :height="size"
+                        :show-loading="false"
+                        :show-error="false"></van-image>
+                </view>
             </template>
         </view>
     </vc-badge>
@@ -19,7 +24,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { addUnit, getSizeStyle } from '../utils'
+import { addUnit, getSizeStyle, createNamespace } from '../utils'
 
 const props = defineProps({
     name: String,
@@ -32,9 +37,11 @@ const props = defineProps({
 })
 const emits = defineEmits(['click'])
 
+const { bem } = createNamespace('icon')
+
 const isImage = computed(() => props.name?.includes('/'))
 const classes = computed(() => ({
-    [`${props.classPrefix}`]: true,
+    [`${props.classPrefix}`]: props.classPrefix,
     [`${props.classPrefix}-${props.name}`]: !isImage.value && !!props.name,
 }))
 const styles = computed(() => ({
@@ -42,7 +49,7 @@ const styles = computed(() => ({
     fontSize: props.size ? addUnit(props.size) : '',
 }))
 
-function handleClick(e) {
+function onClick(e) {
     emits('click', e)
 }
 </script>

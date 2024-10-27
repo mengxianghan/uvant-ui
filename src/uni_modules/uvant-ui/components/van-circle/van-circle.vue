@@ -1,15 +1,15 @@
 <template>
     <view
-        class="van-circle"
+        :class="bem()"
         :style="getSizeStyle(size)">
         <canvas
-            class="van-circle__canvas"
-            :id="canvasId"
-            :canvas-id="canvasId"
+            :class="bem('canvas')"
+            :id="canvasSelector"
+            :canvas-id="canvasSelector"
             :type="type"
             :style="getSizeStyle(size)"></canvas>
         <template v-if="hasText">
-            <view class="van-circle__text">
+            <view :class="bem('text')">
                 <slot>{{ text }}</slot>
             </view>
         </template>
@@ -18,30 +18,31 @@
 
 <script setup>
 import { ref, computed, getCurrentInstance, onBeforeUnmount, onMounted, watch, useSlots } from 'vue'
-import { isObject, canIUseCanvas2d, uuid, getSizeStyle } from '../utils'
+import {
+    canIUseCanvas2d,
+    createUniqueSelector,
+    getSizeStyle,
+    createNamespace,
+    makeStringProp,
+    makeNumberProp,
+    truthProp,
+} from '../utils'
 import { adaptor } from './canvas'
+import { isObject } from 'lodash-es'
 
 const props = defineProps({
-    modelValue: { type: Number, default: 0 },
-    type: { type: String, default: '2d' },
-    size: { type: Number, default: 100 },
+    modelValue: makeNumberProp(0),
+    type: makeStringProp('2d'),
+    size: makeNumberProp(100),
     color: { type: [String, Object], default: '#1989fa' },
-    layerColor: { type: String, default: '#fff' },
+    layerColor: makeStringProp('#fff'),
     fill: String,
-    speed: { type: Number, default: 50 },
+    speed: makeNumberProp(50),
     text: String,
-    strokeWidth: { type: Number, default: 4 },
-    stroleLinecap: {
-        type: String,
-        default: 'round',
-        validator: (value) => ['square', 'butt', 'round'].includes(value),
-    },
-    clockwise: { type: Boolean, default: true },
-    startPosition: {
-        type: String,
-        default: 'top',
-        validator: (value) => ['top', 'bottom', 'left', 'right'].includes(value),
-    },
+    strokeWidth: makeNumberProp(4),
+    stroleLinecap: makeStringProp('round'),
+    clockwise: truthProp,
+    startPosition: makeStringProp('top'),
 })
 const emits = defineEmits(['update:modelValue'])
 
@@ -56,12 +57,13 @@ const ROTATE_ANGLE_MAP = {
 
 const instance = getCurrentInstance()
 const slots = useSlots()
+const { bem, name } = createNamespace('circle')
+const [canvasSelector] = createUniqueSelector(name)
 
 const hoverColor = ref('#1989fa')
 const inited = ref(false)
 const currentValue = ref(props.modelValue)
 const interval = ref()
-const canvasId = ref(`van-circle--${uuid()}`)
 
 const hasText = computed(() => {
     return props.text || slots.default
@@ -93,7 +95,7 @@ function getContext() {
     const { type, size } = props
 
     if (type === '' || !canIUseCanvas2d()) {
-        const ctx = uni.createCanvasContext(canvasId.value, instance.proxy)
+        const ctx = uni.createCanvasContext(canvasSelector, instance.proxy)
         return Promise.resolve(ctx)
     }
 
@@ -102,7 +104,7 @@ function getContext() {
     return new Promise((resolve) => {
         uni.createSelectorQuery()
             .in(instance.proxy)
-            .select(`#${canvasId.value}`)
+            .select(`#${canvasSelector}`)
             .fields({ node: true, size: true })
             .exec((res) => {
                 const canvas = res[0].node

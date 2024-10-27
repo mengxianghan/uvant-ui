@@ -1,55 +1,57 @@
 <template>
     <view class="pb-8 bg-white">
         <demo-block title="基础用法">
-            <view class="flex flex-wrap gap-4">
-                <view class="flex flex-col items-center">
+            <van-row :gutter="16">
+                <van-col :span="8">
                     <van-image
                         width="100"
                         height="100"
-                        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+                        :src="cdnURL('cat.jpeg')" />
                     <view class="mt-2 text-neutral-400">基础用法</view>
-                </view>
+                </van-col>
 
-                <view class="flex flex-col items-center">
+                <van-col :span="8">
                     <view class="w-32 h-32">
-                        <van-image src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+                        <van-image
+                            :src="cdnURL('cat.jpeg')"
+                            autosize />
                     </view>
                     <view class="mt-2 text-neutral-400">宽高自适应父元素</view>
-                </view>
-            </view>
+                </van-col>
+            </van-row>
         </demo-block>
 
         <demo-block title="填充模式">
-            <view class="flex flex-wrap gap-4">
-                <view
+            <van-row :gutter="16">
+                <van-col
                     v-for="item in list"
                     :key="item.mode"
-                    class="flex flex-col items-center">
+                    :span="8">
                     <van-image
                         :fit="item.mode"
                         width="6rem"
                         height="6rem"
-                        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+                        :src="cdnURL('cat.jpeg')" />
                     <view class="mt-2 text-neutral-400">{{ item.mode }}</view>
-                </view>
-            </view>
+                </van-col>
+            </van-row>
         </demo-block>
 
         <demo-block title="圆形图片">
-            <view class="flex flex-wrap gap-4">
-                <view
+            <van-row :gutter="16">
+                <van-col
                     v-for="item in list"
                     :key="item.mode"
-                    class="flex flex-col items-center">
+                    :span="8">
                     <van-image
                         :fit="item.mode"
                         round
                         width="6rem"
                         height="6rem"
-                        src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+                        :src="cdnURL('cat.jpeg')" />
                     <view class="mt-2 text-neutral-400">{{ item.mode }}</view>
-                </view>
-            </view>
+                </van-col>
+            </van-row>
         </demo-block>
 
         <demo-block title="图片懒加载">
@@ -58,22 +60,22 @@
                     width="100"
                     height="100"
                     lazy-load
-                    src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg" />
+                    :src="cdnURL('cat.jpeg')" />
                 <view class="mt-2 text-neutral-400">只针对page与scroll-view下的image有效</view>
             </view>
         </demo-block>
 
         <demo-block title="加载中提示">
-            <view class="flex flex-wrap gap-4">
-                <view class="flex flex-col items-center">
+            <van-row :gutter="16">
+                <van-col :span="8">
                     <van-image
                         width="100"
                         height="100">
                     </van-image>
                     <view class="mt-2 text-neutral-400">默认提示</view>
-                </view>
+                </van-col>
 
-                <view class="flex flex-col items-center">
+                <van-col :span="8">
                     <van-image
                         width="100"
                         height="100">
@@ -84,22 +86,22 @@
                         </template>
                     </van-image>
                     <view class="mt-2 text-neutral-400">自定义提示</view>
-                </view>
-            </view>
+                </van-col>
+            </van-row>
         </demo-block>
 
         <demo-block title="加载失败提示">
-            <view class="flex flex-wrap gap-4">
-                <view class="flex flex-col items-center">
+            <van-row :gutter="16">
+                <van-col :span="8">
                     <van-image
                         src="https://x"
                         width="100"
                         height="100">
                     </van-image>
                     <view class="mt-2 text-neutral-400">默认提示</view>
-                </view>
+                </van-col>
 
-                <view class="flex flex-col items-center">
+                <van-col :span="8">
                     <van-image
                         src="https://x"
                         width="100"
@@ -107,13 +109,15 @@
                         <template #error> 加载失败 </template>
                     </van-image>
                     <view class="mt-2 text-neutral-400">自定义提示</view>
-                </view>
-            </view>
+                </van-col>
+            </van-row>
         </demo-block>
     </view>
 </template>
 
 <script setup>
+import { cdnURL } from '@/utils'
+
 const list = [
     {
         mode: 'scaleToFill',

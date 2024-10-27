@@ -1,29 +1,29 @@
 <template>
     <view
         :class="[
-            'van-floating-panel',
+            bem(),
             {
                 'van-safe-area-bottom': safeAreaInsetBottom,
             },
         ]"
-        :style="rootStyles"
+        :style="styles"
         @touchstart="(e) => (props.contentDraggable ? onTouchstart(e) : '')"
         @touchmove="(e) => (props.contentDraggable ? onTouchmove(e) : '')"
         @touchend="(e) => (props.contentDraggable ? onTouchend(e) : '')"
         @touchcancel="(e) => (props.contentDraggable ? onTouchend(e) : '')">
         <view
-            class="van-floating-panel__header"
+            :class="bem('header')"
             @touchstart="(e) => (!props.contentDraggable ? onTouchstart(e) : '')"
             @touchmove="(e) => (!props.contentDraggable ? onTouchmove(e) : '')"
             @touchend="(e) => (!props.contentDraggable ? onTouchend(e) : '')"
             @touchcancel="(e) => (!props.contentDraggable ? onTouchend(e) : '')">
             <slot name="header">
-                <view class="van-floating-panel__header-bar"></view>
+                <view :class="bem('header-bar')"></view>
             </slot>
         </view>
         <scroll-view
             :scroll-y="open"
-            :class="['van-floating-panel__content']"
+            :class="bem('content')"
             @scroll="onScroll">
             <slot></slot>
         </scroll-view>
@@ -32,21 +32,32 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { getSystemInfoSync, addUnit, closest, preventDefault } from '../utils'
+import {
+    getSystemInfoSync,
+    addUnit,
+    closest,
+    preventDefault,
+    createNamespace,
+    makeArrayProp,
+    makeNumericProp,
+    truthProp,
+    makeNumberProp,
+} from '../utils'
 import { useTouch } from '../composables/useTouch'
 import { defaultTo } from 'lodash-es'
 
 const props = defineProps({
-    anchors: { type: Array, default: () => [] },
-    duration: { type: [String, Number], default: 0.3 },
-    contentDraggable: { type: Boolean, default: true },
-    safeAreaInsetBottom: { type: Boolean, default: true },
+    anchors: makeArrayProp(),
+    duration: makeNumericProp(0.3),
+    contentDraggable: truthProp,
+    safeAreaInsetBottom: truthProp,
 })
 const emits = defineEmits(['heightChange'])
-const height = defineModel('height', { type: Number, default: 0 })
-const open = defineModel('open', { type: Boolean, default: false })
+const height = defineModel('height', makeNumberProp(0))
+const open = defineModel('open', { type: Boolean })
 
 const touch = useTouch()
+const { bem } = createNamespace('floating-panel')
 
 let startY
 let maxScroll = -1
@@ -62,7 +73,7 @@ const boundary = computed(() => {
     }
 })
 const anchors = computed(() => (props.anchors.length >= 2 ? props.anchors : [boundary.value.min, boundary.value.max]))
-const rootStyles = computed(() => ({
+const styles = computed(() => ({
     height: addUnit(boundary.value.max),
     transform: `translateY(calc(100% + ${addUnit(-height.value)}))`,
     transition: !dragging.value ? `transform ${props.duration}s cubic-bezier(0.18, 0.89, 0.32, 1.28)` : 'none',

@@ -100,7 +100,7 @@
                 >
                 <van-button
                     plain
-                    icon="https://fastly.jsdelivr.net/npm/@vant/assets/user-active.png"
+                    :icon="cdnURL('user-active.png')"
                     type="primary">
                     按钮
                 </van-button>
@@ -154,6 +154,8 @@
     </view>
 </template>
 
-<script setup></script>
+<script setup>
+import { cdnURL } from '@/utils'
+</script>
 
 <style lang="scss" scoped></style>

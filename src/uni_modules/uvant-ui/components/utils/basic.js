@@ -1,8 +1,4 @@
-import { defaultTo } from 'lodash-es'
-
-export const extend = Object.assign
-
-export function noop() {}
+import { isFunction, isObject, isArray, defaultTo } from 'lodash-es'
 
 /**
  * @param {*} value
@@ -10,22 +6,6 @@ export function noop() {}
  */
 export function isDef(value) {
     return value !== undefined && value !== null
-}
-
-/**
- * @param {*} value
- * @returns
- */
-export function isFunction(value) {
-    return typeof value === 'function'
-}
-
-/**
- * @param {*} value
- * @returns
- */
-export function isObject(value) {
-    return value !== null && typeof value === 'object'
 }
 
 /**
@@ -49,16 +29,8 @@ export function isMobile(value) {
  * @param {*} value
  * @returns
  */
-export function isEmpty(value) {
+export function isNullOrEmpty(value) {
     return value === '' || value === undefined || value === null
-}
-
-/**
- * @param {*} value
- * @returns
- */
-export function isArray(value) {
-    return Array.isArray(value)
 }
 
 /**
@@ -67,6 +39,18 @@ export function isArray(value) {
  */
 export function isPromise(val) {
     return isObject(val) && isFunction(val.then) && isFunction(val.catch)
+}
+
+export function isImageUrl(url) {
+    return /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/i.test(url)
+}
+
+export function isVideoUrl(url) {
+    return /\.(mp4|mpg|mpeg|dat|asf|avi|rm|rmvb|mov|wmv|flv|mkv)/i.test(url)
+}
+
+export function isBoolean(value) {
+    return typeof value === 'boolean'
 }
 
 /**
@@ -154,7 +138,7 @@ export function mergeClassNames(...args) {
         if (item && typeof item === 'string') {
             classNames.push(item)
         }
-        if (Array.isArray(item)) {
+        if (isArray(item)) {
             classNames.push(...mergeClassNames(item))
         }
         if (isObject(item)) {
@@ -183,4 +167,12 @@ export function get(object, path) {
     })
 
     return result
+}
+
+export function isSameValue(newValue, oldValue) {
+    return JSON.stringify(newValue) === JSON.stringify(oldValue)
+}
+
+export function toArray(item) {
+    return isArray(item) ? item : [item]
 }

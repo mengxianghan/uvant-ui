@@ -76,7 +76,7 @@ const list = ref([
             { key: 'Stepper', name: '步进器', url: '/pages/component/stepper' },
             { key: 'Switch', name: '开关', url: '/pages/component/switch' },
             { key: 'TimePicker', name: '时间选择', url: '' },
-            { key: 'Uploader', name: '文件上传', url: '' },
+            { key: 'Uploader', name: '文件上传', url: '/pages/component/uploader' },
         ],
     },
     {

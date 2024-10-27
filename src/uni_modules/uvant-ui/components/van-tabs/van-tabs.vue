@@ -1,47 +1,51 @@
 <template>
-    <view class="van-tabs">
+    <view :class="bem()">
         <scroll-view
             scroll-with-animation
             :scroll-x="scrollable"
             :scroll-left="scrollLeft"
             :show-scrollbar="false"
             :class="[
-                'van-tabs__wrap',
+                bem('wrap', {
+                    shrink,
+                }),
                 scrollViewSelector,
                 {
                     'van-hairline--top-bottom': border,
-                    'van-tabs__wrap--shrink': shrink,
                 },
             ]">
             <view
-                class="van-tabs__nav"
-                :class="{
-                    'van-tabs__nav--shrink': shrink,
-                }">
+                :class="
+                    bem('nav', {
+                        shrink,
+                    })
+                ">
                 <view
                     v-for="(item, index) in list"
                     :key="item.value"
-                    :class="{
-                        [`${tabSelector}-${index}`]: true,
-                        'van-tab--active': item.value === active,
-                        'van-tab--disabled': item.disabled,
-                        'van-tab--shrink': shrink,
-                        'van-tab--grow': scrollable,
-                    }"
+                    :class="[
+                        bemTab({
+                            active: item.value === active,
+                            disabled: item.disabled,
+                            shrink,
+                            grow: scrollable,
+                        }),
+                        `${tabSelector}-${index}`,
+                    ]"
                     :style="{
                         color: item.value === active ? titleActiveColor : titleInactiveColor,
                     }"
-                    class="van-tab"
                     @click="handleClick(item, index)">
                     <vc-badge
                         :dot="item.dot"
                         :badge="item.badge"
                         :badge-props="item.badgeProps">
                         <view
-                            class="van-tab__text"
-                            :class="{
-                                'van-tab__text--ellipsis': ellipsis,
-                            }">
+                            :class="
+                                bemTab({
+                                    ellipsis,
+                                })
+                            ">
                             <slot
                                 :record="item"
                                 :index="index">
@@ -51,8 +55,7 @@
                     </vc-badge>
                 </view>
                 <view
-                    class="van-tabs__line"
-                    :class="[lineSelector]"
+                    :class="[bem('line'), lineSelector]"
                     :style="lineStyles"></view>
             </view>
         </scroll-view>
@@ -61,40 +64,51 @@
 
 <script setup>
 import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue'
-import { addUnit, isEmpty, getRect, getSizeStyle } from '../utils'
-import { findIndex, head, uniqueId, get } from 'lodash-es'
+import {
+    addUnit,
+    isNullOrEmpty,
+    getRect,
+    getSizeStyle,
+    createNamespace,
+    createUniqueSelector,
+    makeArrayProp,
+    makeNumericProp,
+    numericProp,
+    truthProp,
+} from '../utils'
+import { findIndex, head, get } from 'lodash-es'
 
 const props = defineProps({
-    list: { type: Array, default: () => [] },
+    list: makeArrayProp(),
     background: String,
-    duration: { type: [Number, String], default: 0.3 },
-    lineWidth: [Number, String],
-    lineHeight: [Number, String],
+    duration: makeNumericProp(0.3),
+    lineWidth: numericProp,
+    lineHeight: numericProp,
     lineColor: String,
-    border: { type: Boolean, default: false },
-    ellipsis: { type: Boolean, default: true },
-    sticky: { type: Boolean, default: false },
-    shrink: { type: Boolean, default: false },
-    offsetTop: [Number, String],
-    swipeThreshold: { type: [Number, String], default: 5 },
+    border: Boolean,
+    ellipsis: truthProp,
+    sticky: Boolean,
+    shrink: Boolean,
+    offsetTop: numericProp,
+    swipeThreshold: makeNumericProp(5),
     titleActiveColor: String,
     titleInactiveColor: String,
     beforeChange: { type: Function, default: () => true },
 })
-const active = defineModel('active', { type: [Number, String] })
+const active = defineModel('active', { type: numericProp })
 const emits = defineEmits(['click', 'change'])
 
+const { name, bem } = createNamespace('tabs')
+const { bem: bemTab } = createNamespace('tab')
+const [tabSelector, lineSelector, scrollViewSelector] = createUniqueSelector(name, 3)
 const instance = getCurrentInstance()
-const tabSelector = ref(uniqueId('van-tab-'))
-const lineSelector = ref(uniqueId('van-tab-line-'))
-const scrollViewSelector = ref(uniqueId('van-tabs-wrap-'))
 const scrollLeft = ref(0)
 const lineOffsetLeft = ref(0)
 
 const lineStyles = computed(() => ({
     transform: `translate(${addUnit(lineOffsetLeft.value)})`,
     transitionDuration: `${props.duration}s`,
-    background: !isEmpty(props.lineColor) ? props.lineColor : '',
+    background: !isNullOrEmpty(props.lineColor) ? props.lineColor : '',
     ...getSizeStyle([props.lineWidth, props.lineHeight]),
 }))
 const activeIndex = computed(() => findIndex(props.list, { value: active.value }))
@@ -109,7 +123,7 @@ onMounted(async () => {
 })
 
 async function initialize() {
-    if (isEmpty(active.value)) {
+    if (isNullOrEmpty(active.value)) {
         active.value = get(head(props.list), 'value')
     }
     await nextTick()
@@ -123,7 +137,7 @@ async function initialize() {
  * @param {number} [count] - 个数
  */
 function getItemRect(start = 0, count = props.list.length) {
-    const queue = props.list.map((item, index) => getRect(instance.proxy, `.${tabSelector.value}-${index}`))
+    const queue = props.list.map((item, index) => getRect(instance.proxy, `.${tabSelector}-${index}`))
     return new Promise((resolve) => {
         Promise.all(queue).then((data) => {
             resolve(data.slice(start, start + count))
@@ -145,14 +159,14 @@ async function getItemRectWidth(start = 0, count = props.list.length) {
  * 获取下划线 DOMRect
  */
 async function getLineRect() {
-    return await getRect(instance.proxy, `.${lineSelector.value}`)
+    return await getRect(instance.proxy, `.${lineSelector}`)
 }
 
 /**
  * 获取菜单尺寸
  */
 async function getScrollViewRect() {
-    return await getRect(instance.proxy, `.${scrollViewSelector.value}`)
+    return await getRect(instance.proxy, `.${scrollViewSelector}`)
 }
 
 async function handleClick(record, index) {

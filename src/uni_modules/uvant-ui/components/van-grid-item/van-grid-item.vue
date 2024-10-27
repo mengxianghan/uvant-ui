@@ -1,13 +1,23 @@
 <template>
     <view
-        class="van-grid-item"
+        :class="bem()"
         :style="styles"
-        @click="handleClick">
+        @click="onClick">
         <view
-            :class="['van-grid-item__content', classNames]"
+            :class="[
+                bem('content', {
+                    [parent.props.direction]: parent.props.direction,
+                    center: parent.props.center,
+                    square: parent.props.square,
+                    reverse: parent.props.reverse,
+                    clickable: parent.props.clickable,
+                    surround: parent.props.border && parent.props.gutter,
+                }),
+                { 'van-hairline': parent.props.border },
+            ]"
             :style="contentStyles">
             <slot>
-                <view class="van-grid-item__icon">
+                <view :class="bem('icon')">
                     <vc-badge
                         :dot="dot"
                         :badge="badge"
@@ -20,7 +30,7 @@
                         </slot>
                     </vc-badge>
                 </view>
-                <view class="van-grid-item__text">
+                <view :class="bem('text')">
                     <slot name="text">{{ text }}</slot>
                 </view>
             </slot>
@@ -36,7 +46,7 @@ export default {
 
 <script setup>
 import { computed } from 'vue'
-import { addUnit } from '../utils'
+import { addUnit, createNamespace, numericProp } from '../utils'
 import { useParent } from '../composables'
 
 defineProps({
@@ -44,13 +54,14 @@ defineProps({
     icon: String,
     iconPrefix: String,
     iconColor: String,
-    dot: { type: Boolean, default: false },
-    badge: [Number, String],
+    dot: Boolean,
+    badge: numericProp,
     badgeProps: Object,
 })
 const emits = defineEmits(['click'])
 
 const { parent, index } = useParent('van-grid')
+const { bem } = createNamespace('grid-item')
 
 const styles = computed(() => {
     const { square, gutter, columnNum } = parent.props
@@ -86,21 +97,8 @@ const contentStyles = computed(() => {
 
     return {}
 })
-const classNames = computed(() => {
-    const { center, border, square, gutter, reverse, direction, clickable } = parent.props
 
-    return {
-        [`van-grid-item__content--${direction}`]: direction,
-        'van-grid-item__content--center': center,
-        'van-grid-item__content--square': square,
-        'van-grid-item__content--reverse': reverse,
-        'van-grid-item__content--clickable': clickable,
-        'van-grid-item__content--surround': border && gutter,
-        'van-hairline': border,
-    }
-})
-
-function handleClick(e) {
+function onClick(e) {
     emits('click', e)
 }
 </script>

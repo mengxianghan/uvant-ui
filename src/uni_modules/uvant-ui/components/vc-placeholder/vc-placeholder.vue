@@ -25,7 +25,7 @@ import { addUnit, getRect } from '../utils'
 import { uniqueId } from 'lodash-es'
 
 const props = defineProps({
-    disabled: { type: Boolean, default: false },
+    disabled: Boolean,
     customStyle: [String, Object],
     customClass: [String, Object, Array],
 })

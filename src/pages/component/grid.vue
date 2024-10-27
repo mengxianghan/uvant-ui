@@ -39,17 +39,17 @@
                 :column-num="3">
                 <van-grid-item>
                     <van-image
-                        src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg"
+                        :src="cdnURL('apple-1.jpeg')"
                         height="80" />
                 </van-grid-item>
                 <van-grid-item>
                     <van-image
-                        src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-2.jpeg"
+                        :src="cdnURL('apple-2.jpeg')"
                         height="80" />
                 </van-grid-item>
                 <van-grid-item>
                     <van-image
-                        src="https://fastly.jsdelivr.net/npm/@vant/assets/apple-3.jpeg"
+                        :src="cdnURL('apple-3.jpeg')"
                         height="80" />
                 </van-grid-item>
             </van-grid>
@@ -114,6 +114,8 @@
     </view>
 </template>
 
-<script setup></script>
+<script setup>
+import { cdnURL } from '@/utils'
+</script>
 
 <style lang="scss" scoped></style>

@@ -1,5 +1,12 @@
 <template>
-    <template v-if="!disabled">
+    <template v-if="disabled">
+        <view
+            :class="[customClass]"
+            :style="customStyle">
+            <slot></slot>
+        </view>
+    </template>
+    <template v-else>
         <view
             :class="[placeholderSelector, customClass]"
             :style="customStyle">
@@ -10,19 +17,11 @@
                 height: addUnit(height),
             }"></view>
     </template>
-    <template v-else>
-        <view
-            :class="[customClass]"
-            :style="customStyle">
-            <slot></slot>
-        </view>
-    </template>
 </template>
 
 <script setup>
 import { ref, getCurrentInstance, onMounted, onUpdated } from 'vue'
-import { addUnit, getRect } from '../utils'
-import { uniqueId } from 'lodash-es'
+import { addUnit, createUniqueSelector, getRect } from '../utils'
 
 const props = defineProps({
     disabled: Boolean,
@@ -31,7 +30,7 @@ const props = defineProps({
 })
 
 const instance = getCurrentInstance()
-const placeholderSelector = ref(uniqueId('van-placeholder-'))
+const [placeholderSelector] = createUniqueSelector('van-placeholder')
 const height = ref(0)
 
 onMounted(() => {
@@ -45,7 +44,7 @@ onUpdated(() => {
 function initialize() {
     if (props.disabled) return
 
-    getRect(instance.proxy, `.${placeholderSelector.value}`).then((data) => {
+    getRect(instance.proxy, `.${placeholderSelector}`).then((data) => {
         if (!data) return
         height.value = data.height
     })

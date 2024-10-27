@@ -1,11 +1,16 @@
 <template>
-    <view
-        :class="[bem(), stickySelector]"
-        :style="styles">
-        <view :style="innerStyles">
-            <slot></slot>
+    <template v-if="disabled">
+        <slot></slot>
+    </template>
+    <template v-else>
+        <view
+            :class="[bem(), stickySelector]"
+            :style="styles">
+            <view :style="innerStyles">
+                <slot></slot>
+            </view>
         </view>
-    </view>
+    </template>
 </template>
 
 <script setup>

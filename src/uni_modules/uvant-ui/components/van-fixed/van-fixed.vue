@@ -1,5 +1,8 @@
 <template>
-    <template v-if="position">
+    <template v-if="disabled">
+        <slot></slot>
+    </template>
+    <template v-else>
         <vc-placeholder
             :disabled="!placeholder"
             :custom-style="customStyles"
@@ -13,22 +16,16 @@
             <slot></slot>
         </vc-placeholder>
     </template>
-    <template v-else>
-        <slot></slot>
-    </template>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { getSystemInfoSync, addUnit, truthProp, makeNumericProp } from '../utils'
+import { getSystemInfoSync, addUnit, truthProp, makeNumericProp, makeStringProp } from '../utils'
 
 const props = defineProps({
+    disabled: Boolean,
     placeholder: truthProp,
-    position: {
-        type: [String, Boolean],
-        default: 'bottom',
-        validator: (value) => [false, 'top', 'bottom'].includes(value),
-    },
+    position: makeStringProp('bottom'),
     offset: makeNumericProp(0),
     zIndex: makeNumericProp(99),
     safeArea: truthProp,

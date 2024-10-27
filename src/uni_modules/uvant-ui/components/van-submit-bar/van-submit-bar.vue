@@ -1,8 +1,9 @@
 <template>
     <van-fixed
+        :disabled="!fixed"
         :placeholder="placeholder"
-        :position="fixed && 'bottom'"
-        :safe-area="safeAreaInsetBottom">
+        :safe-area="safeAreaInsetBottom"
+        position="bottom">
         <view :class="bem()">
             <template v-if="hasTip">
                 <view :class="bem('tip')">

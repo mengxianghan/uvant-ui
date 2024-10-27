@@ -3,54 +3,54 @@
         <demo-block
             title="基础用法"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active1"
                 :list="list1">
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
 
         <demo-block
             title="标签栏滚动"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active2"
                 :list="list2">
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
 
         <demo-block
             title="禁用标签"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active3"
                 :list="list3">
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
 
         <demo-block
             title="点击事件"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active4"
                 :list="list4"
                 @click="onClickTab">
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
 
         <demo-block
             title="收缩布局"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active2"
                 :list="list2"
                 shrink>
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
 
         <demo-block
             title="自定义标签"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active5"
                 :list="list5">
                 <template #default="{ record }">
@@ -59,17 +59,17 @@
                     </template>
                     {{ record.label }}
                 </template>
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
 
         <demo-block
             title="异步切换"
             :card="false">
-            <van-tabs
+            <van-data-tabs
                 v-model:active="active1"
                 :list="list1"
                 :before-change="beforeChange">
-            </van-tabs>
+            </van-data-tabs>
         </demo-block>
     </view>
 </template>

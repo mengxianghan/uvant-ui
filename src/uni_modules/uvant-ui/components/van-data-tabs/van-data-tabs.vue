@@ -6,7 +6,7 @@
             :scroll-left="scrollLeft"
             :show-scrollbar="false"
             :class="[
-                bem('wrap', {
+                bem('scroll', {
                     shrink,
                 }),
                 scrollViewSelector,
@@ -24,7 +24,7 @@
                     v-for="(item, index) in list"
                     :key="item.value"
                     :class="[
-                        bemTab({
+                        bem('item', {
                             active: item.value === active,
                             disabled: item.disabled,
                             shrink,
@@ -42,7 +42,7 @@
                         :badge-props="item.badgeProps">
                         <view
                             :class="
-                                bemTab({
+                                bem('text', {
                                     ellipsis,
                                 })
                             ">
@@ -99,7 +99,6 @@ const active = defineModel('active', { type: numericProp })
 const emits = defineEmits(['click', 'change'])
 
 const { name, bem } = createNamespace('tabs')
-const { bem: bemTab } = createNamespace('tab')
 const [tabSelector, lineSelector, scrollViewSelector] = createUniqueSelector(name, 3)
 const instance = getCurrentInstance()
 const scrollLeft = ref(0)

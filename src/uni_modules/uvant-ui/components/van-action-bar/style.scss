@@ -18,11 +18,11 @@ $van-action-bar-height: var(--van-action-bar-height, 50px);
         left: 0;
     }
 
-    :deep(van-action-bar-button) {
+    :deep(.van-action-bar-button) {
         flex: 1;
     }
 
-    :deep(van-action-bar-icon) {
+    :deep(.van-action-bar-icon) {
         height: 100%;
     }
 }

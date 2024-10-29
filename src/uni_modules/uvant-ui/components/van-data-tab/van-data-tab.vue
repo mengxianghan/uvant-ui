@@ -1,35 +1,32 @@
 <template>
-    <view :class="bem()">
+    <view :class="bem([type])">
+        <slot name="nav-left"></slot>
         <scroll-view
-            scroll-with-animation
+            :scroll-with-animation="true"
             :scroll-x="scrollable"
             :scroll-left="scrollLeft"
             :show-scrollbar="false"
             :class="[
-                bem('scroll', {
-                    shrink,
-                }),
+                bem('wrap'),
                 scrollViewSelector,
                 {
-                    'van-hairline--top-bottom': border,
+                    [BORDER_TOP_BOTTOM]: type === 'line' && border,
                 },
             ]">
-            <view
-                :class="
-                    bem('nav', {
-                        shrink,
-                    })
-                ">
+            <view :class="bem('nav', [type, { shrink }])">
                 <view
                     v-for="(item, index) in list"
                     :key="item.value"
                     :class="[
-                        bem('item', {
-                            active: item.value === active,
-                            disabled: item.disabled,
-                            shrink,
-                            grow: scrollable,
-                        }),
+                        bemTab([
+                            type,
+                            {
+                                grow: scrollable && !shrink,
+                                shrink,
+                                active: item.value === active,
+                                disabled: item.disabled,
+                            },
+                        ]),
                         `${tabSelector}-${index}`,
                     ]"
                     :style="{
@@ -42,21 +39,22 @@
                         :badge-props="item.badgeProps">
                         <view
                             :class="
-                                bem('text', {
+                                bemTab('text', {
                                     ellipsis,
                                 })
                             ">
-                            <slot>
-                                {{ item.label }}
-                            </slot>
+                            {{ item.label }}
                         </view>
                     </vc-badge>
                 </view>
-                <view
-                    :class="[bem('line'), lineSelector]"
-                    :style="lineStyles"></view>
+                <template v-if="hasLine">
+                    <view
+                        :class="[bem('line'), lineSelector]"
+                        :style="lineStyles"></view>
+                </template>
             </view>
         </scroll-view>
+        <slot name="nav-right"></slot>
     </view>
 </template>
 
@@ -73,11 +71,14 @@ import {
     makeNumericProp,
     numericProp,
     truthProp,
+    makeStringProp,
+    BORDER_TOP_BOTTOM,
 } from '../utils'
 import { findIndex, head, get } from 'lodash-es'
 
 const props = defineProps({
     list: makeArrayProp(),
+    type: makeStringProp('line'),
     background: String,
     duration: makeNumericProp(0.3),
     lineWidth: numericProp,
@@ -96,7 +97,8 @@ const props = defineProps({
 const active = defineModel('active', { type: numericProp })
 const emits = defineEmits(['click', 'change'])
 
-const { name, bem } = createNamespace('data-tab')
+const { name, bem } = createNamespace('data-tabs')
+const { bem: bemTab } = createNamespace('data-tab')
 const [tabSelector, lineSelector, scrollViewSelector] = createUniqueSelector(name, 3)
 const instance = getCurrentInstance()
 const scrollLeft = ref(0)
@@ -110,6 +112,7 @@ const lineStyles = computed(() => ({
 }))
 const activeIndex = computed(() => findIndex(props.list, { value: active.value }))
 const scrollable = computed(() => props.list.length > +props.swipeThreshold || !props.ellipsis)
+const hasLine = computed(() => props.type === 'line' && props.list.length)
 
 watch([() => active.value, () => props.list, () => props.swipeThreshold], () => {
     initialize()
@@ -180,6 +183,7 @@ async function handleClick(record, index) {
  * 设置底部条偏移位置
  */
 async function setLineOffset() {
+    if (!hasLine.value) return
     const offsetLeft = await getItemRectWidth(0, activeIndex.value)
     const itemRect = head(await getItemRect(activeIndex.value, 1))
     const lineRect = await getLineRect()

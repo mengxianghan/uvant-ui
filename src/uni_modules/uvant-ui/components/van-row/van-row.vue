@@ -34,7 +34,7 @@ const groups = computed(() => {
 
     let totalSpan = 0
     children.forEach((child, index) => {
-        totalSpan += Number(child.span)
+        totalSpan += Number(child.props.span)
 
         if (totalSpan > 24) {
             groups.push([index])
@@ -78,10 +78,9 @@ const spaces = computed(() => {
 })
 
 const verticalSpaces = computed(() => {
-    const { gutter } = props
     const spaces = []
-    if (isArray(gutter) && gutter.length > 1) {
-        const bottom = Number(gutter[1]) || 0
+    if (isArray(props.gutter) && props.gutter.length > 1) {
+        const bottom = Number(props.gutter[1]) || 0
         if (bottom <= 0) {
             return spaces
         }
@@ -92,6 +91,7 @@ const verticalSpaces = computed(() => {
             })
         })
     }
+
     return spaces
 })
 

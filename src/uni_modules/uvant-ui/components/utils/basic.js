@@ -176,3 +176,9 @@ export function isSameValue(newValue, oldValue) {
 export function toArray(item) {
     return isArray(item) ? item : [item]
 }
+
+export function requestAnimationFrame(cb) {
+    return setTimeout(() => {
+        cb()
+    }, 1000 / 30)
+}

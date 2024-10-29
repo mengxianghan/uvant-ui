@@ -1,135 +1,165 @@
 <template>
-    <view class="pb-8">
-        <demo-block title="基础用法">
-            <van-checkbox v-model="state.checkbox1">复选框</van-checkbox>
+    <view class="pb-5">
+        <demo-block :title="t('basicUsage')">
+            <van-checkbox v-model="state.checkbox1">{{ t('checkbox') }}</van-checkbox>
         </demo-block>
 
-        <demo-block title="禁用状态">
-            <van-checkbox
-                :model-value="false"
-                disabled>
-                复选框
-            </van-checkbox>
-            <view class="h-2"></view>
-            <van-checkbox
-                :model-value="true"
-                disabled>
-                复选框
-            </van-checkbox>
+        <demo-block :title="t('disabled')">
+            <van-row :gutter="[0, 8]">
+                <van-col :span="24">
+                    <van-checkbox
+                        :model-value="false"
+                        disabled>
+                        {{ t('checkbox') }}
+                    </van-checkbox>
+                </van-col>
+                <van-col :span="24">
+                    <van-checkbox
+                        :model-value="true"
+                        disabled>
+                        {{ t('checkbox') }}
+                    </van-checkbox>
+                </van-col>
+            </van-row>
         </demo-block>
 
-        <demo-block title="自定义形状">
+        <demo-block :title="t('customShape')">
             <van-checkbox-group
                 v-model="state.checkboxShape"
                 shape="square">
-                <van-checkbox name="a">自定义形状 a</van-checkbox>
-                <view class="h-2"></view>
-                <van-checkbox name="b">自定义形状 b</van-checkbox>
+                <van-row :gutter="[0, 8]">
+                    <van-col :span="24">
+                        <van-checkbox name="a">{{ t('customShape') }} a</van-checkbox>
+                    </van-col>
+                    <van-col :span="24">
+                        <van-checkbox name="b">{{ t('customShape') }} b</van-checkbox>
+                    </van-col>
+                </van-row>
             </van-checkbox-group>
         </demo-block>
 
-        <demo-block title="自定义颜色">
+        <demo-block :title="t('customColor')">
             <van-checkbox
                 v-model="state.checkbox2"
                 checked-color="#ee0a24">
-                自定义颜色
+                {{ t('customColor') }}
             </van-checkbox>
         </demo-block>
 
-        <demo-block title="自定义大小">
+        <demo-block :title="t('customIconSize')">
             <van-checkbox
                 v-model="state.checkboxIcon"
                 icon-size="24px">
-                自定义大小
+                {{ t('customIconSize') }}
             </van-checkbox>
         </demo-block>
 
-        <demo-block title="自定义图标">
+        <demo-block :title="t('customIcon')">
             <van-checkbox v-model="state.checkbox3">
-                自定义图标
+                {{ t('customIcon') }}
                 <template #icon>
                     <van-image
-                        :src="state.checkbox3 ? cdnURL('user-active.png') : cdnURL('user-inactive.png')"
                         height="16px"
-                        fit="aspectFit" />
+                        :src="state.checkbox3 ? activeIcon : inactiveIcon" />
                 </template>
             </van-checkbox>
         </demo-block>
 
-        <demo-block title="左侧文本">
+        <demo-block :title="t('leftLabel')">
             <van-checkbox
                 v-model="state.leftLabel"
                 label-position="left">
-                左侧文本
+                {{ t('leftLabel') }}
             </van-checkbox>
         </demo-block>
 
-        <demo-block title="禁止文本点击">
+        <demo-block :title="t('disableLabel')">
             <van-checkbox
                 v-model="state.checkboxLabel"
                 label-disabled>
-                复选框
+                {{ t('checkbox') }}
             </van-checkbox>
         </demo-block>
 
-        <demo-block title="复选框组">
+        <demo-block :title="t('title3')">
             <van-checkbox-group v-model="state.result">
-                <van-checkbox name="a">复选框 a</van-checkbox>
-                <view class="h-2"></view>
-                <van-checkbox name="b">复选框 b</van-checkbox>
+                <van-row :gutter="[0, 8]">
+                    <van-col :span="24">
+                        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+                    </van-col>
+                    <van-col :span="24">
+                        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+                    </van-col>
+                </van-row>
             </van-checkbox-group>
         </demo-block>
 
-        <demo-block title="水平排列">
+        <demo-block :title="t('horizontal')">
             <van-checkbox-group
                 v-model="state.horizontalResult"
                 direction="horizontal">
-                <van-checkbox name="a">复选框 a</van-checkbox>
-                <van-checkbox name="b">复选框 b</van-checkbox>
+                <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+                <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
             </van-checkbox-group>
         </demo-block>
 
-        <demo-block title="限制最大可选数">
+        <demo-block :title="t('title4')">
             <van-checkbox-group
                 v-model="state.result2"
                 :max="2">
-                <van-checkbox name="a">复选框 a</van-checkbox>
-                <view class="h-2"></view>
-                <van-checkbox name="b">复选框 b</van-checkbox>
-                <view class="h-2"></view>
-                <van-checkbox name="c">复选框 c</van-checkbox>
+                <van-row :gutter="[0, 8]">
+                    <van-col :span="24">
+                        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+                    </van-col>
+                    <van-col :span="24">
+                        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+                    </van-col>
+                    <van-col :span="24">
+                        <van-checkbox name="c">{{ t('checkbox') }} c</van-checkbox>
+                    </van-col>
+                </van-row>
             </van-checkbox-group>
         </demo-block>
 
-        <demo-block title="全选与反选">
+        <demo-block :title="t('toggleAll')">
             <van-checkbox-group
                 v-model="state.checkAllResult"
                 ref="group">
-                <van-checkbox name="a">复选框 a</van-checkbox>
-                <view class="h-2"></view>
-                <van-checkbox name="b">复选框 b</van-checkbox>
-                <view class="h-2"></view>
-                <van-checkbox name="c">复选框 c</van-checkbox>
+                <van-row :gutter="[0, 8]">
+                    <van-col :span="24">
+                        <van-checkbox name="a">{{ t('checkbox') }} a</van-checkbox>
+                    </van-col>
+                    <van-col :span="24">
+                        <van-checkbox name="b">{{ t('checkbox') }} b</van-checkbox>
+                    </van-col>
+                    <van-col :span="24">
+                        <van-checkbox name="c">{{ t('checkbox') }} c</van-checkbox>
+                    </van-col>
+                </van-row>
             </van-checkbox-group>
 
-            <div class="mt-2 flex gap-2">
-                <van-button
-                    type="primary"
-                    size="small"
-                    @click="checkAll">
-                    全选
-                </van-button>
-                <van-button
-                    type="primary"
-                    size="small"
-                    @click="toggleAll">
-                    反选
-                </van-button>
-            </div>
+            <view class="mt-4">
+                <van-row :gutter="16">
+                    <van-col>
+                        <van-button
+                            type="primary"
+                            @click="checkAll">
+                            {{ t('checkAll') }}
+                        </van-button>
+                    </van-col>
+                    <van-col>
+                        <van-button
+                            type="primary"
+                            @click="toggleAll">
+                            {{ t('inverse') }}
+                        </van-button>
+                    </van-col>
+                </van-row>
+            </view>
         </demo-block>
 
         <demo-block
-            title="搭配单元格组件使用"
+            :title="t('title5')"
             :card="false">
             <van-checkbox-group v-model="state.result3">
                 <van-cell-group inset>
@@ -137,9 +167,9 @@
                         v-for="(item, index) in state.list"
                         clickable
                         :key="index"
-                        :title="`复选框 ${item}`"
+                        :title="`${t('checkbox')} ${item}`"
                         @click="toggle(index)">
-                        <template #rightIcon>
+                        <template #right-icon>
                             <van-checkbox
                                 :ref="setRefs(index)"
                                 :name="item"
@@ -150,33 +180,55 @@
             </van-checkbox-group>
         </demo-block>
 
-        <demo-block title="不确定状态">
-            <view class="border-0 border-b border-neutral-200 border-solid mb-3 pb-3">
-                <van-checkbox
-                    v-model="state.isCheckAll"
-                    :indeterminate="state.isIndeterminate"
-                    @change="checkAllChange">
-                    全选
-                </van-checkbox>
-            </view>
+        <demo-block :title="t('indeterminate')">
+            <van-checkbox
+                v-model="state.isCheckAll"
+                :indeterminate="state.isIndeterminate"
+                @change="checkAllChange">
+                {{ t('checkAll') }}
+            </van-checkbox>
+            <view class="border-0 border-b border-neutral-200 border-solid my-3"></view>
             <van-checkbox-group
                 v-model="state.result4"
                 @change="checkedResultChange">
-                <template
-                    v-for="item in list"
-                    :key="item">
-                    <van-checkbox :name="item"> 复选框 {{ item }} </van-checkbox>
-                    <view class="h-2"></view>
-                </template>
+                <van-row :gutter="[0, 8]">
+                    <van-col
+                        v-for="item in list"
+                        :span="24"
+                        :key="item">
+                        <van-checkbox :name="item"> {{ t('checkbox') }} {{ item }} </van-checkbox>
+                    </van-col>
+                </van-row>
             </van-checkbox-group>
         </demo-block>
     </view>
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, nextTick } from 'vue'
-import { useRefs } from '@/uni_modules/uvant-ui'
+import { useTranslate } from '@/composables/useTranslate'
+import { ref, reactive } from 'vue'
 import { cdnURL } from '@/utils'
+import { useRefs } from '@/uni_modules/uvant-ui'
+
+const t = useTranslate({
+    'zh-CN': {
+        checkbox: '复选框',
+        customIcon: '自定义图标',
+        customIconSize: '自定义大小',
+        customColor: '自定义颜色',
+        customShape: '自定义形状',
+        leftLabel: '左侧文本',
+        title3: '复选框组',
+        title4: '限制最大可选数',
+        title5: '搭配单元格组件使用',
+        toggleAll: '全选与反选',
+        checkAll: '全选',
+        inverse: '反选',
+        horizontal: '水平排列',
+        disableLabel: '禁用文本点击',
+        indeterminate: '不确定状态',
+    },
+})
 
 const state = reactive({
     checkbox1: true,
@@ -197,14 +249,17 @@ const state = reactive({
     horizontalResult: [],
 })
 
-const group = ref()
 const list = ['a', 'b', 'c', 'd']
 
-onMounted(() => {
-    nextTick(() => {
-        console.log(group.value)
-    })
-})
+const activeIcon = cdnURL('user-active.png')
+const inactiveIcon = cdnURL('user-inactive.png')
+
+const group = ref()
+const [refs, setRefs] = useRefs()
+
+const toggle = (index) => {
+    refs.value[index].toggle()
+}
 
 const checkAll = () => {
     group.value?.toggleAll(true)
@@ -212,11 +267,6 @@ const checkAll = () => {
 
 const toggleAll = () => {
     group.value?.toggleAll()
-}
-
-const [refs, setRefs] = useRefs()
-const toggle = (index) => {
-    refs.value[index].toggle()
 }
 
 const checkAllChange = (val) => {

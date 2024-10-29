@@ -9,7 +9,7 @@ $van-badge-border-width: var(--van-badge-border-width, $van-border-width);
 $van-badge-background: var(--van-badge-background, $van-danger-color);
 $van-badge-dot-color: var(--van-badge-dot-color, $van-danger-color);
 $van-badge-dot-size: var(--van-badge-dot-size, 8px);
-$van-badge-font: var(--van-badge-font, '-apple-system-font, helvetica neue, arial, sans-serif');
+$van-badge-font: var(--van-badge-font, -apple-system-font, helvetica neue, arial, sans-serif);
 
 .van-badge {
     display: inline-block;

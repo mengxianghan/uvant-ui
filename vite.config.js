@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import { UnifiedViteWeappTailwindcssPlugin as uvwt } from 'weapp-tailwindcss/vite'
+import { resolve } from 'path'
 import uni from '@dcloudio/vite-plugin-uni'
 import tailwindcss from 'tailwindcss'
 import autoprefixer from 'autoprefixer'
@@ -29,6 +30,11 @@ export default defineConfig(() => {
                         transformUnit: 'px',
                     }),
                 ],
+            },
+        },
+        resolve: {
+            alias: {
+                '@': resolve(__dirname, 'src'),
             },
         },
     }

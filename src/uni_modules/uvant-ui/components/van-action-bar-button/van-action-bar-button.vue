@@ -20,6 +20,12 @@
     </view>
 </template>
 
+<script>
+export default {
+    options: { virtualHost: true },
+}
+</script>
+
 <script setup>
 import { computed } from 'vue'
 import { useParent } from '../composables'

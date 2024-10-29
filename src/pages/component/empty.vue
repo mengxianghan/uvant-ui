@@ -1,41 +1,54 @@
 <template>
-    <view class="pb-8 empty">
-        <demo-block title="基础用法">
-            <van-empty description="描述文字" />
+    <view class="pb-5 demo-empty">
+        <demo-block :title="t('basicUsage')">
+            <van-empty :description="t('description')" />
         </demo-block>
 
-        <demo-block title="图片类型">
-            <van-data-tab
-                v-model:active="imageType"
-                :list="[
-                    { label: '通用错误', value: 'error' },
-                    { label: '网络错误', value: 'network' },
-                    { label: '搜索提示', value: 'search' },
-                ]"></van-data-tab>
-            <van-empty
-                :image="imageType"
-                description="描述文字" />
+        <demo-block :title="t('imageType')">
+            <van-tabs v-model:active="active">
+                <van-tab
+                    name="error"
+                    :title="t('error')">
+                    <van-empty
+                        image="error"
+                        :description="t('description')" />
+                </van-tab>
+                <van-tab
+                    name="network"
+                    :title="t('network')">
+                    <van-empty
+                        image="network"
+                        :description="t('description')" />
+                </van-tab>
+                <van-tab
+                    name="search"
+                    :title="t('search')">
+                    <van-empty
+                        image="search"
+                        :description="t('description')" />
+                </van-tab>
+            </van-tabs>
         </demo-block>
 
-        <demo-block title="自定义大小">
+        <demo-block :title="t('customSize')">
             <van-empty
                 image-size="100"
-                description="描述文字" />
+                :description="t('description')" />
         </demo-block>
 
-        <demo-block title="自定义图片">
+        <demo-block :title="t('customImage')">
             <van-empty
                 :image="cdnURL('custom-empty-image.png')"
-                image-size="80"
-                description="描述文字" />
+                :image-size="80"
+                :description="t('description')" />
         </demo-block>
 
-        <demo-block title="底部内容">
-            <van-empty description="描述文字">
+        <demo-block :title="t('bottomContent')">
+            <van-empty :description="t('description')">
                 <van-button
                     round
                     type="primary">
-                    按钮
+                    {{ t('button') }}
                 </van-button>
             </van-empty>
         </demo-block>
@@ -44,13 +57,27 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useTranslate } from '@/composables/useTranslate'
 import { cdnURL } from '@/utils'
 
-const imageType = ref('error')
+const t = useTranslate({
+    'zh-CN': {
+        error: '通用错误',
+        search: '搜索提示',
+        network: '网络错误',
+        imageType: '图片类型',
+        customSize: '自定义大小',
+        description: '描述文字',
+        customImage: '自定义图片',
+        bottomContent: '底部内容',
+    },
+})
+
+const active = ref('error')
 </script>
 
 <style lang="scss" scoped>
-.empty {
+.demo-empty {
     --van-data-tab-nav-background: transparent;
     --van-button-normal-padding: 0 56px;
 }

@@ -3,52 +3,40 @@
         <slot></slot>
     </template>
     <template v-else>
-        <vc-placeholder
-            :disabled="!placeholder"
-            :custom-style="customStyles"
-            :custom-class="[
-                customClass,
-                {
-                    'van-safe-area-bottom': safeArea && position === 'bottom',
-                    'van-safe-area-top': safeArea && position === 'top',
-                },
-            ]">
-            <slot></slot>
-        </vc-placeholder>
+        <view
+            :class="bem()"
+            :style="styles">
+            <vc-placeholder :disabled="!placeholder">
+                <slot></slot>
+            </vc-placeholder>
+        </view>
     </template>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { getSystemInfoSync, addUnit, truthProp, makeNumericProp, makeStringProp } from '../utils'
+import { addUnit, createNamespace, getSystemInfoSync, makeNumericProp, makeStringProp, numericProp } from '../utils'
 
 const props = defineProps({
     disabled: Boolean,
-    placeholder: truthProp,
+    placeholder: Boolean,
     position: makeStringProp('bottom'),
     offset: makeNumericProp(0),
-    zIndex: makeNumericProp(99),
-    safeArea: truthProp,
-    customClass: { type: [String, Object], default: '' },
+    zIndex: numericProp,
 })
 
-const customStyles = computed(() => {
+const { bem } = createNamespace('fixed')
+
+const styles = computed(() => {
     const { windowTop, windowBottom } = getSystemInfoSync()
 
-    if (!props.position) {
-        return
-    }
-
-    const style = {
+    return {
         zIndex: props.zIndex,
-        position: 'fixed',
         [`${props.position}`]: `calc(${addUnit(props.offset)} + ${addUnit(props.position === 'top' ? windowTop : windowBottom)})`,
-        ['left']: 0,
-        ['right']: 0,
     }
-
-    return style
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import './style.scss';
+</style>

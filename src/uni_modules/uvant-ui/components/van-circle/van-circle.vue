@@ -31,7 +31,7 @@ import { adaptor } from './canvas'
 import { isObject } from 'lodash-es'
 
 const props = defineProps({
-    modelValue: makeNumberProp(0),
+    currentRate: makeNumberProp(0),
     type: makeStringProp('2d'),
     size: makeNumberProp(100),
     color: { type: [String, Object], default: '#1989fa' },
@@ -40,11 +40,11 @@ const props = defineProps({
     speed: makeNumberProp(50),
     text: String,
     strokeWidth: makeNumberProp(4),
-    stroleLinecap: makeStringProp('round'),
+    strokeLinecap: makeStringProp('round'),
     clockwise: truthProp,
     startPosition: makeStringProp('top'),
 })
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:currentRate'])
 
 const PERIMETER = 2 * Math.PI
 const STEP = 1
@@ -61,8 +61,8 @@ const { bem, name } = createNamespace('circle')
 const [canvasSelector] = createUniqueSelector(name)
 
 const hoverColor = ref('#1989fa')
-const inited = ref(false)
-const currentValue = ref(props.modelValue)
+const initialized = ref(false)
+const currentValue = ref(props.currentRate)
 const interval = ref()
 
 const hasText = computed(() => {
@@ -70,7 +70,7 @@ const hasText = computed(() => {
 })
 
 watch(
-    () => props.modelValue,
+    () => props.currentRate,
     (val) => {
         if (val === currentValue.value) return
         reRender()
@@ -110,8 +110,8 @@ function getContext() {
                 const canvas = res[0].node
                 const ctx = canvas.getContext(type)
 
-                if (!inited.value) {
-                    inited.value = true
+                if (!initialized.value) {
+                    initialized.value = true
                     canvas.width = size * dpr
                     canvas.height = size * dpr
                     ctx.scale(dpr, dpr)
@@ -142,13 +142,13 @@ function setHoverColor() {
 }
 
 function presetCanvas(context, strokeStyle, beginAngle, endAngle, fill) {
-    const { strokeWidth, stroleLinecap, clockwise, size } = props
+    const { strokeWidth, strokeLinecap, clockwise, size } = props
     const position = size / 2
     const radius = position - strokeWidth / 2
 
     context.setStrokeStyle(strokeStyle)
     context.setLineWidth(strokeWidth)
-    context.setLineCap(stroleLinecap)
+    context.setLineCap(strokeLinecap)
 
     context.beginPath()
     context.arc(position, position, radius, beginAngle, endAngle, !clockwise)
@@ -195,10 +195,10 @@ function drawCircle(currentValue) {
 
 function reRender() {
     // tofector 动画暂时没有想到好的解决方案
-    const { modelValue, speed } = props
+    const { currentRate, speed } = props
 
     if (speed <= 0 || speed > 1000) {
-        drawCircle(modelValue)
+        drawCircle(currentRate)
         return
     }
 
@@ -206,10 +206,10 @@ function reRender() {
     currentValue.value = currentValue.value || 0
     const run = () => {
         interval.value = setTimeout(() => {
-            if (currentValue.value !== modelValue) {
-                if (Math.abs(currentValue.value - modelValue) < STEP) {
-                    currentValue.value = modelValue
-                } else if (currentValue.value < modelValue) {
+            if (currentValue.value !== currentRate) {
+                if (Math.abs(currentValue.value - currentRate) < STEP) {
+                    currentValue.value = currentRate
+                } else if (currentValue.value < currentRate) {
                     currentValue.value += STEP
                 } else {
                     currentValue.value -= STEP
@@ -233,7 +233,7 @@ function clearMockInterval() {
 }
 
 function trigger() {
-    emits('update:modelValue', currentValue.value)
+    emits('update:currentRate', currentValue.value)
 }
 </script>
 

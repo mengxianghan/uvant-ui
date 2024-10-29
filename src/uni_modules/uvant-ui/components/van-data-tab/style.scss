@@ -4,28 +4,131 @@ $van-data-tab-text-color: var(--van-data-tab-text-color, $van-gray-7);
 $van-data-tab-active-text-color: var(--van-data-tab-active-text-color, $van-text-color);
 $van-data-tab-disabled-text-color: var(--van-data-tab-disabled-text-color, $van-text-color-3);
 $van-data-tab-font-size: var(--van-data-tab-font-size, $van-font-size-md);
-$van-data-tab-default-color: var(--van-data-tab-default-color, $van-primary-color);
-$van-data-tab-line-height: var(--van-data-tab-line-height, 44px);
-$van-data-tab-nav-background: var(--van-data-tab-nav-background, $van-background-2);
-$van-data-tab-bottom-bar-width: var(--van-data-tab-bottom-bar-width, 40px);
-$van-data-tab-bottom-bar-height: var(--van-data-tab-bottom-bar-height, 3px);
-$van-data-tab-bottom-bar-color: var(--van-data-tab-bottom-bar-color, $van-primary-color);
+$van-data-tab-line-height: var(--van-data-tab-line-height, $van-line-height-md);
+$van-data-tabs-default-color: var(--van-data-tabs-default-color, $van-primary-color);
+$van-data-tabs-line-height: var(--van-data-tabs-line-height, 44px);
+$van-data-tabs-card-height: var(--van-data-tabs-card-height, 30px);
+$van-data-tabs-nav-background: var(--van-data-tabs-nav-background, $van-background-2);
+$van-data-tabs-bottom-bar-width: var(--van-data-tabs-bottom-bar-width, 40px);
+$van-data-tabs-bottom-bar-height: var(--van-data-tabs-bottom-bar-height, 3px);
+$van-data-tabs-bottom-bar-color: var(--van-data-tabs-bottom-bar-color, $van-primary-color);
 
 .van-data-tab {
     position: relative;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0 $van-padding-base;
+    color: $van-data-tab-text-color;
+    font-size: $van-data-tab-font-size;
+    line-height: $van-data-tab-line-height;
+    //cursor: pointer;
 
-    &__scroll {
+    &--active {
+        color: $van-data-tab-active-text-color;
+        font-weight: $van-font-bold;
+    }
+
+    &--disabled {
+        color: $van-data-tab-disabled-text-color;
+        cursor: not-allowed;
+    }
+
+    &--grow {
+        flex: 1 0 auto;
+        padding: 0 $van-padding-sm;
+    }
+
+    &--shrink {
+        flex: none;
+        padding: 0 $van-padding-xs;
+    }
+
+    &--card {
+        color: $van-data-tabs-default-color;
+        border-right: $van-border-width solid $van-data-tabs-default-color;
+
+        &:last-child {
+            border-right: none;
+        }
+
+        &.van-data-tab--active {
+            color: $van-white;
+            background-color: $van-data-tabs-default-color;
+        }
+
+        &.van-data-tab--disabled {
+            color: $van-data-tab-disabled-text-color;
+        }
+    }
+
+    &__text {
+        &--ellipsis {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+    }
+}
+
+.van-data-tabs {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__wrap {
         overflow: hidden;
-        height: $van-data-tab-line-height;
-        background: $van-data-tab-nav-background;
+
+        &--page-top {
+            position: fixed;
+        }
+
+        &--content-bottom {
+            top: auto;
+            bottom: 0;
+        }
     }
 
     &__nav {
         position: relative;
         display: flex;
         user-select: none;
-        box-sizing: content-box;
-        height: 100%;
+
+        &--complete {
+            overflow-x: auto;
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+
+        &--line {
+            box-sizing: content-box;
+            height: 100%;
+        }
+
+        //&--line.van-data-tabs__nav--shrink,
+        //&--line.van-data-tabs__nav--complete {
+        //    padding-right: $van-padding-xs;
+        //    padding-left: $van-padding-xs;
+        //}
+
+        &--card {
+            box-sizing: border-box;
+            height: $van-data-tabs-card-height;
+            border: $van-border-width solid $van-data-tabs-default-color;
+            border-radius: $van-radius-sm;
+        }
+
+        &--card.van-data-tabs__nav--shrink {
+            display: inline-flex;
+        }
     }
 
     &__line {
@@ -33,10 +136,10 @@ $van-data-tab-bottom-bar-color: var(--van-data-tab-bottom-bar-color, $van-primar
         bottom: 0;
         left: 0;
         z-index: 1;
-        width: $van-data-tab-bottom-bar-width;
-        height: $van-data-tab-bottom-bar-height;
-        background: $van-data-tab-bottom-bar-color;
-        border-radius: $van-data-tab-bottom-bar-height;
+        width: $van-data-tabs-bottom-bar-width;
+        height: $van-data-tabs-bottom-bar-height;
+        background: $van-data-tabs-bottom-bar-color;
+        border-radius: $van-data-tabs-bottom-bar-height;
     }
 
     &__track {
@@ -53,44 +156,22 @@ $van-data-tab-bottom-bar-color: var(--van-data-tab-bottom-bar-color, $van-primar
         }
     }
 
-    &__item {
-        position: relative;
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        padding: 0 $van-padding-base;
-        color: $van-data-tab-text-color;
-        font-size: $van-data-tab-font-size;
+    &--line {
+        background: $van-data-tabs-nav-background;
+        .van-data-tabs__wrap {
+            height: $van-data-tabs-line-height;
+        }
+    }
 
-        &--active {
-            color: $van-data-tab-active-text-color;
-            font-weight: $van-font-bold;
+    &--card {
+        margin: 0 $van-padding-md;
+
+        .van-data-tabs__wrap {
+            height: $van-data-tabs-card-height;
         }
 
-        &--disabled {
-            color: $van-data-tab-disabled-text-color;
-            cursor: not-allowed;
-        }
-
-        &--grow {
-            flex: 1 0 auto;
-            padding: 0 $van-padding-sm;
-        }
-
-        &--shrink {
-            flex: none;
-            padding: 0 $van-padding-xs;
-        }
-
-        &__text {
-            &--ellipsis {
-                display: -webkit-box;
-                overflow: hidden;
-                -webkit-line-clamp: 1;
-                -webkit-box-orient: vertical;
-            }
+        .van-data-tabs__nav {
+            background: $van-data-tabs-nav-background;
         }
     }
 }

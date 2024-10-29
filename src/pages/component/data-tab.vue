@@ -1,7 +1,7 @@
 <template>
     <view class="pb-8">
         <demo-block
-            title="基础用法"
+            :title="t('basicUsage')"
             :card="false">
             <van-data-tab
                 v-model:active="active1"
@@ -10,7 +10,7 @@
         </demo-block>
 
         <demo-block
-            title="标签栏滚动"
+            :title="t('title2')"
             :card="false">
             <van-data-tab
                 v-model:active="active2"
@@ -19,16 +19,25 @@
         </demo-block>
 
         <demo-block
-            title="禁用标签"
+            :title="t('title3')"
             :card="false">
             <van-data-tab
                 v-model:active="active3"
                 :list="list3">
             </van-data-tab>
         </demo-block>
+        <demo-block
+            :title="t('title4')"
+            :card="false">
+            <van-data-tab
+                v-model:active="active3"
+                :list="list3"
+                type="card">
+            </van-data-tab>
+        </demo-block>
 
         <demo-block
-            title="点击事件"
+            :title="t('title5')"
             :card="false">
             <van-data-tab
                 v-model:active="active4"
@@ -38,7 +47,7 @@
         </demo-block>
 
         <demo-block
-            title="收缩布局"
+            :title="t('title6')"
             :card="false">
             <van-data-tab
                 v-model:active="active2"
@@ -47,23 +56,8 @@
             </van-data-tab>
         </demo-block>
 
-        <!-- <demo-block
-            title="自定义标签"
-            :card="false">
-            <van-data-tab
-                v-model:active="active5"
-                :list="list5">
-                <template>
-                    <template v-if="record.leftIcon">
-                        <van-icon :name="record.leftIcon"></van-icon>
-                    </template>
-                    {{ record.label }}
-                </template>
-            </van-data-tab>
-        </demo-block> -->
-
         <demo-block
-            title="异步切换"
+            :title="t('beforeChange')"
             :card="false">
             <van-data-tab
                 v-model:active="active1"
@@ -76,11 +70,24 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        title2: '标签栏滚动',
+        title3: '禁用标签',
+        title4: '样式风格',
+        title5: '点击事件',
+        title6: '收缩布局',
+        beforeChange: '异步切换',
+    },
+})
+
 const active1 = ref(1)
 const active2 = ref(1)
 const active3 = ref(1)
 const active4 = ref(1)
-// const active5 = ref(1)
+
 const list1 = ref([
     { label: '标签1', value: 1 },
     { label: '标签2', value: 2 },
@@ -110,13 +117,6 @@ const list4 = ref([
     { label: '标签1', value: 1 },
     { label: '标签2', value: 2 },
 ])
-
-// const list5 = ref([
-//     { label: '标签1', value: 1 },
-//     { label: '标签2', value: 2, dot: true },
-//     { label: '标签3', value: 3, badge: 3 },
-//     { label: '标签4', value: 4, leftIcon: 'more-o' },
-// ])
 
 const onClickTab = ({ label }) => uni.showToast({ title: label, icon: 'none' })
 

@@ -1,108 +1,103 @@
 <template>
-    <view class="pb-8">
+    <view class="pb-5">
         <demo-block
-            title="基础用法"
+            :title="t('basicUsage')"
             :card="false">
             <van-cell-group>
                 <van-cell
-                    title="单元格"
-                    value="内容" />
+                    :title="t('cell')"
+                    :value="t('content')" />
                 <van-cell
-                    title="单元格"
-                    value="内容"
-                    label="描述信息" />
+                    :title="t('cell')"
+                    :value="t('content')"
+                    :label="t('desc')" />
             </van-cell-group>
         </demo-block>
 
         <demo-block
-            title="卡片风格"
+            :title="t('insetGrouped')"
             :card="false">
             <van-cell-group inset>
                 <van-cell
-                    title="单元格"
-                    value="内容" />
+                    :title="t('cell')"
+                    :value="t('content')" />
                 <van-cell
-                    title="单元格"
-                    value="内容"
-                    label="描述信息" />
+                    :title="t('cell')"
+                    :value="t('content')"
+                    :label="t('desc')" />
             </van-cell-group>
         </demo-block>
 
         <demo-block
-            title="单元格大小"
+            :title="t('largeSize')"
             :card="false">
             <van-cell
-                title="单元格"
-                value="内容"
+                :title="t('cell')"
+                :value="t('content')"
                 size="large" />
             <van-cell
-                title="单元格"
-                value="内容"
+                :title="t('cell')"
+                :value="t('content')"
                 size="large"
-                label="描述信息" />
+                :label="t('desc')" />
         </demo-block>
 
         <demo-block
-            title="展示图标"
+            :title="t('showIcon')"
             :card="false">
             <van-cell
-                title="单元格"
+                :title="t('cell')"
+                :value="t('content')"
                 icon="location-o" />
         </demo-block>
 
         <demo-block
-            title="展示箭头"
+            :title="t('showArrow')"
             :card="false">
             <van-cell
-                title="单元格"
+                :title="t('cell')"
                 is-link />
             <van-cell
-                title="单元格"
+                :title="t('cell')"
                 is-link
-                value="内容" />
+                :value="t('content')" />
             <van-cell
-                title="单元格"
+                :title="t('cell')"
                 is-link
                 arrow-direction="down"
-                value="内容" />
+                :value="t('content')" />
         </demo-block>
 
         <demo-block
-            title="分组标题"
-            :body-style="{ padding: 0, '--van-cell-group-background': 'transparent' }">
-            <van-cell-group
-                title="分组1"
-                :border="false">
+            :title="t('groupTitle')"
+            :card="false">
+            <van-cell-group :title="`${t('group')} 1`">
                 <van-cell
-                    title="单元格"
-                    value="内容" />
+                    :title="t('cell')"
+                    :value="t('content')" />
             </van-cell-group>
-            <van-cell-group
-                title="分组2"
-                :border="false">
+            <van-cell-group :title="`${t('group')} 2`">
                 <van-cell
-                    title="单元格"
-                    value="内容" />
+                    :title="t('cell')"
+                    :value="t('content')" />
             </van-cell-group>
         </demo-block>
 
         <demo-block
-            title="使用插槽"
+            :title="t('useSlots')"
             :card="false">
             <van-cell
-                value="内容"
+                :value="t('content')"
                 is-link>
-                <!-- 使用 title 插槽来自定义标题 -->
                 <template #title>
-                    <span class="custom-title">单元格</span>
-                    <van-tag type="primary">标签</van-tag>
+                    <span class="custom-title">{{ t('cell') }}</span>
+                    <van-tag type="primary">{{ t('tag') }}</van-tag>
                 </template>
             </van-cell>
 
             <van-cell
-                title="单元格"
-                icon="shop-o">
-                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                icon="shop-o"
+                :title="t('cell')">
                 <template #right-icon>
                     <van-icon
                         name="search"
@@ -112,18 +107,37 @@
         </demo-block>
 
         <demo-block
-            title="垂直居中"
+            :title="t('verticalCenter')"
             :card="false">
             <van-cell
                 center
-                title="单元格"
-                value="内容"
-                label="描述信息" />
+                :title="t('cell')"
+                :value="t('content')"
+                :label="t('desc')" />
         </demo-block>
     </view>
 </template>
 
-<script setup></script>
+<script setup>
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        cell: '单元格',
+        group: '分组',
+        router: '页面导航',
+        urlRoute: 'URL 跳转',
+        vueRoute: '路由跳转',
+        useSlots: '使用插槽',
+        showIcon: '展示图标',
+        showArrow: '展示箭头',
+        largeSize: '单元格大小',
+        groupTitle: '分组标题',
+        insetGrouped: '卡片风格',
+        verticalCenter: '垂直居中',
+    },
+})
+</script>
 
 <style lang="scss" scoped>
 .custom-title {

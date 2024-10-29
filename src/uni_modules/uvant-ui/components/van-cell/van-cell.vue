@@ -35,7 +35,7 @@
         </template>
         <template v-if="hasRightIcon">
             <view :class="bem('right-icon')">
-                <slot name="rightIcon">
+                <slot name="right-icon">
                     <van-icon :name="arrow"></van-icon>
                 </slot>
             </view>
@@ -77,7 +77,7 @@ const hasLeftIcon = computed(() => isDef(props.icon) || slots.icon)
 const hasTitle = computed(() => isDef(props.title) || slots.title || hasLabel.value)
 const hasValue = computed(() => isDef(props.value) || slots.value)
 const hasLabel = computed(() => isDef(props.label) || slots.label)
-const hasRightIcon = computed(() => slots['rightIcon'] || props.isLink)
+const hasRightIcon = computed(() => slots['right-icon'] || props.isLink)
 const arrow = computed(() => {
     const { arrowDirection } = props
     let name

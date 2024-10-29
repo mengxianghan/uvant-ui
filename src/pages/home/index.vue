@@ -111,7 +111,7 @@ const list = ref([
             { key: 'ImagePreview', name: '图片预览', url: '' },
             { key: 'Lazyload', name: '懒加载', url: '' },
             { key: 'List', name: '列表', url: '' },
-            { key: 'NoticeBar', name: '通知栏', url: '' },
+            { key: 'NoticeBar', name: '通知栏', url: '/pages/component/notice-bar' },
             { key: 'Popover', name: '气泡弹出框', url: '' },
             { key: 'Progress', name: '进度条', url: '' },
             { key: 'RollingText', name: '翻滚文本动效', url: '' },

@@ -25,7 +25,8 @@
 
 <script setup>
 import { useSlots, computed } from 'vue'
-import { getSizeStyle, isNullOrEmpty, get, createNamespace, makeStringProp } from '../utils'
+import { getSizeStyle, isNullOrEmpty, createNamespace, makeStringProp } from '../utils'
+import { get } from 'lodash-es'
 
 const props = defineProps({
     image: makeStringProp('default'),

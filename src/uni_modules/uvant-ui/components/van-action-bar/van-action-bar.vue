@@ -1,24 +1,24 @@
 <template>
-    <van-fixed
-        :disabled="!fixed"
-        :placeholder="placeholder"
-        :safe-area="safeAreaInsetBottom"
-        position="bottom">
+    <vc-placeholder
+        :disabled="!placeholder"
+        :bem="bem"
+        :selector="rootSelector">
         <view
             :class="[
-                bem(),
+                bem({ fixed }),
+                rootSelector,
                 {
                     'van-safe-area-bottom': safeAreaInsetBottom,
                 },
             ]">
             <slot></slot>
         </view>
-    </van-fixed>
+    </vc-placeholder>
 </template>
 
 <script setup>
 import { useChildren } from '../composables'
-import { createNamespace, truthProp } from '../utils'
+import { createNamespace, createUniqueSelector, truthProp } from '../utils'
 
 defineProps({
     placeholder: Boolean,
@@ -27,7 +27,8 @@ defineProps({
 })
 
 const { linkChildren } = useChildren('van-action-bar')
-const { bem } = createNamespace('action-bar')
+const { name, bem } = createNamespace('action-bar')
+const [rootSelector] = createUniqueSelector(name)
 
 linkChildren()
 </script>

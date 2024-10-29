@@ -15,6 +15,12 @@
     </view>
 </template>
 
+<script>
+export default {
+    options: { virtualHost: true },
+}
+</script>
+
 <script setup>
 import { createNamespace, numericProp } from '../utils'
 

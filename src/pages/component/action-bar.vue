@@ -19,6 +19,7 @@
                     :text="t('icon3')"
                     @click="onClickIcon" />
                 <van-action-bar-button
+                    ref="buttonRef"
                     type="danger"
                     :text="t('button2')"
                     @click="onClickButton" />
@@ -105,6 +106,7 @@
 
 <script setup>
 import { useTranslate } from '@/composables/useTranslate'
+import { ref, onMounted } from 'vue'
 
 const t = useTranslate({
     'zh-CN': {
@@ -123,6 +125,12 @@ const t = useTranslate({
 })
 const onClickIcon = () => uni.showToast({ title: '点击图标' })
 const onClickButton = () => uni.showToast({ title: '点击按钮' })
+
+const buttonRef = ref()
+
+onMounted(() => {
+    console.log(buttonRef.value)
+})
 </script>
 
 <style lang="scss" scoped></style>

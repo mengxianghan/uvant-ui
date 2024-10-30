@@ -1,4 +1,4 @@
-import { isFunction, isObject, isArray, defaultTo } from 'lodash-es'
+import { isFunction, isArray, defaultTo } from 'lodash-es'
 
 /**
  * @param {*} value
@@ -51,6 +51,10 @@ export function isVideoUrl(url) {
 
 export function isBoolean(value) {
     return typeof value === 'boolean'
+}
+
+export function isObject(value) {
+    return typeof value === 'object' && value !== null
 }
 
 /**

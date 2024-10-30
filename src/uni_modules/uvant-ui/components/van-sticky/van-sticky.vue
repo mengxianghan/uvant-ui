@@ -33,7 +33,7 @@ const props = defineProps({
     zIndex: makeNumericProp(99),
     container: Function,
     disabled: Boolean,
-    pageScroll: { type: Function, default: () => {}, required: true },
+    pageScroll: { type: Function, default: () => {} },
 })
 const emits = defineEmits(['scroll', 'change'])
 const scrollTop = defineModel('scrollTop', { type: Number, default: null })

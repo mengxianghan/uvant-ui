@@ -41,6 +41,10 @@ const { bem } = createNamespace('badge')
 
 const hasDefault = computed(() => slots.default)
 const hasContent = computed(() => {
+    if (props.dot) {
+        return false
+    }
+
     if (slots.content) {
         return true
     }

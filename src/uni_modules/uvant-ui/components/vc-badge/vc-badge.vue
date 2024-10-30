@@ -15,7 +15,6 @@
 <script setup>
 import { computed } from 'vue'
 import { isDef, numericProp } from '../utils'
-import { isObject } from 'lodash-es'
 
 const props = defineProps({
     dot: Boolean,
@@ -23,7 +22,7 @@ const props = defineProps({
     badgeProps: Object,
 })
 
-const disabled = computed(() => !(props.dot || isDef(props.badge) || isObject(props.badgeProps)))
+const disabled = computed(() => !props.dot || isDef(props.badge))
 </script>
 
 <style lang="scss" scoped></style>

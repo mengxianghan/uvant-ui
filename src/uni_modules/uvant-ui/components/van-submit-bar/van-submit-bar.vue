@@ -1,10 +1,9 @@
 <template>
-    <van-fixed
-        :disabled="!fixed"
-        :placeholder="placeholder"
-        :safe-area="safeAreaInsetBottom"
-        position="bottom">
-        <view :class="bem()">
+    <vc-placeholder
+        :disabled="!placeholder"
+        :bem="bem"
+        :selector="rootSelector">
+        <view :class="[bem({ fixed }), { 'van-safe-area-bottom': safeAreaInsetBottom }]">
             <template v-if="hasTip">
                 <view :class="bem('tip')">
                     <template v-if="hasTipIcon">
@@ -50,12 +49,12 @@
                 </slot>
             </view>
         </view>
-    </van-fixed>
+    </vc-placeholder>
 </template>
 
 <script setup>
 import { computed, useSlots, watchEffect, ref } from 'vue'
-import { isNumber, createNamespace, makeNumericProp, makeStringProp, truthProp } from '../utils'
+import { isNumber, createNamespace, makeNumericProp, makeStringProp, truthProp, createUniqueSelector } from '../utils'
 
 const props = defineProps({
     price: Number,
@@ -79,6 +78,7 @@ const emits = defineEmits(['submit'])
 
 const slots = useSlots()
 const { bem } = createNamespace('submit-bar')
+const [rootSelector] = createUniqueSelector(name)
 
 const integer = ref(0)
 const decimal = ref()

@@ -1,7 +1,7 @@
 <template>
     <view
         v-show="show"
-        :class="bem('panel')"
+        :class="bem('panel', { active, inactive: !active })"
         :style="styles">
         <slot></slot>
     </view>

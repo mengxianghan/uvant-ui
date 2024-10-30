@@ -2,14 +2,13 @@
 
 .van-tab {
     &__panel {
-        &,
-        &-wrapper {
+        &--active {
             flex-shrink: 0;
             box-sizing: border-box;
             width: 100%;
         }
 
-        &-wrapper--inactive {
+        &--inactive {
             height: 0;
             overflow: visible;
         }

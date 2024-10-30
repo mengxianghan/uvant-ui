@@ -365,12 +365,21 @@ function onClickTab(item, index, event) {
     })
 }
 
+function resize() {
+    setLine()
+    nextTick(() => {
+        scrollIntoView()
+    })
+}
+
 linkChildren({
     props,
     active,
     onRendered,
     currentName,
 })
+
+defineExpose({ resize })
 </script>
 
 <style lang="scss" scoped>

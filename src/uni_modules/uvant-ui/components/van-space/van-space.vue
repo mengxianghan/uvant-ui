@@ -20,7 +20,7 @@ import { isArray } from 'lodash-es'
 
 const props = defineProps({
     direction: makeStringProp('horizontal'),
-    size: [Number, String, Array],
+    size: { type: [Number, String, Array], default: 8 },
     align: String,
     wrap: Boolean,
     fill: Boolean,

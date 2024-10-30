@@ -7,3 +7,7 @@ view,
 text {
     box-sizing: border-box;
 }
+
+.demo-doc {
+    @apply pb-5 overflow-hidden;
+}

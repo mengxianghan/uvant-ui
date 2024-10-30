@@ -1,5 +1,5 @@
 <template>
-    <view class="pb-8">
+    <view class="demo-doc">
         <demo-block :title="t('basicUsage')">
             <van-circle
                 v-model:current-rate="currentRate1"

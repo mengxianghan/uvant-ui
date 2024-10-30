@@ -1,206 +1,222 @@
 <template>
-    <view class="icon-container">
-        <van-fixed position="top">
-            <van-data-tab
-                v-model:active="active"
-                sticky
-                :list="[
-                    { label: '用法示例', value: 1 },
-                    { label: '基础图标', value: 2 },
-                    { label: '线框风格', value: 3 },
-                    { label: '实底风格', value: 4 },
-                ]"></van-data-tab>
-        </van-fixed>
+    <view class="demo-doc">
+        <van-tabs
+            sticky
+            :page-scroll="onPageScroll">
+            <van-tab :title="t('demo')">
+                <view class="p-5">
+                    <view class="bg-white rounded-xl">
+                        <demo-block
+                            :title="t('basicUsage')"
+                            :card="false">
+                            <van-row>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoIcon)">
+                                    <icon-block>
+                                        <van-icon :name="demoIcon" />
+                                    </icon-block>
+                                </van-col>
+                            </van-row>
+                        </demo-block>
+                        <demo-block
+                            :title="t('usingUrl')"
+                            :card="false">
+                            <van-row>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoImage)">
+                                    <icon-block>
+                                        <van-icon :name="demoImage" />
+                                    </icon-block>
+                                </van-col>
+                            </van-row>
+                        </demo-block>
 
-        <view class="p-5">
-            <view class="bg-white rounded-xl">
-                <!-- 用法示例 -->
-                <template v-if="active === 1">
-                    <demo-block
-                        title="基础用法"
-                        :card="false">
+                        <demo-block
+                            :title="t('badge')"
+                            :card="false">
+                            <van-row>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoIcon, { dot: true })">
+                                    <icon-block>
+                                        <van-icon
+                                            :name="demoIcon"
+                                            dot />
+                                    </icon-block>
+                                </van-col>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoIcon, { badge: '9' })">
+                                    <icon-block>
+                                        <van-icon
+                                            :name="demoIcon"
+                                            badge="9" />
+                                    </icon-block>
+                                </van-col>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoIcon, { badge: '99+' })">
+                                    <icon-block>
+                                        <van-icon
+                                            :name="demoIcon"
+                                            badge="99+" />
+                                    </icon-block>
+                                </van-col>
+                            </van-row>
+                        </demo-block>
+
+                        <demo-block
+                            :title="t('color')"
+                            :card="false">
+                            <van-row>
+                                <van-col
+                                    span="6"
+                                    @click="copy('cart-o', { color: '#1989fa' })">
+                                    <icon-block>
+                                        <van-icon
+                                            name="cart-o"
+                                            color="#1989fa" />
+                                    </icon-block>
+                                </van-col>
+                                <van-col
+                                    span="6"
+                                    @click="copy('fire-o', { color: '#ee0a24' })">
+                                    <icon-block>
+                                        <van-icon
+                                            name="fire-o"
+                                            color="#ee0a24" />
+                                    </icon-block>
+                                </van-col>
+                            </van-row>
+                        </demo-block>
+
+                        <demo-block
+                            :title="t('size')"
+                            :card="false">
+                            <van-row>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoIcon, { size: '40' })">
+                                    <icon-block>
+                                        <van-icon
+                                            :name="demoIcon"
+                                            size="40" />
+                                    </icon-block>
+                                </van-col>
+                                <van-col
+                                    span="6"
+                                    @click="copy(demoIcon, { size: '3rem' })">
+                                    <icon-block>
+                                        <van-icon
+                                            :name="demoIcon"
+                                            size="3rem" />
+                                    </icon-block>
+                                </van-col>
+                            </van-row>
+                        </demo-block>
+
+                        <demo-block
+                            :title="t('custom')"
+                            :card="false">
+                            <van-row>
+                                <van-col
+                                    span="6"
+                                    @click="copy('logo', { size: '40', classPrefix: 'my-icon' })">
+                                    <icon-block>
+                                        <van-icon
+                                            class-prefix="my-icon"
+                                            name="logo"
+                                            size="40" />
+                                    </icon-block>
+                                </van-col>
+                            </van-row>
+                        </demo-block>
+                    </view>
+                </view>
+            </van-tab>
+
+            <van-tab :title="t('basic')">
+                <view class="p-5">
+                    <view class="bg-white rounded-xl">
                         <van-row>
                             <van-col
+                                v-for="icon in icons.basic"
+                                :key="icon"
                                 span="6"
-                                @click="copy(demoIcon)">
-                                <icon-block>
-                                    <van-icon :name="demoIcon" />
+                                @click="copy(icon)">
+                                <icon-block :title="icon">
+                                    <van-icon :name="icon" />
                                 </icon-block>
                             </van-col>
                         </van-row>
-                    </demo-block>
+                    </view>
+                </view>
+            </van-tab>
 
-                    <demo-block
-                        title="使用图片 URL"
-                        :card="false">
+            <!-- 线框风格 -->
+            <van-tab :title="t('outline')">
+                <view class="p-5">
+                    <view class="bg-white rounded-xl">
                         <van-row>
                             <van-col
+                                v-for="icon in icons.outline"
+                                :key="icon"
                                 span="6"
-                                @click="copy(demoImage)">
-                                <icon-block>
-                                    <van-icon :name="demoImage" />
+                                @click="copy(icon)">
+                                <icon-block :title="icon">
+                                    <van-icon :name="icon" />
                                 </icon-block>
                             </van-col>
                         </van-row>
-                    </demo-block>
+                    </view>
+                </view>
+            </van-tab>
 
-                    <demo-block
-                        title="徽标提示"
-                        :card="false">
+            <!-- 实底风格 -->
+            <van-tab :title="t('filled')">
+                <view class="p-5">
+                    <view class="bg-white rounded-xl">
                         <van-row>
                             <van-col
+                                v-for="icon in icons.filled"
+                                :key="icon"
                                 span="6"
-                                @click="copy(demoIcon, { dot: true })">
-                                <icon-block>
-                                    <van-icon
-                                        :name="demoIcon"
-                                        dot />
-                                </icon-block>
-                            </van-col>
-                            <van-col
-                                span="6"
-                                @click="copy(demoIcon, { badge: '9' })">
-                                <icon-block>
-                                    <van-icon
-                                        :name="demoIcon"
-                                        badge="9" />
-                                </icon-block>
-                            </van-col>
-                            <van-col
-                                span="6"
-                                @click="copy(demoIcon, { badge: '99+' })">
-                                <icon-block>
-                                    <van-icon
-                                        :name="demoIcon"
-                                        badge="99+" />
+                                @click="copy(icon)">
+                                <icon-block :title="icon">
+                                    <van-icon :name="icon" />
                                 </icon-block>
                             </van-col>
                         </van-row>
-                    </demo-block>
-
-                    <demo-block
-                        title="图标颜色"
-                        :card="false">
-                        <van-row>
-                            <van-col
-                                span="6"
-                                @click="copy('cart-o', { color: '#1989fa' })">
-                                <icon-block>
-                                    <van-icon
-                                        name="cart-o"
-                                        color="#1989fa" />
-                                </icon-block>
-                            </van-col>
-                            <van-col
-                                span="6"
-                                @click="copy('fire-o', { color: '#ee0a24' })">
-                                <icon-block>
-                                    <van-icon
-                                        name="fire-o"
-                                        color="#ee0a24" />
-                                </icon-block>
-                            </van-col>
-                        </van-row>
-                    </demo-block>
-
-                    <demo-block
-                        title="图标大小"
-                        :card="false">
-                        <van-row>
-                            <van-col
-                                span="6"
-                                @click="copy(demoIcon, { size: '40' })">
-                                <icon-block>
-                                    <van-icon
-                                        :name="demoIcon"
-                                        size="40" />
-                                </icon-block>
-                            </van-col>
-                            <van-col
-                                span="6"
-                                @click="copy(demoIcon, { size: '3rem' })">
-                                <icon-block>
-                                    <van-icon
-                                        :name="demoIcon"
-                                        size="3rem" />
-                                </icon-block>
-                            </van-col>
-                        </van-row>
-                    </demo-block>
-
-                    <demo-block
-                        title="自定义图标"
-                        :card="false">
-                        <van-row>
-                            <van-col
-                                span="6"
-                                @click="copy('logo', { size: '40', classPrefix: 'my-icon' })">
-                                <icon-block>
-                                    <van-icon
-                                        class-prefix="my-icon"
-                                        name="logo"
-                                        size="40" />
-                                </icon-block>
-                            </van-col>
-                        </van-row>
-                    </demo-block>
-                </template>
-
-                <!-- 基础图标 -->
-                <template v-if="active === 2">
-                    <van-row>
-                        <van-col
-                            v-for="icon in icons.basic"
-                            :key="icon"
-                            span="6"
-                            @click="copy(icon)">
-                            <icon-block :title="icon">
-                                <van-icon :name="icon" />
-                            </icon-block>
-                        </van-col>
-                    </van-row>
-                </template>
-
-                <!-- 线框风格 -->
-                <template v-if="active === 3">
-                    <van-row>
-                        <van-col
-                            v-for="icon in icons.outline"
-                            :key="icon"
-                            span="6"
-                            @click="copy(icon)">
-                            <icon-block :title="icon">
-                                <van-icon :name="icon" />
-                            </icon-block>
-                        </van-col>
-                    </van-row>
-                </template>
-
-                <!-- 实底风格 -->
-                <template v-if="active === 4">
-                    <van-row>
-                        <van-col
-                            v-for="icon in icons.filled"
-                            :key="icon"
-                            span="6"
-                            @click="copy(icon)">
-                            <icon-block :title="icon">
-                                <van-icon :name="icon" />
-                            </icon-block>
-                        </van-col>
-                    </van-row>
-                </template>
-            </view>
-        </view>
+                    </view>
+                </view>
+            </van-tab>
+        </van-tabs>
     </view>
 </template>
 
 <script setup>
 import { cdnURL } from '@/utils'
-import { ref } from 'vue'
 import icons from '@/utils/icons'
+import { useTranslate } from '@/composables/useTranslate'
+import { onPageScroll } from '@dcloudio/uni-app'
 
-const active = ref(1)
+const t = useTranslate({
+    'zh-CN': {
+        title: '图标列表',
+        badge: '徽标提示',
+        basic: '基础图标',
+        copied: '复制成功',
+        outline: '线框风格',
+        filled: '实底风格',
+        demo: '用法示例',
+        color: '图标颜色',
+        size: '图标大小',
+        custom: '自定义图标',
+    },
+})
+
 const demoIcon = 'chat-o'
 const demoImage = cdnURL('icon-demo.png')
 

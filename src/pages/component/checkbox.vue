@@ -1,5 +1,5 @@
 <template>
-    <view class="pb-5">
+    <view class="demo-doc">
         <demo-block :title="t('basicUsage')">
             <van-checkbox v-model="state.checkbox1">{{ t('checkbox') }}</van-checkbox>
         </demo-block>

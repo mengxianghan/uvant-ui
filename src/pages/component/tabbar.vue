@@ -1,141 +1,124 @@
 <template>
-    <view class="pb-8">
+    <view class="demo-doc">
         <demo-block
-            title="基础用法"
+            :title="t('basicUsage')"
             :card="false">
             <van-tabbar
                 v-model="active"
                 :fixed="false"
                 :safe-area-inset-bottom="false">
-                <van-tabbar-item
-                    icon="home-o"
-                    :icon-size="20">
-                    标签
-                </van-tabbar-item>
-                <van-tabbar-item
-                    icon="search"
-                    :icon-size="20">
-                    标签
-                </van-tabbar-item>
-                <van-tabbar-item
-                    icon="friends-o"
-                    :icon-size="20">
-                    标签
-                </van-tabbar-item>
-                <van-tabbar-item
-                    icon="setting-o"
-                    :icon-size="20">
-                    标签
-                </van-tabbar-item>
+                <van-tabbar-item icon="home-o">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="search">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="friends-o">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="setting-o">{{ t('tab') }}</van-tabbar-item>
             </van-tabbar>
         </demo-block>
 
         <demo-block
-            title="通过名称匹配"
+            :title="t('matchByName')"
             :card="false">
             <van-tabbar
-                v-model="active1"
+                v-model="activeName"
                 :fixed="false"
                 :safe-area-inset-bottom="false">
                 <van-tabbar-item
                     name="home"
-                    icon="home-o"
-                    >标签</van-tabbar-item
-                >
+                    icon="home-o">
+                    {{ t('tab') }}
+                </van-tabbar-item>
                 <van-tabbar-item
                     name="search"
-                    icon="search"
-                    >标签</van-tabbar-item
-                >
+                    icon="search">
+                    {{ t('tab') }}
+                </van-tabbar-item>
                 <van-tabbar-item
                     name="friends"
-                    icon="friends-o"
-                    >标签</van-tabbar-item
-                >
+                    icon="friends-o">
+                    {{ t('tab') }}
+                </van-tabbar-item>
                 <van-tabbar-item
                     name="setting"
-                    icon="setting-o"
-                    >标签</van-tabbar-item
-                >
+                    icon="setting-o">
+                    {{ t('tab') }}
+                </van-tabbar-item>
             </van-tabbar>
         </demo-block>
 
         <demo-block
-            title="徽标提示"
+            :title="t('badge')"
             :card="false">
             <van-tabbar
-                v-model="active"
+                v-model="active2"
                 :fixed="false"
                 :safe-area-inset-bottom="false">
-                <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+                <van-tabbar-item icon="home-o">{{ t('tab') }}</van-tabbar-item>
                 <van-tabbar-item
                     icon="search"
                     dot
-                    >标签</van-tabbar-item
+                    >{{ t('tab') }}</van-tabbar-item
                 >
                 <van-tabbar-item
                     icon="friends-o"
-                    badge="5"
-                    >标签</van-tabbar-item
-                >
+                    badge="5">
+                    {{ t('tab') }}
+                </van-tabbar-item>
                 <van-tabbar-item
                     icon="setting-o"
-                    badge="20"
-                    >标签</van-tabbar-item
-                >
+                    badge="20">
+                    {{ t('tab') }}
+                </van-tabbar-item>
             </van-tabbar>
         </demo-block>
 
         <demo-block
-            title="自定义图标"
+            :title="t('customIcon')"
             :card="false">
             <van-tabbar
-                v-model="active"
+                v-model="active3"
                 :fixed="false"
                 :safe-area-inset-bottom="false">
                 <van-tabbar-item badge="3">
-                    <span>自定义</span>
+                    <span>{{ t('custom') }}</span>
                     <template #icon="props">
                         <van-image
-                            fit="aspectFit"
-                            width="20"
-                            height="20"
-                            :src="props.active ? icon.active : icon.inactive" />
+                            :show-error="false"
+                            :show-loading="false"
+                            :src="props.active ? icon.active : icon.inactive"
+                            height="16px" />
                     </template>
                 </van-tabbar-item>
-                <van-tabbar-item icon="search">标签</van-tabbar-item>
-                <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+                <van-tabbar-item icon="search">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="setting-o">{{ t('tab') }}</van-tabbar-item>
             </van-tabbar>
         </demo-block>
 
         <demo-block
-            title="自定义颜色"
+            :title="t('customColor')"
             :card="false">
             <van-tabbar
-                v-model="active"
-                :fixed="false"
-                :safe-area-inset-bottom="false"
+                v-model="active4"
                 active-color="#ee0a24"
-                inactive-color="gray">
-                <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-                <van-tabbar-item icon="search">标签</van-tabbar-item>
-                <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
-                <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+                :fixed="false"
+                :safe-area-inset-bottom="false">
+                <van-tabbar-item icon="home-o">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="search">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="friends-o">{{ t('tab') }}</van-tabbar-item>
+                <van-tabbar-item icon="setting-o">{{ t('tab') }}</van-tabbar-item>
             </van-tabbar>
         </demo-block>
 
         <demo-block
-            title="监听切换事件"
+            :title="t('switchEvent')"
             :card="false">
             <van-tabbar
-                v-model="active"
+                v-model="active5"
                 :fixed="false"
                 :safe-area-inset-bottom="false"
                 @change="onChange">
-                <van-tabbar-item icon="home-o">标签 1</van-tabbar-item>
-                <van-tabbar-item icon="search">标签 2</van-tabbar-item>
-                <van-tabbar-item icon="friends-o">标签 3</van-tabbar-item>
-                <van-tabbar-item icon="setting-o">标签 4</van-tabbar-item>
+                <van-tabbar-item icon="home-o">{{ `${t('tab')} 1` }}</van-tabbar-item>
+                <van-tabbar-item icon="search">{{ `${t('tab')} 2` }}</van-tabbar-item>
+                <van-tabbar-item icon="friends-o">{{ `${t('tab')} 3` }}</van-tabbar-item>
+                <van-tabbar-item icon="setting-o">{{ `${t('tab')} 4` }}</van-tabbar-item>
             </van-tabbar>
         </demo-block>
     </view>
@@ -144,13 +127,37 @@
 <script setup>
 import { ref } from 'vue'
 import { cdnURL } from '@/utils'
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        badge: '徽标提示',
+        customIcon: '自定义图标',
+        customColor: '自定义颜色',
+        matchByName: '通过名称匹配',
+        switchEvent: '监听切换事件',
+    },
+    'en-US': {
+        badge: 'Show Badge',
+        customIcon: 'Custom Icon',
+        customColor: 'Custom Color',
+        matchByName: 'Match by name',
+        switchEvent: 'Change Event',
+    },
+})
+
+const active = ref(0)
+const active2 = ref(0)
+const active3 = ref(0)
+const active4 = ref(0)
+const active5 = ref(0)
+const activeName = ref('home')
 
 const icon = {
     active: cdnURL('user-active.png'),
     inactive: cdnURL('user-inactive.png'),
 }
-const active = ref(0)
-const active1 = ref('home')
+
 const onChange = (index) => uni.showToast({ title: `标签 ${index}`, icon: 'none' })
 </script>
 

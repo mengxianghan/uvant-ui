@@ -1,45 +1,55 @@
 <template>
-    <view
-        class="pb-8"
-        :style="{ height: '300vh' }">
-        <demo-block title="基础用法">
+    <view class="demo-doc h-[200vh]">
+        <demo-block :title="t('basicUsage')">
             <van-sticky
                 position="top"
                 :page-scroll="onPageScroll">
-                <van-button type="primary">基础用法</van-button>
+                <view class="ml-4">
+                    <van-button type="primary">
+                        {{ t('basicUsage') }}
+                    </van-button>
+                </view>
             </van-sticky>
         </demo-block>
 
-        <demo-block title="吸顶距离">
+        <demo-block :title="t('offsetTop')">
             <van-sticky
                 :offset="50"
                 :page-scroll="onPageScroll">
-                <van-button type="primary">吸顶距离</van-button>
+                <view class="ml-[115px]">
+                    <van-button type="primary">
+                        {{ t('offsetTop') }}
+                    </van-button>
+                </view>
             </van-sticky>
         </demo-block>
 
-        <demo-block title="指定容器">
+        <demo-block :title="t('setContainer')">
             <view
-                class="h-40 bg-white"
-                id="container">
+                id="container"
+                class="h-[150px] bg-white">
                 <van-sticky
                     :container="container"
                     :page-scroll="onPageScroll">
-                    <view class="text-right">
-                        <van-button type="warning">指定容器</van-button>
+                    <view class="ml-[215px]">
+                        <van-button type="warning">
+                            {{ t('setContainer') }}
+                        </van-button>
                     </view>
                 </van-sticky>
             </view>
         </demo-block>
 
-        <demo-block title="吸低距离">
-            <view class="h-screen"></view>
+        <demo-block :title="t('offsetBottom')">
+            <view class="h-[200px]"></view>
             <van-sticky
                 :offset="50"
                 position="bottom"
                 :page-scroll="onPageScroll">
-                <view class="text-center">
-                    <van-button type="primary">吸低距离</van-button>
+                <view class="ml-4">
+                    <van-button type="primary">
+                        {{ t('offsetBottom') }}
+                    </van-button>
                 </view>
             </van-sticky>
         </demo-block>
@@ -48,8 +58,20 @@
 
 <script setup>
 import { onPageScroll } from '@dcloudio/uni-app'
+import { useTranslate } from '@/composables/useTranslate'
 
-console.log(uni.getSystemInfoSync())
+const t = useTranslate({
+    'zh-CN': {
+        offsetTop: '吸顶距离',
+        offsetBottom: '吸底距离',
+        setContainer: '指定容器',
+    },
+    'en-US': {
+        offsetTop: 'Offset Top',
+        offsetBottom: 'Offset Bottom',
+        setContainer: 'Set Container',
+    },
+})
 
 const container = () => uni.createSelectorQuery().select('#container')
 </script>

@@ -1,9 +1,8 @@
 <template>
-    <view class="pb-8">
+    <view class="demo-doc">
         <demo-block
             title="基础用法"
             :card="false">
-            <!-- 可以使用 CellGroup 作为容器 -->
             <van-cell-group inset>
                 <van-field
                     v-model="value"

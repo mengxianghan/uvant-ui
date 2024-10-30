@@ -1,30 +1,27 @@
 <template>
-    <view class="pb-8">
-        <demo-block title="文字省略">
+    <view class="demo-doc">
+        <demo-block :title="t('ellipsis')">
             <view class="bg-white text-neutral-500 p-3 rounded-md">
-                <div class="max-w-60">
-                    <!-- 最多显示一行 -->
-                    <div class="van-ellipsis mb-4">这是一段最多显示一行的文字，多余的内容会被省略</div>
-
-                    <!-- 最多显示两行 -->
-                    <div class="van-multi-ellipsis--l2">
-                        这是一段最多显示两行的文字，后面的内容会省略。这是一段最多显示两行的文字，后面的内容会省略
-                    </div>
-                </div>
-            </view>
-        </demo-block>
-
-        <demo-block title="1px 边框">
-            <view class="bg-white py-3 rounded-md">
-                <view class="van-hairline--top"></view>
+                <view class="max-w-[300px]">
+                    <view class="van-ellipsis">{{ t('text1') }}</view>
+                    <view class="van-multi-ellipsis--l2">{{ t('text2') }}</view>
+                </view>
             </view>
         </demo-block>
 
         <demo-block
-            title="动画"
+            card
+            :title="t('hairline')">
+            <view class="bg-white py-3 rounded-md">
+                <div class="van-hairline--top" />
+            </view>
+        </demo-block>
+
+        <demo-block
+            :title="t('animation')"
             :card="false">
             <view
-                :class="['w-24 h-24 rounded bg-blue-500 fixed left-0 right-0 top-0 bottom-0 m-auto z-10', classes]"
+                :class="['demo-animate-block', classes]"
                 :style="styles"
                 @animationstart="onAnimationstart"
                 @animationend="onAnimationend"></view>
@@ -61,6 +58,18 @@
 
 <script setup>
 import { useCSSAnimation } from '@/uni_modules/uvant-ui'
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        hairline: '1px 边框',
+        ellipsis: '文字省略',
+        animation: '动画',
+        toggle: '切换动画',
+        text1: '这是一段最多显示一行的文字，后面的内容会省略',
+        text2: '这是一段最多显示两行的文字，后面的内容会省略。这是一段最多显示两行的文字，后面的内容会省略',
+    },
+})
 
 const { open, close, classes, styles, onAnimationstart, onAnimationend } = useCSSAnimation()
 
@@ -127,5 +136,17 @@ function handleTransition(name) {
     &-leave-active {
         animation: custom-out 0.3s both;
     }
+}
+
+.demo-animate-block {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 -50px;
+    border-radius: 8px;
+    z-index: 100;
+    @apply bg-blue-500;
 }
 </style>

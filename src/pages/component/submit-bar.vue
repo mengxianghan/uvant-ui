@@ -1,59 +1,59 @@
 <template>
-    <view class="pb-8">
+    <view class="demo-doc">
         <demo-block
-            title="基础用法"
+            :title="t('basicUsage')"
             :card="false">
             <van-submit-bar
                 :fixed="false"
-                :price="3050"
                 :safe-area-inset-bottom="false"
-                button-text="提交订单"
+                :price="3050"
+                :button-text="t('submit')"
                 @submit="onSubmit" />
         </demo-block>
 
         <demo-block
-            title="禁用状态"
+            :title="t('disabled')"
             :card="false">
             <van-submit-bar
-                :fixed="false"
-                :price="3050"
-                :safe-area-inset-bottom="false"
                 disabled
-                button-text="提交订单"
-                tip="你的收货地址不支持配送"
+                :fixed="false"
+                :safe-area-inset-bottom="false"
+                :price="3050"
+                :button-text="t('submit')"
+                :tip="t('tip1')"
                 tip-icon="info-o"
                 @submit="onSubmit" />
         </demo-block>
 
         <demo-block
-            title="加载状态"
+            :title="t('loadingStatus')"
             :card="false">
             <van-submit-bar
-                :fixed="false"
-                :price="3050"
-                :safe-area-inset-bottom="false"
                 loading
-                button-text="提交订单"
+                :fixed="false"
+                :safe-area-inset-bottom="false"
+                :price="3050"
+                :button-text="t('submit')"
                 @submit="onSubmit" />
         </demo-block>
 
         <demo-block
-            title="高级用法"
+            :title="t('advancedUsage')"
             :card="false">
             <van-submit-bar
                 :fixed="false"
-                :price="3050"
                 :safe-area-inset-bottom="false"
-                button-text="提交订单"
+                :price="3050"
+                :button-text="t('submit')"
                 @submit="onSubmit">
-                <van-checkbox>全选</van-checkbox>
+                <van-checkbox>{{ t('check') }}</van-checkbox>
                 <template #tip>
-                    你的收货地址不支持配送,
-                    <text
-                        class="text-blue-500"
+                    {{ t('tip2') }}
+                    <span
+                        class="edit-address"
                         @click="onClickLink">
-                        修改地址
-                    </text>
+                        {{ t('tip3') }}
+                    </span>
                 </template>
             </van-submit-bar>
         </demo-block>
@@ -61,6 +61,29 @@
 </template>
 
 <script setup>
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        tip1: '你的收货地址不支持配送',
+        tip2: '你的收货地址不支持配送, ',
+        tip3: '修改地址',
+        check: '全选',
+        submit: '提交订单',
+        clickLink: '修改地址',
+        clickButton: '点击按钮',
+    },
+    'en-US': {
+        tip1: 'Some tips',
+        tip2: 'Some tips, ',
+        tip3: 'Link',
+        check: 'Label',
+        submit: 'Submit',
+        clickLink: 'Click Link',
+        clickButton: 'Submit',
+    },
+})
+
 const onSubmit = () => uni.showToast({ title: '点击按钮' })
 const onClickLink = () => uni.showToast({ title: '修改地址' })
 </script>

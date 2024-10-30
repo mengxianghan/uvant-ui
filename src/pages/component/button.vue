@@ -1,5 +1,5 @@
 <template>
-    <view class="pb-5">
+    <view class="demo-doc">
         <demo-block :title="t('type')">
             <van-row :gutter="[0, 12]">
                 <van-col :span="8">

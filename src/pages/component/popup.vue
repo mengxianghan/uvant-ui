@@ -1,155 +1,161 @@
 <template>
-    <view class="pb-8">
+    <view class="demo-doc doc-popup">
         <demo-block
-            title="基础用法"
-            :card="false">
-            <van-cell-group inset>
-                <van-cell
-                    title="展示弹出层"
-                    is-link
-                    @click="showBasic = true" />
-            </van-cell-group>
+            card
+            :title="t('basicUsage')">
+            <van-cell
+                :title="t('buttonBasic')"
+                is-link
+                :border="false"
+                @click="showBasic = true" />
             <van-popup v-model:show="showBasic">
-                <view class="p-16 bg-white">内容</view>
+                <view class="p-12">
+                    {{ t('content') }}
+                </view>
             </van-popup>
         </demo-block>
 
-        <demo-block title="弹出位置">
+        <demo-block
+            card
+            :title="t('position')">
             <van-grid clickable>
                 <van-grid-item
                     icon="arrow-up"
-                    text="顶部弹出"
-                    @click="showTop = true"></van-grid-item>
+                    :text="t('buttonTop')"
+                    @click="showTop = true" />
                 <van-grid-item
                     icon="arrow-down"
-                    text="底部弹出"
-                    @click="showBottom = true"></van-grid-item>
+                    :text="t('buttonBottom')"
+                    @click="showBottom = true" />
                 <van-grid-item
                     icon="arrow-left"
-                    text="左侧弹出"
-                    @click="showLeft = true"></van-grid-item>
+                    :text="t('buttonLeft')"
+                    @click="showLeft = true" />
                 <van-grid-item
                     icon="arrow"
-                    text="右侧弹出"
-                    @click="showRight = true"></van-grid-item>
+                    :border="false"
+                    :text="t('buttonRight')"
+                    @click="showRight = true" />
             </van-grid>
+
             <van-popup
                 v-model:show="showTop"
                 position="top">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showBottom"
                 position="bottom">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showLeft"
                 position="left">
-                <view class="h-screen w-28 bg-white"></view>
+                <view class="h-screen w-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showRight"
                 position="right">
-                <view class="h-screen w-28 bg-white"></view>
+                <view class="h-screen w-[30vh]"></view>
             </van-popup>
         </demo-block>
 
         <demo-block
-            title="关闭图标"
-            :card="false">
-            <van-cell-group inset>
-                <van-cell
-                    title="关闭图标"
-                    is-link
-                    @click="showCloseIcon = true" />
-                <van-cell
-                    title="自定义图标"
-                    is-link
-                    @click="showCustomCloseIcon = true" />
-                <van-cell
-                    title="图标位置"
-                    is-link
-                    @click="showCustomIconPosition = true" />
-            </van-cell-group>
+            card
+            :title="t('closeIcon')">
+            <van-cell
+                :title="t('closeIcon')"
+                is-link
+                @click="showCloseIcon = true" />
+            <van-cell
+                :title="t('customCloseIcon')"
+                is-link
+                @click="showCustomCloseIcon = true" />
+            <van-cell
+                :title="t('customIconPosition')"
+                :border="false"
+                is-link
+                @click="showCustomIconPosition = true" />
+
             <van-popup
                 v-model:show="showCloseIcon"
                 closeable
                 position="bottom">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showCustomCloseIcon"
                 closeable
                 close-icon="close"
                 position="bottom">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showCustomIconPosition"
                 closeable
                 close-icon-position="top-left"
                 position="bottom">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
         </demo-block>
 
         <demo-block
-            title="圆角弹窗"
-            :card="false">
-            <van-cell-group inset>
-                <van-cell
-                    title="圆角弹窗（居中）"
-                    is-link
-                    @click="showRoundCornerCenter = true" />
-                <van-cell
-                    title="圆角弹窗（底部）"
-                    is-link
-                    @click="showRoundCornerBottom = true" />
-            </van-cell-group>
+            card
+            :title="t('roundCorner')">
+            <van-cell
+                :title="t('roundCornerCenter')"
+                is-link
+                @click="showRoundCornerCenter = true" />
             <van-popup
                 v-model:show="showRoundCornerCenter"
-                round>
-                <view class="w-40 h-40 bg-white"></view>
+                round
+                position="center">
+                <view class="p-12">{{ t('content') }}</view>
             </van-popup>
+
+            <van-cell
+                :title="t('roundCornerBottom')"
+                :border="false"
+                is-link
+                @click="showRoundCornerBottom = true" />
             <van-popup
                 v-model:show="showRoundCornerBottom"
                 round
                 position="bottom">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
         </demo-block>
 
         <demo-block
-            title="事件监听"
-            :card="false">
-            <van-cell-group inset>
-                <van-cell
-                    title="监听点击事件"
-                    is-link
-                    @click="showClickEvents = true" />
-                <van-cell
-                    title="监听显示事件"
-                    is-link
-                    @click="showDisplayEvents = true" />
-            </van-cell-group>
+            card
+            :title="t('listenEvents')">
+            <van-cell
+                :title="t('clickEvents')"
+                :border="false"
+                is-link
+                @click="showClickEvents = true" />
             <van-popup
                 v-model:show="showClickEvents"
                 position="bottom"
                 closeable
                 @click-overlay="showToast('click-overlay')"
                 @click-close-icon="showToast('click-close-icon')">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
+
+            <van-cell
+                :title="t('displayEvents')"
+                :border="false"
+                is-link
+                @click="showDisplayEvents = true" />
             <van-popup
                 v-model:show="showDisplayEvents"
-                round
                 position="bottom"
                 @open="showToast('open')"
                 @opened="showToast('opened')"
                 @close="showToast('close')"
                 @closed="showToast('closed')">
-                <view class="h-40 bg-white"></view>
+                <view class="h-[30vh]"></view>
             </van-popup>
         </demo-block>
     </view>
@@ -157,6 +163,27 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        position: '弹出位置',
+        buttonBasic: '展示弹出层',
+        buttonTop: '顶部弹出',
+        buttonBottom: '底部弹出',
+        buttonLeft: '左侧弹出',
+        buttonRight: '右侧弹出',
+        roundCorner: '圆角弹窗',
+        roundCornerBottom: '圆角弹窗（底部）',
+        roundCornerCenter: '圆角弹窗（居中）',
+        closeIcon: '关闭图标',
+        customCloseIcon: '自定义图标',
+        customIconPosition: '图标位置',
+        listenEvents: '事件监听',
+        clickEvents: '监听点击事件',
+        displayEvents: '监听显示事件',
+    },
+})
 
 const showBasic = ref(false)
 const showTop = ref(false)

@@ -1,82 +1,104 @@
 <template>
-    <view class="pb-8">
-        <demo-block title="加载类型">
-            <view class="flex flex-wrap gap-4">
-                <van-loading />
-
-                <van-loading type="spinner" />
-            </view>
+    <view class="demo-doc">
+        <demo-block :title="t('type')">
+            <van-row :gutter="20">
+                <van-col>
+                    <van-loading />
+                </van-col>
+                <van-col>
+                    <van-loading type="spinner" />
+                </van-col>
+            </van-row>
         </demo-block>
 
-        <demo-block title="自定义颜色">
-            <view class="flex flex-wrap gap-4">
-                <van-loading color="#1989fa" />
-
-                <van-loading
-                    type="spinner"
-                    color="#1989fa" />
-            </view>
+        <demo-block :title="t('color')">
+            <van-row :gutter="20">
+                <van-col>
+                    <van-loading color="#1989fa" />
+                </van-col>
+                <van-col>
+                    <van-loading
+                        type="spinner"
+                        color="#1989fa" />
+                </van-col>
+            </van-row>
         </demo-block>
 
-        <demo-block title="自定义大小">
-            <view class="flex flex-wrap gap-4">
-                <van-loading size="24" />
-
-                <van-loading
-                    type="spinner"
-                    size="24px" />
-            </view>
+        <demo-block :title="t('size')">
+            <van-row :gutter="20">
+                <van-col>
+                    <van-loading size="24" />
+                </van-col>
+                <van-col>
+                    <van-loading
+                        type="spinner"
+                        size="24" />
+                </van-col>
+            </van-row>
         </demo-block>
 
-        <demo-block title="加载文案">
-            <view class="flex flex-wrap gap-4">
-                <van-loading size="24px">加载中...</van-loading>
-            </view>
+        <demo-block :title="t('text')">
+            <van-loading size="24px">
+                {{ t('loading') }}
+            </van-loading>
         </demo-block>
 
-        <demo-block title="垂直排列">
-            <view class="flex flex-wrap gap-4">
-                <van-loading
-                    size="24px"
-                    vertical
-                    >加载中...</van-loading
-                >
-            </view>
+        <demo-block :title="t('vertical')">
+            <van-loading
+                size="24px"
+                vertical>
+                {{ t('loading') }}
+            </van-loading>
         </demo-block>
 
-        <demo-block title="自定义文本颜色">
-            <view class="flex flex-wrap gap-4">
-                <!-- 可修改文案和加载图标的颜色 -->
-                <van-loading
-                    color="#0094ff"
-                    vertical
-                    >加载中...</van-loading
-                >
-
-                <!-- 只修改文案颜色 -->
-                <van-loading
-                    text-color="#0094ff"
-                    vertical
-                    >加载中...</van-loading
-                >
-            </view>
+        <demo-block :title="t('textColor')">
+            <van-row :gutter="20">
+                <van-col>
+                    <van-loading
+                        size="24px"
+                        vertical
+                        color="#0094ff">
+                        {{ t('loading') }}
+                    </van-loading>
+                </van-col>
+                <van-col>
+                    <van-loading
+                        size="24px"
+                        vertical
+                        text-color="#0094ff">
+                        {{ t('loading') }}
+                    </van-loading>
+                </van-col>
+            </van-row>
         </demo-block>
 
-        <demo-block title="自定义图标">
-            <view class="flex flex-wrap gap-4">
-                <van-loading vertical>
-                    <template #icon>
-                        <van-icon
-                            name="star-o"
-                            size="30" />
-                    </template>
-                    加载中...
-                </van-loading>
-            </view>
+        <demo-block :title="t('customIcon')">
+            <van-loading vertical>
+                <template #icon>
+                    <van-icon
+                        name="star-o"
+                        size="30" />
+                </template>
+                {{ t('loading') }}
+            </van-loading>
         </demo-block>
     </view>
 </template>
 
-<script setup></script>
+<script setup>
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        type: '加载类型',
+        text: '加载文案',
+        size: '自定义大小',
+        color: '自定义颜色',
+        vertical: '垂直排列',
+        textColor: '自定义文本颜色',
+        customIcon: '自定义图标',
+    },
+})
+</script>
 
 <style lang="scss" scoped></style>

@@ -1,114 +1,108 @@
 <template>
-    <view class="pb-8 bg-white">
-        <demo-block title="基础用法">
-            <van-row :gutter="16">
+    <view class="demo-doc demo-image">
+        <demo-block :title="t('basicUsage')">
+            <van-row :gutter="[20, 20]">
                 <van-col :span="8">
                     <van-image
                         width="100"
                         height="100"
-                        :src="cdnURL('cat.jpeg')" />
-                    <view class="mt-2 text-neutral-400">基础用法</view>
+                        :src="image" />
+                    <view class="text">基础用法</view>
                 </van-col>
-
                 <van-col :span="8">
-                    <view class="w-32 h-32">
-                        <van-image
-                            :src="cdnURL('cat.jpeg')"
-                            autosize />
-                    </view>
-                    <view class="mt-2 text-neutral-400">宽高自适应父元素</view>
+                    <van-image :src="image" />
+                    <view class="text">不指定尺寸</view>
+                </van-col>
+                <van-col :span="8">
+                    <van-image
+                        :src="image"
+                        width="100" />
+                    <view class="text">只指定宽度</view>
+                </van-col>
+                <van-col :span="8">
+                    <van-image
+                        :src="image"
+                        height="80" />
+                    <view class="text">只指定高度</view>
                 </van-col>
             </van-row>
         </demo-block>
 
-        <demo-block title="填充模式">
-            <van-row :gutter="16">
+        <demo-block :title="t('fitMode')">
+            <van-row :gutter="[20, 20]">
                 <van-col
-                    v-for="item in list"
-                    :key="item.mode"
-                    :span="8">
+                    v-for="fit in fits"
+                    span="8"
+                    :key="fit">
                     <van-image
-                        :fit="item.mode"
-                        width="6rem"
-                        height="6rem"
-                        :src="cdnURL('cat.jpeg')" />
-                    <view class="mt-2 text-neutral-400">{{ item.mode }}</view>
+                        :fit="fit"
+                        width="100%"
+                        height="27vw"
+                        :src="image" />
+                    <view class="text">{{ fit }}</view>
                 </van-col>
             </van-row>
         </demo-block>
 
-        <demo-block title="圆形图片">
-            <van-row :gutter="16">
+        <demo-block :title="t('round')">
+            <van-row :gutter="[20, 20]">
                 <van-col
-                    v-for="item in list"
-                    :key="item.mode"
-                    :span="8">
+                    v-for="fit in fits"
+                    span="8"
+                    :key="fit">
                     <van-image
-                        :fit="item.mode"
                         round
-                        width="6rem"
-                        height="6rem"
-                        :src="cdnURL('cat.jpeg')" />
-                    <view class="mt-2 text-neutral-400">{{ item.mode }}</view>
+                        :fit="fit"
+                        width="100%"
+                        height="27vw"
+                        :src="image" />
+                    <view class="text">{{ fit }}</view>
                 </van-col>
             </van-row>
         </demo-block>
 
-        <demo-block title="图片懒加载">
-            <view class="flex flex-col">
-                <van-image
-                    width="100"
-                    height="100"
-                    lazy-load
-                    :src="cdnURL('cat.jpeg')" />
-                <view class="mt-2 text-neutral-400">只针对page与scroll-view下的image有效</view>
-            </view>
-        </demo-block>
-
-        <demo-block title="加载中提示">
-            <van-row :gutter="16">
-                <van-col :span="8">
+        <demo-block :title="t('loading')">
+            <van-row :gutter="[20, 20]">
+                <van-col span="8">
                     <van-image
-                        width="100"
-                        height="100">
-                    </van-image>
-                    <view class="mt-2 text-neutral-400">默认提示</view>
+                        width="100%"
+                        height="27vw" />
+                    <view class="text">{{ t('defaultTip') }}</view>
                 </van-col>
 
-                <van-col :span="8">
+                <van-col span="8">
                     <van-image
-                        width="100"
-                        height="100">
+                        width="100%"
+                        height="27vw">
                         <template #loading>
                             <van-loading
                                 type="spinner"
                                 size="20" />
                         </template>
                     </van-image>
-                    <view class="mt-2 text-neutral-400">自定义提示</view>
+                    <view class="text">{{ t('customTip') }}</view>
                 </van-col>
             </van-row>
         </demo-block>
 
-        <demo-block title="加载失败提示">
-            <van-row :gutter="16">
-                <van-col :span="8">
+        <demo-block :title="t('error')">
+            <van-row :gutter="[20, 20]">
+                <van-col span="8">
                     <van-image
-                        src="https://x"
-                        width="100"
-                        height="100">
-                    </van-image>
-                    <view class="mt-2 text-neutral-400">默认提示</view>
+                        width="100%"
+                        height="27vw"
+                        src="http://x" />
+                    <view class="text">{{ t('defaultTip') }}</view>
                 </van-col>
 
-                <van-col :span="8">
+                <van-col span="8">
                     <van-image
-                        src="https://x"
-                        width="100"
-                        height="100">
-                        <template #error> 加载失败 </template>
+                        width="100%"
+                        height="27vw"
+                        src="http://x">
+                        <template #error>{{ t('loadFail') }}</template>
                     </van-image>
-                    <view class="mt-2 text-neutral-400">自定义提示</view>
+                    <view class="text">{{ t('customTip') }}</view>
                 </van-col>
             </van-row>
         </demo-block>
@@ -117,21 +111,29 @@
 
 <script setup>
 import { cdnURL } from '@/utils'
+import { useTranslate } from '@/composables/useTranslate'
 
-const list = [
-    {
-        mode: 'scaleToFill',
-        text: 'scaleToFill：不保持纵横比缩放图片，使图片完全适应',
+const t = useTranslate({
+    'zh-CN': {
+        fitMode: '填充模式',
+        position: '图片位置',
+        round: '圆形图片',
+        loading: '加载中提示',
+        error: '加载失败提示',
+        defaultTip: '默认提示',
+        customTip: '自定义提示',
+        loadFail: '加载失败',
     },
-    {
-        mode: 'aspectFit',
-        text: 'aspectFit：保持纵横比缩放图片，使图片的长边能完全显示出来',
-    },
-    {
-        mode: 'aspectFill',
-        text: 'aspectFill：保持纵横比缩放图片，只保证图片的短边能完全显示出来',
-    },
-]
+})
+
+const image = cdnURL('cat.jpeg')
+const fits = ['scaleToFill', 'aspectFit', 'aspectFill']
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.demo-image {
+    .text {
+        @apply mt-1 text-sm text-center text-gray-500;
+    }
+}
+</style>

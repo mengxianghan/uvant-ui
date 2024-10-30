@@ -1,49 +1,78 @@
 <template>
-    <view class="pb-8">
-        <demo-block title="基础用法">
+    <view class="demo-doc demo-overlay">
+        <demo-block :title="t('basicUsage')">
             <van-button
                 type="primary"
-                text="显示遮罩层"
+                :text="t('showOverlay')"
                 @click="show = true" />
             <van-overlay
                 :show="show"
                 @click="show = false" />
         </demo-block>
 
-        <demo-block title="嵌入内容">
+        <demo-block :title="t('embeddedContent')">
             <van-button
                 type="primary"
-                text="嵌入内容"
-                @click="show1 = true" />
+                :text="t('embeddedContent')"
+                @click="showEmbedded = true" />
             <van-overlay
-                :show="show1"
-                @click="show1 = false">
-                <view class="flex items-center justify-center h-full">
-                    <view class="w-32 h-32 bg-white"></view>
+                :show="showEmbedded"
+                @click="showEmbedded = false">
+                <view class="wrapper">
+                    <view class="block"></view>
                 </view>
             </van-overlay>
         </demo-block>
 
-        <demo-block title="设置 z-index">
+        <demo-block :title="t('setZIndex')">
             <van-button
                 type="primary"
-                text="设置 z-index"
-                @click="show2 = true" />
+                :text="t('setZIndex')"
+                @click="showZIndex = true" />
             <van-overlay
-                :show="show2"
-                :z-index="100"
-                @click="show2 = false">
-            </van-overlay>
+                :show="showZIndex"
+                @click="showZIndex = false"
+                z-index="100" />
         </demo-block>
     </view>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        setZIndex: '设置 z-index',
+        showOverlay: '显示遮罩层',
+        embeddedContent: '嵌入内容',
+    },
+    'en-US': {
+        setZIndex: 'Set z-index',
+        showOverlay: 'Show Overlay',
+        embeddedContent: 'Embedded Content',
+    },
+})
 
 const show = ref(false)
-const show1 = ref(false)
-const show2 = ref(false)
+const showEmbedded = ref(false)
+const showZIndex = ref(false)
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.demo-overlay {
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .block {
+        width: 120px;
+        height: 120px;
+        background-color: #fff;
+        border-radius: 4px;
+    }
+}
+</style>

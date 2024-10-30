@@ -1,5 +1,5 @@
 <template>
-    <view class="pb-8">
+    <view class="demo-doc">
         <demo-block
             :title="t('basicUsage')"
             :card="false">

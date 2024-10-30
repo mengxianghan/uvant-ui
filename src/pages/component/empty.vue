@@ -1,5 +1,5 @@
 <template>
-    <view class="pb-5 demo-empty">
+    <view class="demo-doc demo-empty">
         <demo-block :title="t('basicUsage')">
             <van-empty :description="t('description')" />
         </demo-block>

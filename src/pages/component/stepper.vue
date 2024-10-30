@@ -1,114 +1,156 @@
 <template>
-    <view class="pb-8">
-        <van-cell-group inset>
+    <view class="demo-doc">
+        <demo-block>
             <van-cell
-                title="基础用法"
-                center>
+                center
+                :title="t('basicUsage')">
                 <template #value>
-                    <van-stepper v-model="value" />
+                    <van-stepper v-model="stepper1" />
                 </template>
             </van-cell>
+
             <van-cell
-                title="步长设置"
-                center>
+                center
+                :title="t('step')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
+                        v-model="stepper2"
                         step="2" />
                 </template>
             </van-cell>
+
             <van-cell
-                title="限制输入范围"
-                center>
+                center
+                :title="t('range')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
-                        min="5"
-                        max="8" />
+                        v-model="stepper3"
+                        :min="5"
+                        :max="8" />
                 </template>
             </van-cell>
+
             <van-cell
-                title="限制输入整数"
-                center>
+                center
+                :title="t('integer')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
+                        v-model="stepper4"
                         integer />
                 </template>
             </van-cell>
+
             <van-cell
-                title="禁用状态"
-                center>
+                center
+                :title="t('disabled')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
+                        v-model="stepper5"
                         disabled />
                 </template>
             </van-cell>
+
             <van-cell
-                title="禁用输入框"
-                center>
+                center
+                :title="t('disableInput')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
+                        v-model="disabledInput"
                         disable-input />
                 </template>
             </van-cell>
+
             <van-cell
-                title="固定小数位数"
-                center>
+                center
+                :title="t('decimalLength')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
-                        :decimal-length="1" />
+                        v-model="stepper8"
+                        :decimal-length="1"
+                        step="0.2" />
                 </template>
             </van-cell>
+
             <van-cell
-                title="自定义大小"
-                center>
+                center
+                :title="t('customSize')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
-                        input-width="40px"
-                        button-size="32px" />
+                        v-model="stepper7"
+                        button-size="32px"
+                        input-width="40px" />
                 </template>
             </van-cell>
+
             <van-cell
-                title="异步变更"
-                center>
+                center
+                :title="t('beforeChange')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
+                        v-model="stepper6"
                         :before-change="beforeChange" />
                 </template>
             </van-cell>
+
             <van-cell
-                title="圆角风格"
-                center>
+                center
+                :title="t('roundTheme')">
                 <template #value>
                     <van-stepper
-                        v-model="value"
+                        v-model="stepperRound"
                         theme="round"
                         button-size="22"
                         disable-input />
                 </template>
             </van-cell>
-        </van-cell-group>
+        </demo-block>
     </view>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { useTranslate } from '@/composables/useTranslate'
 
-const value = ref(1)
+const t = useTranslate({
+    'zh-CN': {
+        step: '步长设置',
+        range: '限制输入范围',
+        integer: '限制输入整数',
+        roundTheme: '圆角风格',
+        customSize: '自定义大小',
+        beforeChange: '异步变更',
+        disableInput: '禁用输入框',
+        decimalLength: '固定小数位数',
+    },
+    'en-US': {
+        step: 'Step',
+        range: 'Range',
+        integer: 'Integer',
+        roundTheme: 'Round Theme',
+        customSize: 'Custom Size',
+        beforeChange: 'Before Change',
+        disableInput: 'Disable Input',
+        decimalLength: 'Decimal Length',
+    },
+})
 
-const beforeChange = (value) => {
-    uni.showLoading({ title: value, forbidClick: true })
+const stepper1 = ref(1)
+const stepper2 = ref(1)
+const stepper3 = ref(1)
+const stepper4 = ref(1)
+const stepper5 = ref(1)
+const stepper6 = ref(1)
+const stepper7 = ref(1)
+const stepper8 = ref(1)
+const stepperRound = ref(1)
+const disabledInput = ref(1)
+
+const beforeChange = () => {
+    uni.showLoading({ forbidClick: true })
 
     return new Promise((resolve) => {
         setTimeout(() => {
             uni.hideLoading()
-            // 在 resolve 函数中返回 true 或 false
             resolve(true)
         }, 500)
     })

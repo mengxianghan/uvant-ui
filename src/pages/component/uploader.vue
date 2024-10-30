@@ -1,31 +1,31 @@
 <template>
     <view class="pb-8 min-h-screen bg-white">
-        <demo-block title="基础用法">
+        <demo-block :title="t('basicUsage')">
             <van-uploader
                 accept="image"
                 :after-read="afterRead" />
         </demo-block>
 
-        <demo-block title="文件预览">
+        <demo-block :title="t('preview')">
             <van-uploader
                 v-model="fileList"
                 multiple />
         </demo-block>
 
-        <demo-block title="上传状态">
+        <demo-block :title="t('status')">
             <van-uploader
                 v-model="statusFileList"
                 :after-read="afterReadFailed" />
         </demo-block>
 
-        <demo-block title="限制上传数量">
+        <demo-block :title="t('maxCount')">
             <van-uploader
                 v-model="fileList2"
                 multiple
                 :max-count="2" />
         </demo-block>
 
-        <demo-block title="限制上传大小">
+        <demo-block :title="t('maxSize')">
             <van-uploader
                 v-model="fileList4"
                 multiple
@@ -33,7 +33,7 @@
                 @oversize="onOversize" />
         </demo-block>
 
-        <demo-block title="自定义上传样式">
+        <demo-block :title="t('customUpload')">
             <van-uploader>
                 <van-button
                     type="primary"
@@ -43,7 +43,7 @@
             </van-uploader>
         </demo-block>
 
-        <demo-block title="自定义预览样式">
+        <demo-block :title="t('previewCover')">
             <van-uploader v-model="previewCoverFiles">
                 <template #preview-cover="{ file }">
                     <div class="preview-cover van-ellipsis">{{ file.url }}</div>
@@ -51,32 +51,32 @@
             </van-uploader>
         </demo-block>
 
-        <demo-block title="自定义预览大小">
+        <demo-block :title="t('previewSize')">
             <van-uploader
                 v-model="previewSizeFiles"
                 preview-size="60" />
         </demo-block>
 
-        <demo-block title="上传前置处理">
+        <demo-block :title="t('beforeRead')">
             <van-uploader
                 v-model="fileList3"
                 :before-read="beforeRead" />
         </demo-block>
 
-        <demo-block title="禁用文件上传">
+        <demo-block :title="t('disabled')">
             <van-uploader
                 :after-read="afterRead"
                 disabled />
         </demo-block>
 
-        <demo-block title="自定义单个图片预览">
+        <demo-block :title="t('customPreviewImage')">
             <van-uploader
                 v-model="fileList5"
                 multiple
                 :deletable="false" />
         </demo-block>
 
-        <demo-block title="开启覆盖上传">
+        <demo-block :title="t('reupload')">
             <van-uploader
                 v-model="fileList6"
                 reupload
@@ -88,6 +88,30 @@
 <script setup>
 import { ref } from 'vue'
 import { cdnURL } from '@/utils'
+import { useTranslate } from '@/composables/useTranslate'
+
+const t = useTranslate({
+    'zh-CN': {
+        status: '上传状态',
+        failed: '上传失败',
+        upload: '上传文件',
+        preview: '文件预览',
+        maxSize: '限制上传大小',
+        disabled: '禁用文件上传',
+        maxCount: '限制上传数量',
+        uploading: '上传中...',
+        imageName: '图片名称',
+        beforeRead: '上传前置处理',
+        overSizeTip: '文件大小不能超过 500kb',
+        invalidType: '请上传 jpg 格式图片',
+        customUpload: '自定义上传样式',
+        previewSize: '自定义预览大小',
+        previewCover: '自定义预览样式',
+        deleteMessage: '删除前置处理',
+        customPreviewImage: '自定义单个图片预览',
+        reupload: '开启覆盖上传',
+    },
+})
 
 const fileList = ref([
     { url: cdnURL('leaf.jpeg'), isImage: true },

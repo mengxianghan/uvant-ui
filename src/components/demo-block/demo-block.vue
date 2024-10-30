@@ -1,11 +1,13 @@
 <template>
     <view class="demo-block">
-        <view class="demo-block__title pt-8 pb-3 text-sm text-neutral-500 px-4">
-            <slot name="title">{{ title }}</slot>
-        </view>
+        <template v-if="title">
+            <view class="demo-block__title pt-8 pb-3 text-sm text-neutral-500 px-4">
+                <slot name="title">{{ title }}</slot>
+            </view>
+        </template>
         <view
             class="demo-block__body"
-            :class="{ 'px-4': card }">
+            :class="{ 'mx-4': card }">
             <slot></slot>
         </view>
     </view>

@@ -1,5 +1,5 @@
 <template>
-    <view class="pb-5">
+    <view class="demo-doc">
         <demo-block
             :title="t('basicUsage')"
             :card="false">
@@ -90,7 +90,7 @@
                 :value="t('content')"
                 is-link>
                 <template #title>
-                    <span class="custom-title">{{ t('cell') }}</span>
+                    <view class="custom-title">{{ t('cell') }}</view>
                     <van-tag type="primary">{{ t('tag') }}</van-tag>
                 </template>
             </van-cell>
@@ -99,9 +99,7 @@
                 icon="shop-o"
                 :title="t('cell')">
                 <template #right-icon>
-                    <van-icon
-                        name="search"
-                        class="search-icon" />
+                    <van-icon name="search" />
                 </template>
             </van-cell>
         </demo-block>

@@ -52,13 +52,20 @@ function toggleAll(options = {}) {
         if (!item.props.bindGroup) {
             return false
         }
+        let _checked = item.exposed.checked
+
+        // #ifndef H5
+        _checked = item.exposed.checked.value
+        // #endif
+
         if (item.props.disabled && skipDisabled) {
-            return item.exposed.checked
+            return _checked
         }
-        return defaultTo(checked, !item.exposed.checked)
+        return defaultTo(checked, !_checked)
     })
 
     const names = checkedChildren.map((item) => item.props.name)
+
     updateValue(names)
 }
 

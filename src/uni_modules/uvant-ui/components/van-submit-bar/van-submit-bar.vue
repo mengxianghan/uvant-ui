@@ -77,7 +77,7 @@ const props = defineProps({
 const emits = defineEmits(['submit'])
 
 const slots = useSlots()
-const { bem } = createNamespace('submit-bar')
+const { name, bem } = createNamespace('submit-bar')
 const [rootSelector] = createUniqueSelector(name)
 
 const integer = ref(0)

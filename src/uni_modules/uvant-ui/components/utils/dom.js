@@ -11,7 +11,3 @@ export function preventDefault(event, isStopPropagation) {
         stopPropagation(event)
     }
 }
-
-export function querySelector(selector) {
-    return uni.createSelectorQuery().select(selector)
-}

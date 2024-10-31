@@ -6,3 +6,7 @@
 @import './components/styles/safe-area.scss';
 @import './components/styles/feedback.scss';
 @import './components/styles/animation.scss';
+
+/* #ifdef H5 */
+@import './components/styles/components/index.scss';
+/* #endif */

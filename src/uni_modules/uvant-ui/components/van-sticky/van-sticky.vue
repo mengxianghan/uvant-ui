@@ -24,8 +24,8 @@ import {
     createNamespace,
     makeStringProp,
     makeNumericProp,
+    isFunction,
 } from '../utils'
-import { isFunction } from 'lodash-es'
 
 const props = defineProps({
     position: makeStringProp('top'),

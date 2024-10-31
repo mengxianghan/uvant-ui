@@ -1,6 +1,5 @@
 import { ref, computed } from 'vue'
-import { isDef, isNullOrEmpty } from '../../utils'
-import { isFunction, defaultTo } from 'lodash-es'
+import { isDef, isNullOrEmpty, isFunction, defaultTo } from '../../utils'
 
 /**
  * @typedef Option

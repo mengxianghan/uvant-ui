@@ -35,7 +35,7 @@
                     bemCell('title'),
                 ]"
                 :style="{
-                    width: !isNullOrEmpty(labelWidth) ? addUnit(labelWidth) : '',
+                    width: isDef(labelWidth) ? addUnit(labelWidth) : '',
                 }">
                 <slot name="label">{{ label }}</slot>
             </view>
@@ -186,7 +186,6 @@
 <script setup>
 import { computed, ref, useSlots } from 'vue'
 import {
-    isNullOrEmpty,
     addUnit,
     createNamespace,
     makeStringProp,
@@ -194,8 +193,9 @@ import {
     truthProp,
     numericProp,
     makeNumberProp,
+    isDef,
+    debounce,
 } from '../utils'
-import { debounce } from 'lodash-es'
 
 const props = defineProps({
     label: String,
@@ -296,35 +296,32 @@ const textareaStyles = computed(() => ({
         : {}),
 }))
 const hasLeftIcon = computed(() => {
-    return !isNullOrEmpty(props.leftIcon) || slots.leftIcon
+    return isDef(props.leftIcon) || slots.leftIcon
 })
 const hasLabel = computed(() => {
-    return !isNullOrEmpty(props.label) || slots.label
+    return isDef(props.label) || slots.label
 })
 const hasRightIcon = computed(() => {
-    return !isNullOrEmpty(props.rightIcon) || slots.rightIcon
+    return isDef(props.rightIcon) || slots.rightIcon
 })
 const hasErrorMessage = computed(() => {
-    return !isNullOrEmpty(props.errorMessage) || slots.errorMessage
+    return isDef(props.errorMessage) || slots.errorMessage
 })
 const hasButton = computed(() => {
     return slots.button
 })
 const hasClear = computed(() => {
-    const checkValue = !isNullOrEmpty(modelValue.value)
-
     if (props.clearTrigger === 'focus') {
-        return props.clearable && checkValue && isFocus.value
+        return props.clearable && isDef(modelValue.value) && isFocus.value
     }
 
-    return props.clearable && props.arrowDirectioncheckValue
+    return props.clearable && props.arrowDirection
 })
 const hasCellRightIcon = computed(() => slots['rightIcon'] || props.isLink)
 const arrow = computed(() => {
-    const { arrowDirection } = props
     let name
 
-    switch (arrowDirection) {
+    switch (props.arrowDirection) {
         case 'left':
             name = 'arrow-left'
             break
@@ -344,7 +341,7 @@ const arrow = computed(() => {
 
     return name
 })
-const hasWordLimit = computed(() => !isNullOrEmpty(props.maxlength) && props.showWordLimit)
+const hasWordLimit = computed(() => isDef(props.maxlength) && props.showWordLimit)
 
 const onInput = debounce(() => {
     if ('onChange' === props.formatTrigger) {

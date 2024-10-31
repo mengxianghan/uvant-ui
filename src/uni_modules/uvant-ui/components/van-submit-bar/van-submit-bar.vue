@@ -54,7 +54,7 @@
 
 <script setup>
 import { computed, useSlots, watchEffect, ref } from 'vue'
-import { isNumber, createNamespace, makeNumericProp, makeStringProp, truthProp, createUniqueSelector } from '../utils'
+import { createNamespace, makeNumericProp, makeStringProp, truthProp, createUniqueSelector, isNumeric } from '../utils'
 
 const props = defineProps({
     price: Number,
@@ -91,7 +91,7 @@ watchEffect(() => {
 
 const hasTipIcon = computed(() => props.tipIcon)
 const hasTip = computed(() => props.tip || slots.tip)
-const hasPrice = computed(() => isNumber(props.price))
+const hasPrice = computed(() => isNumeric(props.price))
 const textStyles = computed(() => {
     const { textAlign } = props
     const style = {}

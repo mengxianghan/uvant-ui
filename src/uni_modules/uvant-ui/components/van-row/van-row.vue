@@ -15,7 +15,6 @@
 <script setup>
 import { computed } from 'vue'
 import { useChildren } from '../composables'
-import { isArray } from 'lodash-es'
 import { createNamespace, truthProp } from '../utils'
 
 const props = defineProps({
@@ -49,7 +48,7 @@ const groups = computed(() => {
 
 const spaces = computed(() => {
     let gutter = 0
-    if (isArray(props.gutter)) {
+    if (Array.isArray(props.gutter)) {
         gutter = Number(props.gutter[0]) || 0
     } else {
         gutter = Number(props.gutter)
@@ -79,7 +78,7 @@ const spaces = computed(() => {
 
 const verticalSpaces = computed(() => {
     const spaces = []
-    if (isArray(props.gutter) && props.gutter.length > 1) {
+    if (Array.isArray(props.gutter) && props.gutter.length > 1) {
         const bottom = Number(props.gutter[1]) || 0
         if (bottom <= 0) {
             return spaces

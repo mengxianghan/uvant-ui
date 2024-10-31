@@ -45,7 +45,6 @@ import { computed, watch, onMounted } from 'vue'
 import {
     callInterceptor,
     isDef,
-    isNullOrEmpty,
     createNamespace,
     truthProp,
     makeStringProp,
@@ -110,7 +109,7 @@ const {
 const { bem } = createNamespace('popup')
 
 let opened
-const curZIndex = computed(() => (!isNullOrEmpty(props.zIndex) ? +props.zIndex : useGlobalZIndex()))
+const curZIndex = computed(() => (isDef(props.zIndex) ? +props.zIndex : useGlobalZIndex()))
 const styles = computed(() => {
     const style = {}
 

@@ -12,8 +12,7 @@
 <script setup>
 import { watch } from 'vue'
 import { useChildren } from '../composables'
-import { defaultTo } from 'lodash-es'
-import { createNamespace, numericProp, makeStringProp, makeArrayProp } from '../utils'
+import { createNamespace, numericProp, makeStringProp, makeArrayProp, defaultTo } from '../utils'
 
 const props = defineProps({
     max: numericProp,

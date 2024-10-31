@@ -6,7 +6,7 @@
                 inset,
             })
         ">
-        <template v-if="!isNullOrEmpty(title)">
+        <template v-if="isDef(title)">
             <view :class="bem('title')">
                 <slot name="title">{{ title }}</slot>
             </view>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { isNullOrEmpty, createNamespace, truthProp } from '../utils'
+import { createNamespace, truthProp, isDef } from '../utils'
 
 defineProps({
     title: String,

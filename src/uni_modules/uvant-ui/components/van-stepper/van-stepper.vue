@@ -61,8 +61,9 @@ import {
     truthProp,
     makeNumericProp,
     numericProp,
+    isEqual,
+    defaultTo,
 } from '../utils'
-import { defaultTo } from 'lodash-es'
 
 const props = defineProps({
     min: makeNumericProp(1),
@@ -190,10 +191,6 @@ function onChange() {
 
     setValue(value)
     emits(actionType.value)
-}
-
-function isEqual(value1, value2) {
-    String(value1) === String(value2)
 }
 
 function format(value, autoFixed) {

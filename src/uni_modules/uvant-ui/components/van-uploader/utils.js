@@ -1,5 +1,4 @@
-import { isImageUrl, isVideoUrl } from '../utils'
-import { omit } from 'lodash-es'
+import { isImageUrl, isVideoUrl, omit } from '../utils'
 
 export function isImageFile(item) {
     if (item.isImage != null) {

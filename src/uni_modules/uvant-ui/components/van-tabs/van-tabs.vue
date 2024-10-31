@@ -122,7 +122,6 @@ import {
     createUniqueSelector,
     getRect,
     callInterceptor,
-    isNullOrEmpty,
     isDef,
     addUnit,
 } from '../utils'
@@ -250,7 +249,7 @@ function getContainer() {
 function setCurrentIndex(currentIndex, skipScrollIntoView) {
     const newIndex = findAvailableTab(currentIndex)
 
-    if (isNullOrEmpty(newIndex)) {
+    if (!isDef(newIndex)) {
         return
     }
 

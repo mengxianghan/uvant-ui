@@ -42,9 +42,9 @@ import {
     makeNumericProp,
     truthProp,
     makeNumberProp,
+    defaultTo,
 } from '../utils'
-import { useTouch } from '../composables/useTouch'
-import { defaultTo } from 'lodash-es'
+import { useTouch } from '../composables'
 
 const props = defineProps({
     anchors: makeArrayProp(),

@@ -15,8 +15,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { isNullOrEmpty, addUnit, createNamespace, makeStringProp } from '../utils'
-import { isArray } from 'lodash-es'
+import { addUnit, createNamespace, isDef, makeStringProp } from '../utils'
 
 const props = defineProps({
     direction: makeStringProp('horizontal'),
@@ -31,9 +30,9 @@ const { bem } = createNamespace('space')
 const styles = computed(() => {
     const style = {}
 
-    if (isNullOrEmpty(props.size)) return
+    if (!isDef(props.size)) return
 
-    if (isArray(props.size)) {
+    if (Array.isArray(props.size)) {
         const [x = 0, y = 0] = props.size
         style.gap = `${addUnit(x)} ${addUnit(y)}`
     } else {

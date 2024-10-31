@@ -24,7 +24,7 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { isDef, isNumber, createNamespace, numericProp, truthProp, makeStringProp } from '../utils'
+import { isDef, createNamespace, numericProp, truthProp, makeStringProp, isNumeric } from '../utils'
 
 const props = defineProps({
     dot: Boolean,
@@ -66,7 +66,7 @@ const styles = computed(() => ({
 }))
 const content = computed(() => {
     const { max, content } = props
-    if (isDef(max) && isNumber(content) && +content > +max) {
+    if (isDef(max) && isNumeric(content) && +content > +max) {
         return `${max}+`
     }
     return content

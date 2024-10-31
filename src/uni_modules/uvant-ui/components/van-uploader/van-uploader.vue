@@ -125,7 +125,6 @@ import {
     isPromise,
     isBoolean,
     getSizeStyle,
-    isNullOrEmpty,
     toArray,
     callInterceptor,
 } from '../utils'

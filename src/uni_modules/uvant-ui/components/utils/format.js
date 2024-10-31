@@ -1,5 +1,47 @@
-import { isDef } from './index'
-import { isArray } from 'lodash-es'
+import { isDef, isNumeric } from './index'
+
+export function addUnit(value) {
+    if (isDef(value)) {
+        return isNumeric(value) ? `${value}px` : String(value)
+    }
+    return undefined
+}
+
+export function getSizeStyle(originSize) {
+    if (isDef(originSize)) {
+        if (Array.isArray(originSize)) {
+            return {
+                width: addUnit(originSize[0]),
+                height: addUnit(originSize[1]),
+            }
+        }
+        const size = addUnit(originSize)
+        return {
+            width: size,
+            height: size,
+        }
+    }
+}
+
+export function getZIndexStyle(zIndex) {
+    const style = {}
+    if (zIndex !== undefined) {
+        style.zIndex = +zIndex
+    }
+    return style
+}
+
+const camelizeRE = /-(\w)/g
+
+export const camelize = (str) => str.replace(camelizeRE, (_, c) => c.toUpperCase())
+
+export const kebabCase = (str) =>
+    str
+        .replace(/([A-Z])/g, '-$1')
+        .toLowerCase()
+        .replace(/^-/, '')
+
+export const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
 
 function trimExtraChar(value, char, regExp) {
     const index = value.indexOf(char)
@@ -13,26 +55,6 @@ function trimExtraChar(value, char, regExp) {
     }
 
     return value.slice(0, index + 1) + value.slice(index).replace(regExp, '')
-}
-
-export function addUnit(value) {
-    return /[a-zA-Z%]+$/.test(value) ? value : `${value}px`
-}
-
-export function getSizeStyle(originSize) {
-    if (isDef(originSize)) {
-        if (isArray(originSize)) {
-            return {
-                width: addUnit(originSize[0]),
-                height: addUnit(originSize[1]),
-            }
-        }
-        const size = addUnit(originSize)
-        return {
-            width: size,
-            height: size,
-        }
-    }
 }
 
 export function formatNumber(value, allowDot = true, allowMinus = true) {
@@ -51,27 +73,6 @@ export function formatNumber(value, allowDot = true, allowMinus = true) {
     const regExp = allowDot ? /[^-0-9.]/g : /[^-0-9]/g
 
     return value.replace(regExp, '')
-}
-
-const camelizeRE = /-(\w)/g
-export function camelize(str) {
-    return str.replace(camelizeRE, (_, c) => c.toUpperCase())
-}
-
-/**
- * @param {Number} zIndex
- * @returns
- */
-export function getZIndexStyle(zIndex) {
-    const style = {}
-    if (zIndex !== undefined) {
-        style.zIndex = +zIndex
-    }
-    return style
-}
-
-export function clamp(num, min, max) {
-    return Math.min(Math.max(num, min), max)
 }
 
 // add num and avoid float number

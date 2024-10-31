@@ -1,5 +1,5 @@
 import { ref, reactive } from 'vue'
-import { deepAssign } from '../utils/deepAssign'
+import { deepAssign } from '../utils'
 import defaultMessages from './lang/zh-CN'
 
 const lang = ref('zh-CN')

@@ -1,3 +1,4 @@
-export * from './components/composables/useCSSAnimation'
-export * from './components/composables/useRelation'
-export * from './components/composables/useRefs'
+export * from './components/composables/use-css-animation'
+export * from './components/composables/use-parent'
+export * from './components/composables/use-children'
+export * from './components/composables/use-refs'

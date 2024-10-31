@@ -77,8 +77,7 @@
 
 <script setup>
 import { computed, useSlots, ref } from 'vue'
-import { isNullOrEmpty, createNamespace, makeStringProp, makeNumericProp, truthProp } from '../utils'
-import { debounce } from 'lodash-es'
+import { createNamespace, makeStringProp, makeNumericProp, truthProp, isDef, debounce } from '../utils'
 
 const props = defineProps({
     label: String,
@@ -123,10 +122,10 @@ const { bem: bemField } = createNamespace('field')
 
 const isFocus = ref(false)
 
-const hasLeftIcon = computed(() => !isNullOrEmpty(props.leftIcon) || slots.leftIcon)
-const hasLabel = computed(() => !isNullOrEmpty(props.label) || slots.label)
+const hasLeftIcon = computed(() => isDef(props.leftIcon) || slots.leftIcon)
+const hasLabel = computed(() => isDef(props.label) || slots.label)
 const hasClear = computed(() => {
-    const checkValue = !isNullOrEmpty(modelValue.value)
+    const checkValue = isDef(modelValue.value)
 
     if (props.clearTrigger === 'focus') {
         return props.clearable && checkValue && isFocus.value
@@ -134,7 +133,7 @@ const hasClear = computed(() => {
 
     return props.clearable && checkValue
 })
-const hasRightIcon = computed(() => !isNullOrEmpty(props.rightIcon) || slots.rightIcon)
+const hasRightIcon = computed(() => isDef(props.rightIcon) || slots.rightIcon)
 
 const onInput = debounce(() => {
     if ('onChange' === props.formatTrigger) {

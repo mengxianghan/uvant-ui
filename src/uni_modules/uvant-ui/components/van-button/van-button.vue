@@ -25,7 +25,7 @@
                             :size="loadingSize"></van-loading>
                     </slot>
                 </view>
-                <template v-if="!isNullOrEmpty(loadingText)">
+                <template v-if="isDef(loadingText)">
                     <view :class="bem('text')">
                         {{ loadingText }}
                     </view>
@@ -60,7 +60,7 @@
 
 <script setup>
 import { computed, useSlots } from 'vue'
-import { isNullOrEmpty, createNamespace, makeStringProp, numericProp } from '../utils'
+import { createNamespace, makeStringProp, numericProp, isDef } from '../utils'
 
 const props = defineProps({
     text: String,
@@ -101,10 +101,10 @@ const styles = computed(() => {
     }
 })
 const hasIcon = computed(() => {
-    return !isNullOrEmpty(props.icon)
+    return isDef(props.icon)
 })
 const hasText = computed(() => {
-    return !isNullOrEmpty(props.text) || slots.default
+    return isDef(props.text) || slots.default
 })
 
 function handleClick(e) {

@@ -1,5 +1,4 @@
-import { isPromise } from './basic'
-import { noop } from 'lodash-es'
+import { isPromise, noop } from './basic'
 
 export function callInterceptor(interceptor, { args = [], done, canceled, error }) {
     if (interceptor) {

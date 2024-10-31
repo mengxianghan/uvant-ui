@@ -1,6 +1,5 @@
-import { get } from './basic'
+import { get, isFunction, uniqueId } from './basic'
 import { camelize } from './format'
-import { uniqueId, isFunction, isArray } from 'lodash-es'
 import locale from '../locale'
 
 export function createTranslate(name) {
@@ -23,7 +22,7 @@ function genBem(name, mods) {
         return ` ${name}--${mods}`
     }
 
-    if (isArray(mods)) {
+    if (Array.isArray(mods)) {
         return mods.reduce((ret, item) => ret + genBem(name, item), '')
     }
 

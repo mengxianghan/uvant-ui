@@ -25,8 +25,7 @@
 
 <script setup>
 import { useSlots, computed } from 'vue'
-import { getSizeStyle, isNullOrEmpty, createNamespace, makeStringProp } from '../utils'
-import { get } from 'lodash-es'
+import { getSizeStyle, createNamespace, makeStringProp, isDef, get } from '../utils'
 
 const props = defineProps({
     image: makeStringProp('default'),
@@ -45,7 +44,7 @@ const PRESET_IMAGES = {
 }
 
 const imageSrc = computed(() => get(PRESET_IMAGES, props.image, props.image))
-const hasDescription = computed(() => !isNullOrEmpty(props.description) || slots.description)
+const hasDescription = computed(() => isDef(props.description) || slots.description)
 </script>
 
 <style lang="scss" scoped>

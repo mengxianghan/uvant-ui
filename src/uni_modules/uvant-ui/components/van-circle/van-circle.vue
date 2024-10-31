@@ -26,9 +26,9 @@ import {
     makeStringProp,
     makeNumberProp,
     truthProp,
+    isObject,
 } from '../utils'
 import { adaptor } from './canvas'
-import { isObject } from 'lodash-es'
 
 const props = defineProps({
     currentRate: makeNumberProp(0),

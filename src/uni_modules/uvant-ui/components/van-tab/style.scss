@@ -2,6 +2,7 @@
 
 .van-tab {
     &__panel {
+        &,
         &--active {
             flex-shrink: 0;
             box-sizing: border-box;

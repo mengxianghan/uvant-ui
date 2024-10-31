@@ -7,6 +7,12 @@
     </view>
 </template>
 
+<script>
+export default {
+    options: { virtualHost: true },
+}
+</script>
+
 <script setup>
 import { createNamespace, numericProp, unknownProp, truthProp } from '../utils'
 import { useParent } from '../composables'

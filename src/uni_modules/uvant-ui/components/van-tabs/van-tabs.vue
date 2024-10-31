@@ -62,7 +62,7 @@
                                     </template>
 
                                     <view :class="bemTab('text', { ellipsis: !scrollable })">
-                                        <template v-if="item.proxy.name">
+                                        <template v-if="useNameSlot">
                                             <slot :name="item.proxy.name">{{ item.proxy.title }}</slot>
                                         </template>
                                         <template v-else>
@@ -93,18 +93,20 @@
             <slot name="nav-bottom"></slot>
         </van-sticky>
         <!--content-->
-        <view
-            :class="
-                bem('content', {
-                    animated: animated || swipeable,
-                })
-            ">
+        <template v-if="showContent">
             <view
-                :class="bem('track', { animated: animated || swipeable })"
-                :style="trackStyles">
-                <slot></slot>
+                :class="
+                    bem('content', {
+                        animated: animated || swipeable,
+                    })
+                ">
+                <view
+                    :class="bem('track', { animated: animated || swipeable })"
+                    :style="trackStyles">
+                    <slot></slot>
+                </view>
             </view>
-        </view>
+        </template>
     </view>
 </template>
 
@@ -123,7 +125,6 @@ import {
     isNullOrEmpty,
     isDef,
     addUnit,
-    querySelector,
 } from '../utils'
 import { useChildren } from '../composables'
 
@@ -150,6 +151,8 @@ const props = defineProps({
     titleActiveColor: String,
     titleInactiveColor: String,
     pageScroll: { type: Function, default: () => {} },
+    useNameSlot: Boolean,
+    showContent: truthProp,
 })
 const emits = defineEmits(['change', 'scroll', 'rendered', 'clickTab'])
 const active = defineModel('active', makeNumericProp(0))
@@ -241,7 +244,7 @@ function getNavRect() {
 }
 
 function getContainer() {
-    return querySelector(`.${tabsSelector}`)
+    return uni.createSelectorQuery().in(instance.proxy).select(`.${tabsSelector}`)
 }
 
 function setCurrentIndex(currentIndex, skipScrollIntoView) {

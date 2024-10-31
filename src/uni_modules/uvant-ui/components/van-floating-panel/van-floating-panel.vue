@@ -143,7 +143,6 @@ function onTouchend() {
 }
 
 function onScroll(e) {
-    console.log(e)
     scrollTop.value = e.detail.scrollTop
 }
 

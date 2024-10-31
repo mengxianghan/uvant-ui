@@ -161,8 +161,6 @@ function handleNavigator(url) {
     if (!url) return
     uni.navigateTo({ url })
 }
-
-console.log('system info', uni.getSystemInfoSync())
 </script>
 
 <style lang="scss" scoped>

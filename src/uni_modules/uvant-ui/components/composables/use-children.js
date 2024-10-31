@@ -6,7 +6,6 @@ import { provide, reactive } from 'vue'
 //     const traverse = (children) => {
 //         if (Array.isArray(children)) {
 //             children.forEach((child) => {
-//                 console.log(child)
 //                 if (isVNode(child)) {
 //                     result.push(child)
 //

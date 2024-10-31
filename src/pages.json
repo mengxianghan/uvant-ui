@@ -100,12 +100,6 @@
             }
         },
         {
-            "path": "pages/component/data-tab",
-            "style": {
-                "navigationBarTitleText": "DataTab"
-            }
-        },
-        {
             "path": "pages/component/sticky",
             "style": {
                 "navigationBarTitleText": "Sticky"

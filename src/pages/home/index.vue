@@ -136,7 +136,6 @@ const list = ref([
             { key: 'Pagination', name: '分页', url: '' },
             { key: 'Sidebar', name: '侧边导航', url: '/pages/component/sidebar' },
             { key: 'Tab', name: '标签页', url: '/pages/component/tab' },
-            { key: 'DataTab', name: '数据标签页', url: '/pages/component/data-tab' },
             { key: 'Tabbar', name: '标签栏', url: '/pages/component/tabbar' },
             { key: 'TreeSelect', name: '分类选择', url: '' },
         ],

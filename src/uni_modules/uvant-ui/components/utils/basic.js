@@ -2,12 +2,7 @@ export { noop, extend, pick, omit, uniqueId, isEqual, defaultTo, debounce, get }
 
 export const isObject = (value) => typeof value === 'object' && value !== null
 
-export function isDef(value, excludeSpaces = true) {
-    if (excludeSpaces) {
-        return value !== undefined && value !== null && value !== ''
-    }
-    return value !== undefined && value !== null
-}
+export const isDef = (value) => value !== undefined && value !== null && value !== ''
 
 export const isFunction = (val) => typeof val === 'function'
 

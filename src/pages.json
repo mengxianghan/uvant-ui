@@ -1,207 +1,214 @@
 {
-    "pages": [
-        //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-        {
-            "path": "pages/home/index",
-            "style": {
-                // #ifdef H5
-                "navigationStyle": "custom"
-                // #endif
-            }
-        },
-        {
-            "path": "pages/test/index",
-            "style": {
-                "navigationBarTitleText": "Test"
-            }
-        },
-        {
-            "path": "pages/component/button",
-            "style": {
-                "navigationBarTitleText": "Button"
-            }
-        },
-        {
-            "path": "pages/component/cell",
-            "style": {
-                "navigationBarTitleText": "Cell"
-            }
-        },
-        {
-            "path": "pages/component/icon",
-            "style": {
-                "navigationBarTitleText": "Icon"
-            }
-        },
-        {
-            "path": "pages/component/image",
-            "style": {
-                "navigationBarTitleText": "Image"
-            }
-        },
-        {
-            "path": "pages/component/space",
-            "style": {
-                "navigationBarTitleText": "Space"
-            }
-        },
-        {
-            "path": "pages/component/field",
-            "style": {
-                "navigationBarTitleText": "Field"
-            }
-        },
-        {
-            "path": "pages/component/search",
-            "style": {
-                "navigationBarTitleText": "Search"
-            }
-        },
-        {
-            "path": "pages/component/loading",
-            "style": {
-                "navigationBarTitleText": "Loading"
-            }
-        },
-        {
-            "path": "pages/component/badge",
-            "style": {
-                "navigationBarTitleText": "Badge"
-            }
-        },
-        {
-            "path": "pages/component/circle",
-            "style": {
-                "navigationBarTitleText": "Circle"
-            }
-        },
-        {
-            "path": "pages/component/tag",
-            "style": {
-                "navigationBarTitleText": "Tag"
-            }
-        },
-        {
-            "path": "pages/component/action-bar",
-            "style": {
-                "navigationBarTitleText": "ActionBar"
-            }
-        },
-        {
-            "path": "pages/component/tabbar",
-            "style": {
-                "navigationBarTitleText": "Tabbar"
-            }
-        },
-        {
-            "path": "pages/component/submit-bar",
-            "style": {
-                "navigationBarTitleText": "SubmitBar"
-            }
-        },
-        {
-            "path": "pages/component/sticky",
-            "style": {
-                "navigationBarTitleText": "Sticky"
-            }
-        },
-        {
-            "path": "pages/component/layout",
-            "style": {
-                "navigationBarTitleText": "Layout"
-            }
-        },
-        {
-            "path": "pages/component/empty",
-            "style": {
-                "navigationBarTitleText": "Empty"
-            }
-        },
-        {
-            "path": "pages/component/stepper",
-            "style": {
-                "navigationBarTitleText": "Stepper"
-            }
-        },
-        {
-            "path": "pages/component/grid",
-            "style": {
-                "navigationBarTitleText": "Grid"
-            }
-        },
-        {
-            "path": "pages/component/sidebar",
-            "style": {
-                "navigationBarTitleText": "Sidebar"
-            }
-        },
-        {
-            "path": "pages/component/overlay",
-            "style": {
-                "navigationBarTitleText": "Overlay"
-            }
-        },
-        {
-            "path": "pages/component/style",
-            "style": {
-                "navigationBarTitleText": "Style"
-            }
-        },
-        {
-            "path": "pages/component/popup",
-            "style": {
-                "navigationBarTitleText": "Popup"
-            }
-        },
-        {
-            "path": "pages/component/floating-panel",
-            "style": {
-                "navigationBarTitleText": "FloatingPanel"
-            }
-        },
-        {
-            "path": "pages/component/checkbox",
-            "style": {
-                "navigationBarTitleText": "Checkbox"
-            }
-        },
-        {
-            "path": "pages/component/radio",
-            "style": {
-                "navigationBarTitleText": "Radio"
-            }
-        },
-        {
-            "path": "pages/component/switch",
-            "style": {
-                "navigationBarTitleText": "Switch"
-            }
-        },
-        {
-            "path": "pages/component/uploader",
-            "style": {
-                "navigationBarTitleText": "Uploader"
-            }
-        },
-        {
-            "path": "pages/component/notice-bar",
-            "style": {
-                "navigationBarTitleText": "NoticeBar",
-                "enablePullDownRefresh": false
-            }
-        },
-        {
-            "path": "pages/component/tab",
-            "style": {
-                "navigationBarTitleText": "Tab",
-                "enablePullDownRefresh": false
-            }
-        }
-    ],
-    "globalStyle": {
-        "navigationBarTextStyle": "black",
-        "navigationBarTitleText": "uvant ui",
-        "navigationBarBackgroundColor": "#f7f8fa",
-        "backgroundColor": "#f7f8fa"
+  "pages": [
+    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/home/index",
+      "style": {
+        // #ifdef H5
+        "navigationStyle": "custom"
+        // #endif
+      }
+    },
+    {
+      "path": "pages/test/index",
+      "style": {
+        "navigationBarTitleText": "Test"
+      }
+    },
+    {
+      "path": "pages/component/button",
+      "style": {
+        "navigationBarTitleText": "Button"
+      }
+    },
+    {
+      "path": "pages/component/cell",
+      "style": {
+        "navigationBarTitleText": "Cell"
+      }
+    },
+    {
+      "path": "pages/component/icon",
+      "style": {
+        "navigationBarTitleText": "Icon"
+      }
+    },
+    {
+      "path": "pages/component/image",
+      "style": {
+        "navigationBarTitleText": "Image"
+      }
+    },
+    {
+      "path": "pages/component/space",
+      "style": {
+        "navigationBarTitleText": "Space"
+      }
+    },
+    {
+      "path": "pages/component/field",
+      "style": {
+        "navigationBarTitleText": "Field"
+      }
+    },
+    {
+      "path": "pages/component/search",
+      "style": {
+        "navigationBarTitleText": "Search"
+      }
+    },
+    {
+      "path": "pages/component/loading",
+      "style": {
+        "navigationBarTitleText": "Loading"
+      }
+    },
+    {
+      "path": "pages/component/badge",
+      "style": {
+        "navigationBarTitleText": "Badge"
+      }
+    },
+    {
+      "path": "pages/component/circle",
+      "style": {
+        "navigationBarTitleText": "Circle"
+      }
+    },
+    {
+      "path": "pages/component/tag",
+      "style": {
+        "navigationBarTitleText": "Tag"
+      }
+    },
+    {
+      "path": "pages/component/action-bar",
+      "style": {
+        "navigationBarTitleText": "ActionBar"
+      }
+    },
+    {
+      "path": "pages/component/tabbar",
+      "style": {
+        "navigationBarTitleText": "Tabbar"
+      }
+    },
+    {
+      "path": "pages/component/submit-bar",
+      "style": {
+        "navigationBarTitleText": "SubmitBar"
+      }
+    },
+    {
+      "path": "pages/component/sticky",
+      "style": {
+        "navigationBarTitleText": "Sticky"
+      }
+    },
+    {
+      "path": "pages/component/layout",
+      "style": {
+        "navigationBarTitleText": "Layout"
+      }
+    },
+    {
+      "path": "pages/component/empty",
+      "style": {
+        "navigationBarTitleText": "Empty"
+      }
+    },
+    {
+      "path": "pages/component/stepper",
+      "style": {
+        "navigationBarTitleText": "Stepper"
+      }
+    },
+    {
+      "path": "pages/component/grid",
+      "style": {
+        "navigationBarTitleText": "Grid"
+      }
+    },
+    {
+      "path": "pages/component/sidebar",
+      "style": {
+        "navigationBarTitleText": "Sidebar"
+      }
+    },
+    {
+      "path": "pages/component/overlay",
+      "style": {
+        "navigationBarTitleText": "Overlay"
+      }
+    },
+    {
+      "path": "pages/component/style",
+      "style": {
+        "navigationBarTitleText": "Style"
+      }
+    },
+    {
+      "path": "pages/component/popup",
+      "style": {
+        "navigationBarTitleText": "Popup"
+      }
+    },
+    {
+      "path": "pages/component/floating-panel",
+      "style": {
+        "navigationBarTitleText": "FloatingPanel"
+      }
+    },
+    {
+      "path": "pages/component/checkbox",
+      "style": {
+        "navigationBarTitleText": "Checkbox"
+      }
+    },
+    {
+      "path": "pages/component/radio",
+      "style": {
+        "navigationBarTitleText": "Radio"
+      }
+    },
+    {
+      "path": "pages/component/switch",
+      "style": {
+        "navigationBarTitleText": "Switch"
+      }
+    },
+    {
+      "path": "pages/component/uploader",
+      "style": {
+        "navigationBarTitleText": "Uploader"
+      }
+    },
+    {
+      "path": "pages/component/notice-bar",
+      "style": {
+        "navigationBarTitleText": "NoticeBar",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/component/tab",
+      "style": {
+        "navigationBarTitleText": "Tab",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/component/progress",
+      "style": {
+        "navigationBarTitleText": "Progress",
+        "enablePullDownRefresh": false
+      }
     }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uvant ui",
+    "navigationBarBackgroundColor": "#f7f8fa",
+    "backgroundColor": "#f7f8fa"
+  }
 }

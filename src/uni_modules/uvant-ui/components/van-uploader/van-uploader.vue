@@ -102,7 +102,7 @@
                         <view :class="bem('upload-icon')">
                             <van-icon name="photograph"></van-icon>
                         </view>
-                        <template v-if="!isNullOrEmpty(uploadText)">
+                        <template v-if="isDef(uploadText)">
                             <view :class="bem('upload-text')">{{ uploadText }}</view>
                         </template>
                     </view>
@@ -127,6 +127,7 @@ import {
     getSizeStyle,
     toArray,
     callInterceptor,
+    isDef,
 } from '../utils'
 import { chooseFile as _chooseFile, isImageFile, isVideoFile } from './utils'
 

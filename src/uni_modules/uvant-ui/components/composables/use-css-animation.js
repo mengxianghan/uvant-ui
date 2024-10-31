@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue'
-import { isDef, isNullOrEmpty, isFunction, defaultTo } from '../../utils'
+import { isDef, isFunction, defaultTo } from '../utils'
 
 /**
  * @typedef Option
@@ -27,7 +27,7 @@ export function useCSSAnimation(_options = {}) {
 
     const styles = computed(() => {
         return {
-            animationDuration: !isNullOrEmpty(options.value.duration) ? `${options.value.duration}s` : '',
+            animationDuration: isDef(options.value.duration) ? `${options.value.duration}s` : '',
             display: display.value ? 'block' : 'none',
             zIndex: defaultTo(options.value.zIndex),
         }

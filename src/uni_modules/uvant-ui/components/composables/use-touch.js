@@ -1,7 +1,5 @@
 import { ref } from 'vue'
-import { TAP_OFFSET } from '../../utils'
-
-// type Direction = '' | 'vertical' | 'horizontal'
+import { TAP_OFFSET } from '../utils'
 
 function getDirection(x, y) {
     if (x > y) {

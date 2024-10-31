@@ -2,7 +2,7 @@
 @import '../styles/animation.scss';
 
 $van-overlay-z-index: var(--van-overlay-z-index, 1);
-$van-overlay-background: var(--van-overlay-background, rgba(0, 0, 0, 0.7));
+$van-overlay-background: var(--van-overlay-background, $van-background-overlay);
 
 .van-overlay {
     position: fixed;

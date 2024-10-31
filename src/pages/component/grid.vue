@@ -32,17 +32,20 @@
                 :column-num="3">
                 <van-grid-item>
                     <van-image
-                        fit="contain"
+                        fit="aspectFit"
+                        width="80px"
                         :src="cdnURL('apple-1.jpeg')" />
                 </van-grid-item>
                 <van-grid-item>
                     <van-image
-                        fit="contain"
+                        fit="aspectFit"
+                        width="80px"
                         :src="cdnURL('apple-2.jpeg')" />
                 </van-grid-item>
                 <van-grid-item>
                     <van-image
-                        fit="contain"
+                        fit="aspectFit"
+                        width="80px"
                         :src="cdnURL('apple-3.jpeg')" />
                 </van-grid-item>
             </van-grid>

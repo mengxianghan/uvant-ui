@@ -50,19 +50,18 @@
         <demo-block :title="t('align')">
             <van-radio-group
                 v-model="align"
-                direction="horizontal"
-                style="margin-bottom: 16px">
+                direction="horizontal">
                 <van-radio name="start">start</van-radio>
                 <van-radio name="center">center</van-radio>
                 <van-radio name="end">end</van-radio>
                 <van-radio name="baseline">baseline</van-radio>
             </van-radio-group>
-            <van-space
-                :align="align"
-                style="padding: 16px; background: #f3f2f5">
-                <van-button type="primary">{{ align }}</van-button>
-                <div style="padding: 40px 20px; background: #fff">Block</div>
-            </van-space>
+            <view class="mt-4 p-4 bg-[#f3f2f5]">
+                <van-space :align="align">
+                    <van-button type="primary">{{ align }}</van-button>
+                    <view style="padding: 40px 20px; background: #fff">Block</view>
+                </van-space>
+            </view>
         </demo-block>
 
         <demo-block :title="t('wrap')">

@@ -253,8 +253,8 @@ $van-button-loading-icon-size: var(--van-button-loading-icon-size, 20px);
     }
 
     &__icon {
+        line-height: 0;
         font-size: $van-button-icon-size;
-        line-height: 1;
     }
 
     &__icon + &__text,

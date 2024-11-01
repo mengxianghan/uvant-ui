@@ -203,6 +203,13 @@
         "navigationBarTitleText": "Progress",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/pagination",
+      "style": {
+        "navigationBarTitleText": "Pagination",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

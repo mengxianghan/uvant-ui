@@ -133,7 +133,7 @@ const list = ref([
             { key: 'Grid', name: '宫格', url: '/pages/component/grid' },
             { key: 'IndexBar', name: '索引栏', url: '' },
             { key: 'NavBar', name: '导航栏', url: '' },
-            { key: 'Pagination', name: '分页', url: '' },
+            { key: 'Pagination', name: '分页', url: '/pages/component/pagination' },
             { key: 'Sidebar', name: '侧边导航', url: '/pages/component/sidebar' },
             { key: 'Tab', name: '标签页', url: '/pages/component/tab' },
             { key: 'Tabbar', name: '标签栏', url: '/pages/component/tabbar' },

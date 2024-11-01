@@ -1,3 +1,5 @@
+import { useWindowSize } from '../composables'
+
 export const stopPropagation = (event) => event.stopPropagation()
 
 export function preventDefault(event, isStopPropagation) {
@@ -31,3 +33,5 @@ export const getAllRect = (context, selector) =>
             })
             .exec()
     })
+
+export const { width: windowWidth, height: windowHeight } = useWindowSize()

@@ -88,7 +88,7 @@ const list = ref([
             { key: 'Dialog', name: '弹出框', url: '' },
             { key: 'DropdownMenu', name: '下拉菜单', url: '' },
             { key: 'FloatingPanel', name: '浮动面板', url: '/pages/component/floating-panel' },
-            { key: 'FloatingBubble', name: '浮动气泡', url: '' },
+            { key: 'FloatingBubble', name: '浮动气泡', url: '/pages/component/floating-bubble' },
             { key: 'Loading', name: '加载', url: '/pages/component/loading' },
             { key: 'Notify', name: '消息通知', url: '' },
             { key: 'Overlay', name: '遮罩层', url: '/pages/component/overlay' },

@@ -210,6 +210,13 @@
         "navigationBarTitleText": "Pagination",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/floating-bubble",
+      "style": {
+        "navigationBarTitleText": "FloatingBubble",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

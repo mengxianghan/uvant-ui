@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 import { ref } from 'vue'
 
 const t = useTranslate({

@@ -111,7 +111,7 @@
 
 <script setup>
 import { cdnURL } from '@/utils'
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 
 const t = useTranslate({
     'zh-CN': {

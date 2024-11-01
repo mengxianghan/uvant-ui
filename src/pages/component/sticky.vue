@@ -58,7 +58,7 @@
 
 <script setup>
 import { onPageScroll } from '@dcloudio/uni-app'
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 
 const t = useTranslate({
     'zh-CN': {

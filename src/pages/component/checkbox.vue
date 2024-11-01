@@ -205,7 +205,7 @@
 </template>
 
 <script setup>
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 import { ref, reactive } from 'vue'
 import { cdnURL } from '@/utils'
 import { useRefs } from '@/uni_modules/uvant-ui'

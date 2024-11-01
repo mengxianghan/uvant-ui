@@ -199,7 +199,7 @@
 <script setup>
 import { cdnURL } from '@/utils'
 import icons from '@/utils/icons'
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 import { onPageScroll } from '@dcloudio/uni-app'
 
 const t = useTranslate({

@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 
 const t = useTranslate({
     'zh-CN': {

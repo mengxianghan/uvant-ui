@@ -59,7 +59,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 import { cdnURL } from '@/utils'
 
 const t = useTranslate({

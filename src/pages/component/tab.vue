@@ -216,7 +216,7 @@
 </template>
 
 <script setup>
-import { useTranslate } from '@/composables/useTranslate'
+import { useTranslate } from '@/composables'
 import { ref } from 'vue'
 import { onPageScroll } from '@dcloudio/uni-app'
 import { cdnURL } from '@/utils'

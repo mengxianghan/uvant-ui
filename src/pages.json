@@ -217,6 +217,13 @@
         "navigationBarTitleText": "FloatingBubble",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/number-keyboard",
+      "style": {
+        "navigationBarTitleText": "NumberKeyboard",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

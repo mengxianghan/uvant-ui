@@ -64,7 +64,7 @@ const list = ref([
             { key: 'DatePicker', name: '日期选择', url: '' },
             { key: 'Field', name: '输入框', url: '/pages/component/field' },
             { key: 'Form', name: '表单', url: '' },
-            { key: 'NumberKeyboard', name: '数字键盘', url: '' },
+            { key: 'NumberKeyboard', name: '数字键盘', url: '/pages/component/number-keyboard' },
             { key: 'PasswordInput', name: '密码输入框', url: '' },
             { key: 'Picker', name: '选择器', url: '' },
             { key: 'PickerGroup', name: '选择器组', url: '' },

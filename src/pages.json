@@ -224,6 +224,13 @@
         "navigationBarTitleText": "NumberKeyboard",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/password-input",
+      "style": {
+        "navigationBarTitleText": "PasswordInput",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

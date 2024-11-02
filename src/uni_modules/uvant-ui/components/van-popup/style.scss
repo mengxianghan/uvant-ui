@@ -76,56 +76,6 @@ $van-popup-close-icon-z-index: var(--van-popup-close-icon-z-index, 1);
             }
         }
 
-        &-slide-center {
-            &-enter-active {
-                animation: $van-duration-base van-fade-in both $van-ease-out;
-            }
-
-            &-leave-active {
-                animation: $van-duration-base van-fade-out both $van-ease-in;
-            }
-        }
-
-        &-slide-bottom {
-            &-enter-active {
-                animation: van-slide-up-enter $van-duration-base both $van-ease-out;
-            }
-
-            &-leave-active {
-                animation: van-slide-up-leave $van-duration-base both $van-ease-in;
-            }
-        }
-
-        &-slide-top {
-            &-enter-active {
-                animation: van-slide-down-enter $van-duration-base both $van-ease-out;
-            }
-
-            &-leave-active {
-                animation: van-slide-down-leave $van-duration-base both $van-ease-in;
-            }
-        }
-
-        &-slide-left {
-            &-enter-active {
-                animation: van-slide-left-enter $van-duration-base both $van-ease-out;
-            }
-
-            &-leave-active {
-                animation: van-slide-left-leave $van-duration-base both $van-ease-in;
-            }
-        }
-
-        &-slide-right {
-            &-enter-active {
-                animation: van-slide-right-enter $van-duration-base both $van-ease-out;
-            }
-
-            &-leave-active {
-                animation: van-slide-right-leave $van-duration-base both $van-ease-in;
-            }
-        }
-
         &__close-icon {
             position: absolute;
             z-index: $van-popup-close-icon-z-index;

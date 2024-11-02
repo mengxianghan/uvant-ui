@@ -1,62 +1,54 @@
 <template>
-    <view
-        :class="[bem(), classes]"
-        :style="[styles, animationStyles]"
-        @animationstart="onAnimationstart"
-        @animationend="onAnimationend"
+    <van-transition
+        :show="show"
+        :custom-class="[bem(), customClass]"
+        :custom-style="normalizeStyle([customStyle, { zIndex: computedZIndex }])"
+        :duration="duration"
+        :z-index="computedZIndex"
+        :lock-scroll="lockScroll"
+        :destroy-on-close="destroyOnClose"
         @click="onClick">
         <slot></slot>
-    </view>
+    </van-transition>
 </template>
 
 <script setup>
-import { computed, watch } from 'vue'
-import { getZIndexStyle, createNamespace } from '../utils'
-import { useCSSAnimation } from '../composables'
+import { createNamespace, makeNumberProp, numericProp, truthProp, isDef } from '../utils'
+import { useGlobalZIndex } from '../composables'
+import { computed, normalizeStyle } from 'vue'
 
 const props = defineProps({
     show: Boolean,
-    zIndex: [Number, String],
-    duration: { type: [Number, String], default: 0.3 },
-    className: String,
-    lockScroll: { type: Boolean, default: true },
-    lazyRender: { type: Boolean, default: true },
-    customStyle: Object,
+    zIndex: numericProp,
+    duration: makeNumberProp(300),
+    lockScroll: truthProp,
+    customClass: [String, Object, Array],
+    customStyle: [String, Object],
+    destroyOnClose: Boolean,
 })
 const emits = defineEmits(['click'])
+
 const { bem } = createNamespace('overlay')
 
-const {
-    styles: animationStyles,
-    classes,
-    open,
-    close,
-    onAnimationstart,
-    onAnimationend,
-} = useCSSAnimation({ name: 'van-fade' })
-
-const styles = computed(() => ({
-    ...getZIndexStyle(props.zIndex),
-    ...props.customStyle,
-    animationDuration: `${props.duration}s`,
-}))
-
-watch(
-    () => props.show,
-    (val) => {
-        if (val) {
-            open({ zIndex: props.zIndex, duration: props.duration })
-        } else {
-            close()
-        }
-    }
-)
+const computedZIndex = computed(() => (isDef(props.zIndex) ? +props.zIndex : useGlobalZIndex()))
 
 function onClick() {
     emits('click')
 }
 </script>
 
-<style lang="scss" scoped>
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    options: {
+        virtualHost: true,
+        addGlobalClass: true,
+        styleIsolation: 'shared',
+    },
+})
+</script>
+
+<style lang="scss">
 @import './style.scss';
 </style>

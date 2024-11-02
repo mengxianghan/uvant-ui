@@ -20,45 +20,61 @@
         <demo-block
             :title="t('animation')"
             :card="false">
-            <view
-                :class="['demo-animate-block', classes]"
-                :style="styles"
-                @animationstart="onAnimationstart"
-                @animationend="onAnimationend"></view>
+            <vc-transition
+                :show="show"
+                :name="transitionName"
+                custom-class="demo-animate-block">
+            </vc-transition>
 
             <van-cell-group inset>
                 <van-cell
                     title="Fade"
                     is-link
-                    @click="handleTransition('van-fade')"></van-cell>
+                    @click="animate('van-fade')"></van-cell>
+                <van-cell
+                    title="Fade Up"
+                    is-link
+                    @click="animate('van-fade-up')"></van-cell>
+                <van-cell
+                    title="Fade Down"
+                    is-link
+                    @click="animate('van-fade-down')"></van-cell>
+                <van-cell
+                    title="Fade Left"
+                    is-link
+                    @click="animate('van-fade-left')"></van-cell>
+                <van-cell
+                    title="Fade Right"
+                    is-link
+                    @click="animate('van-fade-right')"></van-cell>
                 <van-cell
                     title="Slide Up"
                     is-link
-                    @click="handleTransition('van-slide-up')"></van-cell>
+                    @click="animate('van-slide-up')"></van-cell>
                 <van-cell
                     title="Slide Down"
                     is-link
-                    @click="handleTransition('van-slide-down')"></van-cell>
+                    @click="animate('van-slide-down')"></van-cell>
                 <van-cell
                     title="Slide Left"
                     is-link
-                    @click="handleTransition('van-slide-left')"></van-cell>
+                    @click="animate('van-slide-left')"></van-cell>
                 <van-cell
                     title="Slide Right"
                     is-link
-                    @click="handleTransition('van-slide-right')"></van-cell>
+                    @click="animate('van-slide-right')"></van-cell>
                 <van-cell
                     title="Custom"
                     is-link
-                    @click="handleTransition('custom-fade')"></van-cell>
+                    @click="animate('custom-fade')"></van-cell>
             </van-cell-group>
         </demo-block>
     </view>
 </template>
 
 <script setup>
-import { useCSSAnimation } from '@/uni_modules/uvant-ui'
 import { useTranslate } from '@/composables'
+import { ref } from 'vue'
 
 const t = useTranslate({
     'zh-CN': {
@@ -71,13 +87,16 @@ const t = useTranslate({
     },
 })
 
-const { open, close, classes, styles, onAnimationstart, onAnimationend } = useCSSAnimation()
+const show = ref(false)
+const transitionName = ref('')
 
-function handleTransition(name) {
-    open({ name })
+const animate = (newName) => {
+    show.value = true
+    transitionName.value = newName
+
     setTimeout(() => {
-        close()
-    }, 800)
+        show.value = false
+    }, 500)
 }
 </script>
 

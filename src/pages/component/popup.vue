@@ -8,10 +8,10 @@
                 is-link
                 :border="false"
                 @click="showBasic = true" />
-            <van-popup v-model:show="showBasic">
-                <view class="p-12">
-                    {{ t('content') }}
-                </view>
+            <van-popup
+                v-model:show="showBasic"
+                :custom-style="{ padding: '64px' }">
+                {{ t('content') }}
             </van-popup>
         </demo-block>
 
@@ -40,23 +40,23 @@
 
             <van-popup
                 v-model:show="showTop"
-                position="top">
-                <view class="h-[30vh]"></view>
+                position="top"
+                :custom-style="{ height: '30%' }">
             </van-popup>
             <van-popup
                 v-model:show="showBottom"
-                position="bottom">
-                <view class="h-[30vh]"></view>
+                position="bottom"
+                :custom-style="{ height: '30%' }">
             </van-popup>
             <van-popup
                 v-model:show="showLeft"
+                :custom-style="{ width: '30%', height: '100%' }"
                 position="left">
-                <view class="h-screen w-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showRight"
+                :custom-style="{ width: '30%', height: '100%' }"
                 position="right">
-                <view class="h-screen w-[30vh]"></view>
             </van-popup>
         </demo-block>
 
@@ -79,23 +79,23 @@
 
             <van-popup
                 v-model:show="showCloseIcon"
+                :custom-style="{ height: '30%' }"
                 closeable
                 position="bottom">
-                <view class="h-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showCustomCloseIcon"
+                :custom-style="{ height: '30%' }"
                 closeable
                 close-icon="close"
                 position="bottom">
-                <view class="h-[30vh]"></view>
             </van-popup>
             <van-popup
                 v-model:show="showCustomIconPosition"
+                :custom-style="{ height: '30%' }"
                 closeable
                 close-icon-position="top-left"
                 position="bottom">
-                <view class="h-[30vh]"></view>
             </van-popup>
         </demo-block>
 
@@ -136,11 +136,11 @@
                 @click="showClickEvents = true" />
             <van-popup
                 v-model:show="showClickEvents"
+                :custom-style="{ height: '30%' }"
                 position="bottom"
                 closeable
                 @click-overlay="showToast('click-overlay')"
                 @click-close-icon="showToast('click-close-icon')">
-                <view class="h-[30vh]"></view>
             </van-popup>
 
             <van-cell
@@ -150,12 +150,12 @@
                 @click="showDisplayEvents = true" />
             <van-popup
                 v-model:show="showDisplayEvents"
+                :custom-style="{ height: '30%' }"
                 position="bottom"
                 @open="showToast('open')"
                 @opened="showToast('opened')"
                 @close="showToast('close')"
                 @closed="showToast('closed')">
-                <view class="h-[30vh]"></view>
             </van-popup>
         </demo-block>
     </view>

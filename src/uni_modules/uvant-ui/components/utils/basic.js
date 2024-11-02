@@ -1,4 +1,4 @@
-export { noop, extend, pick, omit, uniqueId, isEqual, defaultTo, debounce, get } from 'lodash-es'
+export { noop, extend, pick, omit, uniqueId, isEqual, defaultTo, debounce, get, camelCase } from 'lodash-es'
 
 export const isObject = (value) => typeof value === 'object' && value !== null
 

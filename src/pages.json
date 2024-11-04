@@ -245,6 +245,13 @@
         "navigationBarTitleText": "ShareSheet",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/swipe-cell",
+      "style": {
+        "navigationBarTitleText": "SwipeCell",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

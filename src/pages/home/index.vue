@@ -94,7 +94,7 @@ const list = ref([
             { key: 'Overlay', name: '遮罩层', url: '/pages/component/overlay' },
             { key: 'PullRefresh', name: '下拉刷新', url: '' },
             { key: 'ShareSheet', name: '分享面板', url: '/pages/component/share-sheet' },
-            { key: 'SwipeCell', name: '滑动单元格', url: '' },
+            { key: 'SwipeCell', name: '滑动单元格', url: '/pages/component/swipe-cell' },
         ],
     },
     {

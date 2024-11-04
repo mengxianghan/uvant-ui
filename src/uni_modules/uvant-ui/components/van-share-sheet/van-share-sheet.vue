@@ -139,6 +139,18 @@ function onSelect(option, index) {
 }
 </script>
 
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    options: {
+        virtualHost: true,
+        addGlobalClass: true,
+        styleIsolation: 'shared',
+    },
+})
+</script>
+
 <style lang="scss">
 @import './style.scss';
 </style>

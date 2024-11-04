@@ -252,6 +252,13 @@
         "navigationBarTitleText": "SwipeCell",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/card",
+      "style": {
+        "navigationBarTitleText": "Card",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

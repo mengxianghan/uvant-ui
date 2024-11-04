@@ -147,7 +147,7 @@ const list = ref([
             { key: 'AddressEdit', name: '地址编辑', url: '' },
             { key: 'AddressList', name: '地址列表', url: '' },
             { key: 'Area', name: '省市区选择', url: '' },
-            { key: 'Card', name: '卡片', url: '' },
+            { key: 'Card', name: '卡片', url: '/pages/component/card' },
             { key: 'ContactCard', name: '联系人卡片', url: '' },
             { key: 'ContactEdit', name: '联系人编辑', url: '' },
             { key: 'ContactList', name: '联系人列表', url: '' },

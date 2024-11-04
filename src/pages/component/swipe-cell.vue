@@ -122,9 +122,9 @@ const beforeClose = ({ position }) => {
 .demo-swipe-cell {
     user-select: none;
 
-    .van-card {
+    :deep(.van-card) {
         margin: 0;
-        background-color: var(--van-background-2);
+        @apply bg-white;
     }
 
     .delete-button {

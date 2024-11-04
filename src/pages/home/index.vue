@@ -105,7 +105,7 @@ const list = ref([
             { key: 'Circle', name: '环形进度条', url: '/pages/component/circle' },
             { key: 'Collapse', name: '折叠面板', url: '' },
             { key: 'CountDown', name: '倒计时', url: '' },
-            { key: 'Divider', name: '分割线', url: '' },
+            { key: 'Divider', name: '分割线', url: '/pages/component/divider' },
             { key: 'Empty', name: '空状态', url: '/pages/component/empty' },
             { key: 'Highlight', name: '高亮文本', url: '' },
             { key: 'ImagePreview', name: '图片预览', url: '' },

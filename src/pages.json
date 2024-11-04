@@ -259,6 +259,13 @@
         "navigationBarTitleText": "Card",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/divider",
+      "style": {
+        "navigationBarTitleText": "Divider",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

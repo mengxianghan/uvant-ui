@@ -238,6 +238,13 @@
         "navigationBarTitleText": "ActionSheet",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/share-sheet",
+      "style": {
+        "navigationBarTitleText": "ShareSheet",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

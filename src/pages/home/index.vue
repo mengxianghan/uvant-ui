@@ -93,7 +93,7 @@ const list = ref([
             { key: 'Notify', name: '消息通知', url: '' },
             { key: 'Overlay', name: '遮罩层', url: '/pages/component/overlay' },
             { key: 'PullRefresh', name: '下拉刷新', url: '' },
-            { key: 'ShareSheet', name: '分享面板', url: '' },
+            { key: 'ShareSheet', name: '分享面板', url: '/pages/component/share-sheet' },
             { key: 'SwipeCell', name: '滑动单元格', url: '' },
         ],
     },

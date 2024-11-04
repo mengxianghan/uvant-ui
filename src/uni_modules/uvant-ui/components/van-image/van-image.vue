@@ -6,6 +6,7 @@
                 autosize: computedAutosize,
             }),
             imageSelector,
+            customClass,
         ]"
         :style="styles"
         @click="onClick">
@@ -58,6 +59,7 @@ import {
     truthProp,
     createUniqueSelector,
     getRect,
+    unknownProp,
 } from '../utils'
 
 const props = defineProps({
@@ -79,6 +81,7 @@ const props = defineProps({
     webp: Boolean,
     aspectRatio: Number,
     autosize: Boolean,
+    customClass: unknownProp,
 })
 const emits = defineEmits(['click', 'load', 'error'])
 
@@ -200,6 +203,18 @@ function onError(e) {
 }
 </script>
 
-<style lang="scss" scoped>
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    options: {
+        virtualHost: true,
+        addGlobalClass: true,
+        styleIsolation: 'shared',
+    },
+})
+</script>
+
+<style lang="scss">
 @import './style.scss';
 </style>

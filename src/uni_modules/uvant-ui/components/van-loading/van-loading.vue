@@ -55,6 +55,18 @@ const { bem } = createNamespace('loading')
 const hasIcon = computed(() => slots.icon)
 </script>
 
-<style lang="scss" scoped>
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    options: {
+        virtualHost: true,
+        addGlobalClass: true,
+        styleIsolation: 'shared',
+    },
+})
+</script>
+
+<style lang="scss">
 @import './style.scss';
 </style>

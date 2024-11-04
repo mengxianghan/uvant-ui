@@ -231,6 +231,13 @@
         "navigationBarTitleText": "PasswordInput",
         "enablePullDownRefresh": false
       }
+    },
+    {
+      "path": "pages/component/action-sheet",
+      "style": {
+        "navigationBarTitleText": "ActionSheet",
+        "enablePullDownRefresh": false
+      }
     }
   ],
   "globalStyle": {

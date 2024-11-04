@@ -83,7 +83,7 @@ const list = ref([
         key: 'feedback',
         name: '反馈组件',
         children: [
-            { key: 'ActionSheet', name: '动作面板', url: '' },
+            { key: 'ActionSheet', name: '动作面板', url: '/pages/component/action-sheet' },
             { key: 'Barrage', name: '弹幕', url: '' },
             { key: 'Dialog', name: '弹出框', url: '' },
             { key: 'DropdownMenu', name: '下拉菜单', url: '' },
